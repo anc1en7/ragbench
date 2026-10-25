@@ -34,3 +34,28 @@ dev = [
     "pytest-cov==7.1.0",
     "ruff==0.17.2",
 ]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+src = ["src", "tests"]
+exclude = [".venv", "data", "results"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["B011"]
+"src/ragbench/cli.py" = ["B008"]
+
+[tool.mypy]
+strict = true
+files = ["src/ragbench"]
+ignore_missing_imports = true
+python_version = "3.13"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "integration: tests that require docker services (pgvector/qdrant)",
+]
