@@ -103,6 +103,30 @@ def goldset_review_cmd(
     )
 
 
+@goldset_app.command("split")
+def goldset_split_cmd(
+    verified: Path = typer.Option(
+        Path("data/goldset/verified.jsonl"), "--verified", help="Verified JSONL"
+    ),
+    out: Path = typer.Option(
+        Path("data/goldset/splits.json"), "--out", help="Splits JSON (output)"
+    ),
+    dev_frac: float = typer.Option(0.3, "--dev-frac", help="Dev fraction"),
+    seed: int = typer.Option(42, "--seed", help="Split seed"),
+) -> None:
+    """Split verified questions into stratified dev/test sets."""
+    from ragbench.goldset.split import split_verified
+
+    try:
+        result = split_verified(verified_path=verified, out_path=out, dev_frac=dev_frac, seed=seed)
+    except (ValueError, FileNotFoundError) as exc:
+        typer.secho(str(exc), fg="red", err=True)
+        raise typer.Exit(code=1) from exc
+    typer.echo(
+        f"seed={result['seed']} dev={len(result['dev'])} test={len(result['test'])} -> {out}"
+    )
+
+
 @app.command("llm-probe")
 def llm_probe_cmd(
     out: Path = typer.Option(HARDWARE_PATH, "--out", help="hardware.json to merge results into"),
