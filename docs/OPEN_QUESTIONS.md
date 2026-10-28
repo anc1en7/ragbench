@@ -15,7 +15,8 @@ Format: status, decision, reason, date.
 
 ## Pending human actions
 
-- [ ] Provide `LLM_BASE_URL` + `LLM_API_KEY` (OmniRoute VPS) and confirm the pinned `LLM_MODEL`
+- [x] Provide `LLM_BASE_URL` + `LLM_API_KEY` — done 2026-10-28; written to local `.env` (gitignored): base `https://vps.taila5d33a.ts.net:8444/v1`.
+- [ ] **Restore one working chat provider on OmniRoute, then confirm the pinned `LLM_MODEL`** — `GET /v1/models` works (366 models) but every tested chat route fails (see technical questions); `ragbench llm-probe` exits 1 until one route succeeds. Blocks gold-set generation (Phase 1, Task 1.3).
 - [ ] Gold-set review to >= 150 verified questions (Checkpoint 1)
 - [ ] Approve storing the OmniRoute key as a GitHub Actions secret (needed for the RAGAS generation stage in CI)
 - [ ] Dashboard deployment (Hugging Face Spaces or Streamlit Community Cloud) per `docs/DEPLOY.md`
@@ -23,5 +24,6 @@ Format: status, decision, reason, date.
 
 ## Open technical questions
 
+- **OmniRoute chat routes all failing (2026-10-28):** with a valid key, `GET /v1/models` returns 366 models, but `POST /v1/chat/completions` fails on every route class tested: `oc/*` OpenCode free models → 429 free-usage-limit (or 401 missing upstream key for paid `oc/*`), `ddgw/*` DuckDuckGo → 418 anti-abuse challenge (VPS egress IP rate-limited), `felo/*` → 400 model unavailable, `tllm/*` → 403 Vercel block on server egress IP, `aug/*` → 502 stream early EOF, `pepper/*` → 502, all `auto/*` alias pools → exhausted after 5–14 attempts. **Human to connect/repair a provider in the OmniRoute dashboard (Providers), then rerun `uv run ragbench llm-probe` and set the confirmed `LLM_MODEL` in `.env`.** Until then `LLM_MODEL=oc/claude-haiku-4-5` in `.env` is provisional and unverified.
 - **FastAPI docs layout**: confirm `docs/en/docs` still matches the pinned release tag at fetch time; if not, adapt and log here (spec section 2).
 - **Actions runner time budget**: if the staged sweep exceeds the practical runtime on a free CPU runner, fall back to a reduced grid or one local run (will be logged here with measured runtimes).
