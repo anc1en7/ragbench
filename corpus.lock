@@ -1,0 +1,10 @@
+{
+  "repo": "https://github.com/fastapi/fastapi",
+  "tag": "0.162.0",
+  "commit_sha": "7a0a3f0b286c6c865cf4398ea0e957a87b8bffa4",
+  "docs_path": "docs/en/docs",
+  "license": "MIT",
+  "fetched_at": "2026-10-28T05:22:11.763723+00:00",
+  "file_count": 156,
+  "sha256_of_files": "a15eae559d9754596d9faa8c3b9125268a0d8f1893adc824a7df0b11d8be1be5"
+}
