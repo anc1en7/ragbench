@@ -24,6 +24,45 @@ class LLMConfigError(RuntimeError):
     """Raised when the LLM endpoint is not configured."""
 
 
+class RateLimitError(RuntimeError):
+    """Raised when the endpoint signals a cooldown/rate limit.
+
+    ``retry_after`` is the number of seconds to wait before retrying (best effort).
+    """
+
+    def __init__(self, message: str, retry_after: float) -> None:
+        super().__init__(message)
+        self.retry_after = retry_after
+
+
+def _parse_retry_after(response: httpx.Response) -> float:
+    """Best-effort seconds-to-wait from a 429 response (header or JSON body)."""
+    header = response.headers.get("retry-after", "")
+    try:
+        return max(0.0, float(header))
+    except ValueError:
+        pass
+    try:
+        data = response.json()
+    except ValueError:
+        return 60.0
+    if isinstance(data, dict):
+        for key in ("reset_seconds", "retry_after_seconds"):
+            value = data.get(key)
+            if isinstance(value, (int, float)):
+                return max(0.0, float(value))
+        retry_after = data.get("retry_after")
+        if isinstance(retry_after, str):
+            try:
+                from datetime import UTC, datetime
+
+                target = datetime.fromisoformat(retry_after.replace("Z", "+00:00"))
+                return max(0.0, (target - datetime.now(UTC)).total_seconds())
+            except ValueError:
+                pass
+    return 60.0
+
+
 @dataclass(frozen=True)
 class LLMSettings:
     base_url: str
@@ -103,6 +142,11 @@ class OpenAICompatClient:
             "max_tokens": max_tokens,
         }
         response = self._client.post("/chat/completions", json=body)
+        if response.status_code == 429:
+            raise RateLimitError(
+                f"rate limited: {response.text[:120]}",
+                retry_after=_parse_retry_after(response),
+            )
         response.raise_for_status()
         payload: dict[str, Any] = response.json()
         content = payload["choices"][0]["message"]["content"]

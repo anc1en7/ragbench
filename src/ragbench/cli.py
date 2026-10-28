@@ -127,6 +127,51 @@ def goldset_split_cmd(
     )
 
 
+@goldset_app.command("generate")
+def goldset_generate_cmd(
+    documents: Path = typer.Option(
+        Path("data/documents.jsonl"), "--documents", help="Corpus JSONL"
+    ),
+    candidates: Path = typer.Option(
+        Path("data/goldset/candidates.jsonl"), "--candidates", help="Candidates JSONL (output)"
+    ),
+    stats: Path = typer.Option(
+        Path("data/goldset/generate_stats.json"), "--stats", help="Filter stats (output)"
+    ),
+    target: int = typer.Option(800, "--target", help="Sections to sample"),
+    concurrency: int = typer.Option(3, "--concurrency", help="LLM workers"),
+    seed: int = typer.Option(42, "--seed", help="Sampling seed"),
+) -> None:
+    """Generate filtered gold-set candidates via the configured LLM."""
+    from ragbench.goldset.generate import fastembed_embedder, generate_candidates
+    from ragbench.llm_client import OpenAICompatClient, settings_from_env
+
+    try:
+        settings = settings_from_env()
+    except Exception as exc:  # noqa: BLE001
+        typer.secho(str(exc), fg="red", err=True)
+        raise typer.Exit(code=1) from exc
+
+    typer.echo("embedding model for dedup loading (first run downloads ~90MB)...")
+    embedder = fastembed_embedder()
+    with OpenAICompatClient(settings) as client:
+        result = generate_candidates(
+            documents_path=documents,
+            out_path=candidates,
+            stats_path=stats,
+            client=client,
+            embedder=embedder,
+            sample_target=target,
+            concurrency=concurrency,
+            seed=seed,
+        )
+    drops = result["drops"]
+    typer.echo(
+        f"sampled={result['sampled']} survivors={result['survivors']} "
+        f"drops={ {k: v for k, v in drops.items() if v} } -> {candidates}"
+    )
+
+
 @app.command("llm-probe")
 def llm_probe_cmd(
     out: Path = typer.Option(HARDWARE_PATH, "--out", help="hardware.json to merge results into"),

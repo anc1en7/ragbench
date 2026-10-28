@@ -7,6 +7,7 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 QuestionType = Literal["factual", "how_to", "why_when"]
+QUESTION_TYPES: tuple[str, ...] = ("factual", "how_to", "why_when")
 
 
 class GoldSpan(BaseModel):

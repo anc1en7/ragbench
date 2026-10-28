@@ -9,6 +9,7 @@ authors = [
 ]
 requires-python = ">=3.13"
 dependencies = [
+    "fastembed>=0.9.1",
     "httpx==0.28.1",
     "numpy==2.5.4",
     "psutil==7.2.2",
