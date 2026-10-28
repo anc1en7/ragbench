@@ -8,10 +8,10 @@
   "cuda_available": false,
   "llm": {
     "base_url_host": "vps.taila5d33a.ts.net",
-    "model": "gc/grok-4.5",
-    "resolved_at": "2026-10-28T06:15:02.911845+00:00",
+    "model": "rag",
+    "resolved_at": "2026-10-28T14:52:30.723892+00:00",
     "chat_ok": true,
-    "model_count": 563
+    "model_count": 582
   },
   "package_versions": {
     "PyYAML": "6.0.3",

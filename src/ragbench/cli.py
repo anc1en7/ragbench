@@ -141,6 +141,9 @@ def goldset_generate_cmd(
     target: int = typer.Option(800, "--target", help="Sections to sample"),
     concurrency: int = typer.Option(3, "--concurrency", help="LLM workers"),
     seed: int = typer.Option(42, "--seed", help="Sampling seed"),
+    pacer: float = typer.Option(
+        0.5, "--pacer", help="Min seconds between request starts (rate-limit safety)"
+    ),
 ) -> None:
     """Generate filtered gold-set candidates via the configured LLM."""
     from ragbench.goldset.generate import fastembed_embedder, generate_candidates
@@ -164,6 +167,7 @@ def goldset_generate_cmd(
             sample_target=target,
             concurrency=concurrency,
             seed=seed,
+            pacer_interval=pacer,
         )
     drops = result["drops"]
     typer.echo(
