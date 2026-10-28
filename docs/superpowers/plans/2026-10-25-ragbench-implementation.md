@@ -263,6 +263,8 @@
 
 ## PHASE 1 — Corpus and gold set
 
+> **Execution status (2026-10-28):** Tasks 1.1, 1.2, 1.4, 1.5 **done** (TDD, committed, `make lint test` green — 34 tests). **Task 1.3 BLOCKED**: OmniRoute chat routes all failing (see `docs/OPEN_QUESTIONS.md`), so `candidates.jsonl` cannot be generated yet; consequently the real review run, the real `splits.json` run, and **Checkpoint 1's USER ACTION are deferred** until the LLM provider works and generation runs. Deviations: `src/ragbench/types.py` created in 1.2 (spec §4 verbatim — Task 2.1 becomes tests-only); shared `goldset/schema.py` (`Candidate`/`GoldSpan`) added for generate/review/split; review tool writes `data/goldset/review_log.jsonl` for resumable reject/flag decisions; blank-run collapse rule is "2+ blank lines → 1" (record in METHODOLOGY).
+
 ### Task 1.1: Fetch pinned corpus + corpus.lock
 
 **Files:** Create: `src/ragbench/corpus/fetch.py`, `corpus.lock`, `tests/unit/test_fetch.py`
