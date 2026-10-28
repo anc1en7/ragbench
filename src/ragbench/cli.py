@@ -17,6 +17,10 @@ app = typer.Typer(
 )
 corpus_app = typer.Typer(name="corpus", help="Corpus fetch and build.", no_args_is_help=True)
 app.add_typer(corpus_app, name="corpus")
+goldset_app = typer.Typer(
+    name="goldset", help="Gold-set generation and review.", no_args_is_help=True
+)
+app.add_typer(goldset_app, name="goldset")
 
 HARDWARE_PATH = Path("results/hardware.json")
 
@@ -58,6 +62,44 @@ def corpus_ingest_cmd(
     approx_tokens = sum(len(doc.text.split()) for doc in documents)
     typer.echo(
         f"documents={len(documents)} sections={sections} approx_tokens={approx_tokens} -> {out}"
+    )
+
+
+@goldset_app.command("review")
+def goldset_review_cmd(
+    candidates: Path = typer.Option(
+        Path("data/goldset/candidates.jsonl"), "--candidates", help="Candidates JSONL"
+    ),
+    verified: Path = typer.Option(
+        Path("data/goldset/verified.jsonl"), "--verified", help="Verified JSONL (output)"
+    ),
+    documents: Path = typer.Option(
+        Path("data/documents.jsonl"), "--documents", help="Corpus for span excerpts"
+    ),
+    log: Path = typer.Option(
+        Path("data/goldset/review_log.jsonl"), "--log", help="Reject/flag log (output)"
+    ),
+) -> None:
+    """Review gold-set candidates interactively (accept/edit/reject/flag)."""
+    from rich.console import Console
+
+    from ragbench.goldset.review import review
+
+    try:
+        summary = review(
+            candidates_path=candidates,
+            verified_path=verified,
+            documents_path=documents,
+            log_path=log,
+            console=Console(),
+        )
+    except FileNotFoundError as exc:
+        typer.secho(str(exc), fg="red", err=True)
+        raise typer.Exit(code=1) from exc
+    typer.echo(
+        f"accepted={summary['accepted']} rejected={summary['rejected']} "
+        f"flagged={summary['flagged']} skipped={summary['skipped']} "
+        f"remaining={summary['remaining']}"
     )
 
 
