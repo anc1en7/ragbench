@@ -15,9 +15,9 @@ def _mock_transport(handler):
 
 
 def test_settings_from_env_rejects_missing(monkeypatch):
+    monkeypatch.setattr("dotenv.load_dotenv", lambda *args, **kwargs: None)
     for var in ("LLM_BASE_URL", "LLM_API_KEY", "LLM_MODEL"):
         monkeypatch.delenv(var, raising=False)
-    monkeypatch.setenv("DOTENV_DISABLE", "1")
     with pytest.raises(LLMConfigError, match="LLM_BASE_URL"):
         settings_from_env()
 
