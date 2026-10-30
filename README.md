@@ -103,7 +103,23 @@ Thresholds and per-stage drop counts are written to `data/goldset/generate_stats
 
 ## Results
 
-> **Not yet run.** The evaluation phases (indexing, retrieval, sweep, dashboard) have not started. This table is intentionally empty; it will be auto-generated from `results/` once runs exist.
+> **Phase 1 complete.** Retrieval/eval/sweep results are not yet run — this section will grow as phases land. Gold-set numbers below are generated from `data/goldset/`.
+
+### Gold set (Phase 1)
+
+| Metric | Value |
+|---|---|
+| Corpus documents | 156 (FastAPI docs, tag `0.162.0`, MIT) |
+| Sections parsed | 2,199 |
+| Sections sampled (≥80 tokens, not changelog/code) | 506 |
+| Candidates after filters | **483** |
+| Human-verified questions | **157** |
+| Rejected / flagged in review | 1 / 18 |
+| Split (seed 42, stratified by question type) | dev 47 / test 110 |
+
+Filter thresholds (recorded in `data/goldset/generate_stats.json`): heading-copy ratio 0.6, lexical overlap 0.6, dedup cosine 0.92, max code-fence ratio 0.6, min section tokens 80.
+
+Drop counts during generation: 9 generation errors, 5 answerability-judge rejections, 9 embedding duplicates. Verified-only vs all-synthetic metric separation is unnecessary — the full 157-question set is human-verified.
 
 ## Hardware & environment
 
