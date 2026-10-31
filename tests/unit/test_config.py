@@ -149,9 +149,16 @@ def test_embedder_rejects_unspecified_fields():
     assert exc_info.value.errors()[0]["type"] == "extra_forbidden"
 
 
-@pytest.mark.parametrize("chunker_type", ["fixed", "recursive_md", "semantic"])
-def test_chunker_accepts_spec_section_5_2_types(chunker_type: str):
-    cfg = ChunkerCfg(type=chunker_type, size_tokens=512, overlap_tokens=64)
+@pytest.mark.parametrize(
+    ("chunker_type", "kwargs"),
+    [
+        ("fixed", {"size_tokens": 256, "overlap_tokens": 32}),
+        ("recursive_md", {"size_tokens": 512, "overlap_tokens": 64}),
+        ("semantic", {}),
+    ],
+)
+def test_chunker_accepts_spec_section_5_2_types(chunker_type: str, kwargs: dict[str, int]):
+    cfg = ChunkerCfg(type=chunker_type, **kwargs)
     assert cfg.type == chunker_type
 
 
@@ -160,11 +167,40 @@ def test_chunker_rejects_unknown_type():
         ChunkerCfg(type="sliding_window", size_tokens=512, overlap_tokens=64)
 
 
+@pytest.mark.parametrize("chunker_type", ["fixed", "recursive_md"])
+def test_chunker_requires_window_params_for_fixed_types(chunker_type: str):
+    with pytest.raises(ValidationError, match="requires size_tokens and overlap_tokens"):
+        ChunkerCfg(type=chunker_type)
+
+
+def test_semantic_chunker_needs_no_window_params_and_has_documented_bounds():
+    cfg = ChunkerCfg(type="semantic")
+    assert cfg.size_tokens is None
+    assert cfg.overlap_tokens is None
+    assert cfg.min_tokens == 256
+    assert cfg.max_tokens == 512
+    assert cfg.threshold == 0.5
+
+
+def test_semantic_bounds_must_increase_when_both_given():
+    ChunkerCfg(type="semantic", min_tokens=128, max_tokens=512)
+    ChunkerCfg(type="semantic", min_tokens=512, max_tokens=None)
+    with pytest.raises(ValidationError, match="min_tokens"):
+        ChunkerCfg(type="semantic", min_tokens=512, max_tokens=256)
+    with pytest.raises(ValidationError, match="min_tokens"):
+        ChunkerCfg(type="semantic", min_tokens=256, max_tokens=256)
+
+
+@pytest.mark.parametrize("chunker_type", ["fixed", "recursive_md"])
+@pytest.mark.parametrize("threshold", [0.5, 0.7])
+def test_threshold_rejected_when_set_on_non_semantic_chunker(chunker_type: str, threshold: float):
+    with pytest.raises(ValidationError, match="threshold applies only to chunker type 'semantic'"):
+        ChunkerCfg(type=chunker_type, size_tokens=256, overlap_tokens=32, threshold=threshold)
+
+
 def test_chunker_semantic_threshold_default_is_configurable():
-    default = ChunkerCfg(type="semantic", size_tokens=512, overlap_tokens=64)
-    assert default.threshold == 0.5
-    tuned = ChunkerCfg(type="semantic", size_tokens=512, overlap_tokens=64, threshold=0.7)
-    assert tuned.threshold == 0.7
+    assert ChunkerCfg(type="semantic").threshold == 0.5
+    assert ChunkerCfg(type="semantic", threshold=0.7).threshold == 0.7
 
 
 def test_rerank_none_accepts_missing_model():
@@ -244,7 +280,8 @@ def test_config_id_unchanged_when_defaults_are_spelled_out_explicitly():
                 "type": "recursive_md",
                 "size_tokens": 512,
                 "overlap_tokens": 64,
-                "threshold": 0.5,
+                "min_tokens": 256,
+                "max_tokens": 512,
             },
             "retrieval": {"mode": "hybrid", "k_dense": 50, "k_sparse": 50, "rrf_k": 60},
             "rerank": {"type": "none", "model": None, "top_n": 50},
@@ -263,15 +300,7 @@ def test_config_id_changes_when_any_value_changes():
         _minimal_data() | {"final_k": 9},
         _minimal_data() | {"corpus": "other_docs"},
         _minimal_data() | {"chunker": {"type": "fixed", "size_tokens": 256, "overlap_tokens": 32}},
-        _minimal_data()
-        | {
-            "chunker": {
-                "type": "recursive_md",
-                "size_tokens": 512,
-                "overlap_tokens": 64,
-                "threshold": 0.9,
-            }
-        },
+        _minimal_data() | {"retrieval": {"mode": "hybrid", "k_dense": 30}},
         _minimal_data() | {"embedder": {"name": "sentence-transformers/all-MiniLM-L6-v2"}},
         _minimal_data() | {"retrieval": {"mode": "dense"}},
         _minimal_data() | {"retrieval": {"mode": "hybrid", "rrf_k": 30}},
@@ -281,3 +310,22 @@ def test_config_id_changes_when_any_value_changes():
     ids = [PipelineConfig.model_validate(variant).config_id for variant in variants]
     assert base not in ids
     assert len(set(ids)) == len(ids)
+
+
+def test_minimal_semantic_pipeline_config_validates_and_gets_config_id():
+    implicit = PipelineConfig.model_validate(_minimal_data() | {"chunker": {"type": "semantic"}})
+    explicit = PipelineConfig.model_validate(
+        _minimal_data() | {"chunker": {"type": "semantic", "threshold": 0.5}}
+    )
+    assert implicit.chunker.threshold == 0.5
+    assert re.fullmatch(r"[0-9a-f]{12}", implicit.config_id)
+    assert implicit.config_id == explicit.config_id
+    tuned = PipelineConfig.model_validate(
+        _minimal_data() | {"chunker": {"type": "semantic", "threshold": 0.9}}
+    )
+    assert tuned.config_id != implicit.config_id
+
+
+def test_example_config_round_trips_through_model_dump():
+    cfg = _load(EXAMPLE_CONFIG_PATH)
+    assert PipelineConfig.model_validate(cfg.model_dump()).config_id == cfg.config_id
