@@ -47,7 +47,9 @@ def test_dataclass_fields_match_spec_section_4():
     expected = {
         Document: ["doc_id", "title", "text", "sections"],
         Section: ["section_id", "heading_path", "start", "end"],
-        Chunk: ["chunk_id", "doc_id", "start", "end", "text"],
+        # metadata is the sanctioned addition (Task 2.3 controller ruling 3): last field,
+        # default_factory=dict, never hashed into chunk_id.
+        Chunk: ["chunk_id", "doc_id", "start", "end", "text", "metadata"],
         Hit: ["chunk", "score", "source"],
     }
     for cls, names in expected.items():

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Protocol
 
 import numpy as np
@@ -27,11 +27,12 @@ class Section:
 
 @dataclass(frozen=True)
 class Chunk:
-    chunk_id: str  # hash of (doc_id, start, end, chunker_config)
+    chunk_id: str  # hash of (doc_id, start, end, chunker_config); metadata is never hashed
     doc_id: str
     start: int
     end: int
     text: str
+    metadata: dict[str, str] = field(default_factory=dict)  # e.g. recursive_md heading_path
 
 
 @dataclass(frozen=True)
