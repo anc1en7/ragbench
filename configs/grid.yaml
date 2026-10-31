@@ -1,0 +1,3 @@
+# Sweep grid skeleton. Stages A-E are defined in spec section 5.8
+# (RAGBENCH_AGENT_SPEC.md) and are filled in by the sweep tasks; keep this file
+# valid YAML until then. Runner: `ragbench sweep --grid configs/grid.yaml`.
