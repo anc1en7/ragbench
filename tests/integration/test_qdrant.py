@@ -99,6 +99,7 @@ def test_add_then_dense_search_returns_planted_neighbor_order(store: QdrantStore
 def test_sparse_search_finds_the_keyword_document(store: QdrantStore) -> None:
     store.reset(NAMESPACE, DIM)
     store.add(NAMESPACE, _chunks(), _vectors())
+    # sparse vectors are stored by add — this first search needs no pre-backfill step
 
     hits = store.sparse_search(NAMESPACE, "xylotomic", k=5)
     assert [hit.chunk.chunk_id for hit in hits] == ["c007"]
@@ -109,6 +110,35 @@ def test_sparse_search_finds_the_keyword_document(store: QdrantStore) -> None:
     # stopword-only / blank queries return [] rather than raising (parity ruling 8)
     assert store.sparse_search(NAMESPACE, "the and of", k=5) == []
     assert store.sparse_search(NAMESPACE, "   ", k=5) == []
+
+
+def test_sparse_search_sees_later_adds_from_another_instance(store: QdrantStore) -> None:
+    """Chunks added after another store instance has searched must still be found.
+
+    Locks the encode-at-add fix: sparse vectors are built at add time, so a later
+    add is immediately visible to every instance. The old lazy-backfill design
+    silently missed such chunks once an instance had already backfilled.
+    """
+    store.reset(NAMESPACE, DIM)
+    store.add(NAMESPACE, _chunks()[:1], _vectors()[:1])  # no "xylotomic" term
+
+    other = QdrantStore(url=DEFAULT_QDRANT_URL)
+    try:
+        assert other.sparse_search(NAMESPACE, "xylotomic", k=5) == []
+        late = [
+            Chunk(
+                chunk_id="c_late",
+                doc_id="d_late",
+                start=0,
+                end=44,
+                text="the rare xylotomic term appears only in chunk seven",
+            )
+        ]
+        store.add(NAMESPACE, late, _vectors()[7:8])
+        hits = other.sparse_search(NAMESPACE, "xylotomic", k=5)
+    finally:
+        other.close()
+    assert [hit.chunk.chunk_id for hit in hits] == ["c_late"]
 
 
 def test_add_validates_chunk_count_and_vector_dim(store: QdrantStore) -> None:

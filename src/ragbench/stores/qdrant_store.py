@@ -1,19 +1,21 @@
 """Qdrant Store backend: HNSW cosine dense search + fastembed BM25 sparse search (Task 2.6).
 
-Controller rulings (2-8): one Qdrant collection per namespace (``chunks_<sanitized>``,
-reusing pgvector's exact table-name sanitization), because HNSW needs a fixed-dim vector
-per embedder while dims differ; dense vectors are ``float32`` rows with ``Cosine``
-distance, HNSW ``m=16`` / ``ef_construct=64`` and search ``hnsw_ef=100`` (identical to
-pgvector). Sparse search uses fastembed's ``Qdrant/bm25`` encoder with Qdrant's
-``modifier="idf"`` sparse index (the Bm25 model declares ``requires_idf=True``);
-scores are backend-native — cosine similarity for dense, IDF-weighted sparse relevance
-for sparse — and ``Chunk`` metadata round-trips as ``{}``.
+Controller rulings (2-8, fix amendment): one Qdrant collection per namespace
+(``chunks_<sanitized>``, reusing pgvector's exact table-name sanitization), because
+HNSW needs a fixed-dim vector per embedder while dims differ; dense vectors are
+``float32`` rows with ``Cosine`` distance, HNSW ``m=16`` / ``ef_construct=64`` and
+search ``hnsw_ef=100`` (identical to pgvector). Sparse search uses fastembed's
+``Qdrant/bm25`` encoder with Qdrant's ``modifier="idf"`` sparse index (the Bm25 model
+declares ``requires_idf=True``); scores are backend-native — cosine similarity for
+dense, IDF-weighted sparse relevance for sparse — and ``Chunk`` metadata round-trips
+as ``{}``.
 
-Sparse vectors materialize lazily: ``add`` stores only the dense vector plus payload
-(ruling 5) and never loads the sparse model; the first ``sparse_search`` creates the
-encoder (ruling 2 — its model download lands in the repo ``.hf_cache/``) and backfills
-sparse vectors for points that lack them, because Qdrant sparse search only scores
-points with a stored sparse vector (verified against server v1.20.0).
+The sparse encoder is created lazily on the first ``add`` **or** ``sparse_search``
+(amended ruling 2): ``add`` builds each chunk's BM25 sparse vector and upserts the
+dense and sparse vectors together, because the ``Store`` protocol only has the chunk
+texts at add time and Qdrant sparse search only scores points with a stored sparse
+vector. Cost accepted and documented: dense-only workloads also pay the (cheap) BM25
+encode at add — no opt-out flag (YAGNI).
 
 ``size_bytes`` is a documented approximation (ruling 7): ``get_collection`` exposes no
 disk-size field, so it reports ``points_count * dim * 4`` (float32 dense vectors) plus
@@ -95,7 +97,6 @@ class QdrantStore:
         self._sparse_model: str = sparse_model or DEFAULT_SPARSE_MODEL
         self._client: QdrantClient | None = None
         self._encoder: SparseTextEmbedding | None = None
-        self._sparse_indexed: set[str] = set()
 
     def _connect(self) -> QdrantClient:
         if self._client is not None:
@@ -123,7 +124,9 @@ class QdrantStore:
         Dense vectors: single unnamed ``VectorParams(size=dim, distance=Cosine)`` with
         collection-level HNSW ``m=16, ef_construct=64`` (ruling 3; the top-level
         ``hnsw_config`` is what ``get_collection`` reports — verified). The sparse
-        vector config (ruling 8) uses ``modifier="idf"`` per the Qdrant/bm25 model card.
+        vector config (ruling 8) uses ``modifier="idf"`` because the Qdrant/bm25 model
+        card declares ``requires_idf: true`` and warns the model is expected to run
+        with the idf modifier — without it, sparse scores lack IDF weighting.
         """
         if dim < 1:
             raise ValueError(f"dim must be >= 1, got {dim}")
@@ -139,15 +142,18 @@ class QdrantStore:
                 _SPARSE_VECTOR_NAME: models.SparseVectorParams(modifier=models.Modifier.IDF)
             },
         )
-        self._sparse_indexed.discard(name)
 
     def add(self, namespace: str, chunks: Sequence[Chunk], vectors: np.ndarray) -> None:
-        """Bulk-upsert chunks with float32 dense vectors (validates count and dim).
+        """Bulk-upsert chunks with float32 dense vectors and their BM25 sparse vectors.
 
         Point id is the first 8 bytes of ``sha256(chunk_id)`` as an unsigned int,
         collision-checked within the batch (ruling 5). Payload is exactly
-        ``{chunk_id, doc_id, start, end, text, namespace}``; no sparse vector is
-        stored here — it is backfilled on the first ``sparse_search`` (ruling 2).
+        ``{chunk_id, doc_id, start, end, text, namespace}``. Texts are encoded with the
+        lazily created sparse encoder (amended ruling 2) and stored as the named
+        ``"sparse"`` vector next to the dense row in one upsert; chunks whose text
+        encodes to zero terms (stopwords/out-of-vocabulary) are stored dense-only —
+        they cannot match any sparse query anyway. Cost accepted: dense-only workloads
+        also pay the cheap BM25 encode here (no opt-out flag — YAGNI).
         """
         name = _collection_name(namespace)
         client = self._connect()
@@ -173,9 +179,12 @@ class QdrantStore:
         if not chunks:
             return
         rows = np.asarray(vectors, dtype=np.float32)
+        encoder = self._sparse_encoder()
         seen: dict[int, str] = {}
         points: list[models.PointStruct] = []
-        for chunk, row in zip(chunks, rows, strict=True):
+        for chunk, row, embedding in zip(
+            chunks, rows, encoder.embed([chunk.text for chunk in chunks]), strict=True
+        ):
             point_id = _point_id(chunk.chunk_id)
             if point_id in seen:
                 raise ValueError(
@@ -183,10 +192,20 @@ class QdrantStore:
                     f"{seen[point_id]!r} and {chunk.chunk_id!r}"
                 )
             seen[point_id] = chunk.chunk_id
+            if len(embedding.indices) == 0:
+                vector: list[float] | dict[str, Any] = row.tolist()
+            else:
+                vector = {
+                    _DENSE_VECTOR_KEY: row.tolist(),
+                    _SPARSE_VECTOR_NAME: models.SparseVector(
+                        indices=[int(index) for index in embedding.indices],
+                        values=[float(value) for value in embedding.values],
+                    ),
+                }
             points.append(
                 models.PointStruct(
                     id=point_id,
-                    vector=row.tolist(),
+                    vector=vector,
                     payload={
                         "chunk_id": chunk.chunk_id,
                         "doc_id": chunk.doc_id,
@@ -198,8 +217,6 @@ class QdrantStore:
                 )
             )
         client.upsert(collection_name=name, points=points, wait=True)
-        # fresh points lack sparse vectors; the next sparse_search backfills them
-        self._sparse_indexed.discard(name)
 
     def dense_search(self, namespace: str, qvec: np.ndarray, k: int) -> list[Hit]:
         """Top-k cosine neighbors: score is Qdrant's cosine similarity, descending.
@@ -225,9 +242,11 @@ class QdrantStore:
     def sparse_search(self, namespace: str, query: str, k: int) -> list[Hit]:
         """Top-k BM25 sparse matches (fastembed ``Qdrant/bm25`` + Qdrant IDF scoring).
 
-        The encoder is created lazily on the first call (ruling 2 — one-time model
+        The encoder is created lazily on the first call — i.e. on the first ``add`` or
+        ``sparse_search``, whichever comes first (amended ruling 2 — one-time model
         download into ``.hf_cache/``); the query is encoded with it and searched as a
-        Qdrant sparse vector (ruling 8). Blank queries and queries whose terms are all
+        Qdrant sparse vector (ruling 8). Document sparse vectors were already stored
+        by ``add``. Blank queries and queries whose terms are all
         stopwords/out-of-vocabulary yield ``[]`` (parity, never an error). Absent
         namespaces return ``[]`` before any model is loaded.
         """
@@ -241,7 +260,6 @@ class QdrantStore:
         embedding = next(iter(encoder.embed([query])))
         if len(embedding.indices) == 0:
             return []
-        self._ensure_sparse_vectors(client, name, encoder)
         response = client.query_points(
             collection_name=name,
             query=models.SparseVector(
@@ -295,7 +313,7 @@ class QdrantStore:
         return total
 
     def _sparse_encoder(self) -> SparseTextEmbedding:
-        """Lazily create the fastembed sparse encoder (first ``sparse_search`` call)."""
+        """Lazily create the fastembed sparse encoder (first ``add``/``sparse_search``)."""
         if self._encoder is None:
             # Deferred import: neither fastembed nor its ONNX runtime loads until a
             # sparse search actually needs the model (ruling 2).
@@ -306,70 +324,3 @@ class QdrantStore:
             cache_dir = os.environ.get("FASTEMBED_CACHE_PATH") or str(hf_cache_root())
             self._encoder = SparseTextEmbedding(self._sparse_model, cache_dir=cache_dir)
         return self._encoder
-
-    def _ensure_sparse_vectors(
-        self,
-        client: QdrantClient,
-        collection: str,
-        encoder: SparseTextEmbedding,
-    ) -> None:
-        """Backfill sparse vectors for points that lack them (see module docstring).
-
-        Runs once per collection until the next ``add``/``reset`` (which drops the
-        flag), so repeated queries cost only the flag check; points whose text encodes
-        to zero terms stay dense-only (they must not match any sparse query anyway).
-        """
-        if collection in self._sparse_indexed:
-            return
-        dense_rows: list[Any] = []
-        payloads: list[dict[str, Any]] = []
-        texts: list[str] = []
-        offset: int | str | uuid.UUID | None = None
-        while True:
-            batch, offset = client.scroll(
-                collection_name=collection,
-                limit=256,
-                offset=offset,
-                with_payload=True,
-                with_vectors=True,
-            )
-            for record in batch:
-                vector = record.vector
-                if isinstance(vector, dict):
-                    if _SPARSE_VECTOR_NAME in vector:
-                        continue
-                    dense_row = vector.get(_DENSE_VECTOR_KEY)
-                else:
-                    dense_row = vector
-                payload = record.payload or {}
-                text = payload.get("text")
-                if dense_row is None or not isinstance(text, str):
-                    continue
-                dense_rows.append((record.id, dense_row))
-                payloads.append(dict(payload))
-                texts.append(text)
-            if offset is None:
-                break
-        if dense_rows:
-            points: list[models.PointStruct] = []
-            for (point_id, dense_row), payload, _text, embedding in zip(
-                dense_rows, payloads, texts, encoder.embed(texts), strict=True
-            ):
-                if len(embedding.indices) == 0:
-                    continue  # no indexable terms — stays dense-only, matches nothing
-                points.append(
-                    models.PointStruct(
-                        id=point_id,
-                        vector={
-                            _DENSE_VECTOR_KEY: [float(value) for value in dense_row],
-                            _SPARSE_VECTOR_NAME: models.SparseVector(
-                                indices=[int(index) for index in embedding.indices],
-                                values=[float(value) for value in embedding.values],
-                            ),
-                        },
-                        payload=payload,
-                    )
-                )
-            if points:
-                client.upsert(collection_name=collection, points=points, wait=True)
-        self._sparse_indexed.add(collection)
