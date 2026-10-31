@@ -1,7 +1,7 @@
 # Keep uv downloads on the project drive (C: is space-constrained).
 export UV_CACHE_DIR := $(CURDIR)/.uv_cache
 
-.PHONY: setup lint test up down ingest goldset goldset-review sweep report reproduce dashboard update-baseline
+.PHONY: setup lint test test-integration up down ingest goldset goldset-review sweep report reproduce dashboard update-baseline
 
 setup:
 	uv sync --all-extras
@@ -14,6 +14,9 @@ lint:
 
 test:
 	uv run pytest tests/unit -q
+
+test-integration:
+	uv run pytest tests/integration -m integration -q
 
 up:
 	docker compose up -d --wait

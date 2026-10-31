@@ -67,7 +67,8 @@
 
 ## Retrieval index parameters
 
-- HNSW parameters, equalized across pgvector and Qdrant: (Phase 2)
+- HNSW parameters, equalized across pgvector and Qdrant: `m=16`, `ef_construction=64`,
+  query-time `hnsw.ef_search=100` (pgvector, Task 2.5; Qdrant parity Task 2.6)
 - control_bm25 rationale: separates backend effect from lexical-scorer effect (Phase 2)
 - Exact-search (brute-force) sanity check vs ANN: (Phase 3)
 
@@ -90,4 +91,6 @@
 ## Resolved versions
 
 - Python and package pins: `pyproject.toml`, `uv.lock` (recorded here at release)
+- pgvector extension: `0.8.7` in image `pgvector/pgvector:0.8.7-pg16-trixie`
+  (verified via `SELECT extversion FROM pg_extension WHERE extname='vector'`, Task 2.5)
 - Model revisions: (Phase 2)
