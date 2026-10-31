@@ -1,3 +1,6 @@
+# superpowers SDD workspace (git-ignored scratch)
+.superpowers/
+
 # secrets
 .env
 
