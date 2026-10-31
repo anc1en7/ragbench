@@ -11,6 +11,12 @@ data/goldset/**
 # large result artifacts (summary.csv and per-run json ARE committed)
 results/*.parquet
 
+# uv package cache (kept on project drive per space constraints)
+.uv_cache/
+
+# tiktoken BPE cache (kept on project drive per space constraints)
+.tiktoken_cache/
+
 # python
 __pycache__/
 *.py[cod]

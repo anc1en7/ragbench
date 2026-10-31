@@ -1,3 +1,6 @@
+# Keep uv downloads on the project drive (C: is space-constrained).
+export UV_CACHE_DIR := $(CURDIR)/.uv_cache
+
 .PHONY: setup lint test up down ingest goldset goldset-review sweep report reproduce dashboard update-baseline
 
 setup:
