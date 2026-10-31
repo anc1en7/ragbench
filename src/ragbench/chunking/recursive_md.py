@@ -4,16 +4,17 @@ Split units: the parsed heading sections from Phase 1 (``doc.sections``, each ca
 ``heading_path`` and char offsets) — reusing the corpus parser rather than re-scanning, so
 code-fence-aware heading detection stays in one place — and, within a section, the
 blank-line-separated paragraphs. Chunks never split mid-paragraph and never break at a
-non-boundary. Every chunk respects ``size_tokens`` measured in cl100k tokens, with one
-documented tolerance: a single paragraph that alone exceeds the budget is emitted as one
-oversize chunk (paragraphs are indivisible). ``overlap_tokens`` is applied at paragraph
-boundaries between consecutive chunks of the same section only: the next chunk is prefixed
-with whole tail paragraphs of the previous chunk while their combined token count stays
-within the overlap budget, and its packing budget is reduced accordingly so the size
-tolerance is not violated. A section's heading line is included only in that section's
-first chunk. Only ``recursive_md`` populates ``Chunk.metadata``: ``heading_path`` from the
-section (empty string for documents without parsed sections, which are treated as a single
-unnamed section).
+non-boundary. Every budget (``size_tokens`` and ``overlap_tokens``) is measured in cl100k
+tokens over the *prospective joined slice* — the exact text that would be emitted,
+``text[start:end]``, separators between units included — never as a sum of per-unit counts.
+The one documented tolerance: a single paragraph that alone exceeds the budget is emitted
+as one oversize chunk (paragraphs are indivisible). ``overlap_tokens`` is applied at
+paragraph boundaries between consecutive chunks of the same section only: the next chunk is
+prefixed with whole tail paragraphs of the previous chunk while that overlap region fits
+the overlap budget and the receiving chunk still fits ``size_tokens``. A section's heading
+line is included only in that section's first chunk. Only ``recursive_md`` populates
+``Chunk.metadata``: ``heading_path`` from the section (empty string for documents without
+parsed sections, which are treated as a single unnamed section).
 """
 
 from __future__ import annotations
@@ -82,51 +83,52 @@ class RecursiveMarkdownChunker:
 
         group: list[Span] = []
         start: int | None = None
-        used = 0
         first = True
         index = 0
 
         def flush() -> None:
-            nonlocal group, start, used
+            nonlocal group, start
             if group and start is not None:
                 chunks.append(self._emit(doc, start, group[-1][1], heading_path))
             group = []
             start = None
-            used = 0
 
         while index < len(paragraphs):
             p_start, p_end = paragraphs[index]
-            para_tokens = count_tokens(text[p_start:p_end])
-            prefix_tokens = 0
-            if first and heading is not None:
-                prefix_tokens = count_tokens(text[heading[0] : heading[1]])
 
-            if group and used + para_tokens > self._size:
-                previous, first = group, False
-                flush()
-                overlap_budget = min(self._overlap, self._size - para_tokens)
-                overlap_start = _overlap_prefix(text, previous, overlap_budget)
-                if overlap_start is not None:
-                    for span_start, span_end in previous:
-                        if span_start >= overlap_start:
-                            group.append((span_start, span_end))
-                            used += count_tokens(text[span_start:span_end])
-                    start = overlap_start
-                continue
+            if group:
+                assert start is not None
+                if count_tokens(text[start:p_end]) > self._size:
+                    previous = group
+                    first = False
+                    flush()
+                    overlap_start = _overlap_prefix(
+                        text, previous, p_end, self._overlap, self._size
+                    )
+                    if overlap_start is not None:
+                        for span_start, span_end in previous:
+                            if span_start >= overlap_start:
+                                group.append((span_start, span_end))
+                        start = overlap_start
+                    continue
 
-            too_big = prefix_tokens + para_tokens > self._size
-            if not group and first and heading is not None and too_big:
+            if (
+                not group
+                and first
+                and heading is not None
+                and count_tokens(text[heading[0] : p_end]) > self._size
+            ):
                 chunks.append(self._emit(doc, heading[0], heading[1], heading_path))
                 first = False
                 continue
 
             if not group:
-                start = heading[0] if (first and heading is not None) else p_start
-                used += prefix_tokens
-                if prefix_tokens:
+                if first and heading is not None:
+                    start = heading[0]
                     first = False
+                else:
+                    start = p_start
             group.append((p_start, p_end))
-            used += para_tokens
             index += 1
 
         flush()
@@ -175,16 +177,23 @@ def _paragraphs(text: str, start: int, end: int) -> list[Span]:
     return spans
 
 
-def _overlap_prefix(text: str, previous: list[Span], budget: int) -> int | None:
-    """Start offset of a whole-paragraph tail of ``previous`` within ``budget`` tokens."""
-    if budget <= 0:
+def _overlap_prefix(
+    text: str, previous: list[Span], next_end: int, overlap_tokens: int, size_tokens: int
+) -> int | None:
+    """Earliest paragraph start of ``previous`` whose joined slices fit both budgets.
+
+    Measured over emitted text: the overlap region ``text[start : previous end]`` must fit
+    ``overlap_tokens`` and the receiving chunk ``text[start : next_end]`` must fit
+    ``size_tokens``, so separators between paragraphs are never omitted from the count.
+    """
+    if overlap_tokens <= 0:
         return None
-    total = 0
-    start: int | None = None
-    for span_start, span_end in reversed(previous):
-        tokens = count_tokens(text[span_start:span_end])
-        if total + tokens > budget:
+    previous_end = previous[-1][1]
+    best: int | None = None
+    for span_start, _span_end in reversed(previous):
+        if count_tokens(text[span_start:previous_end]) > overlap_tokens:
             break
-        total += tokens
-        start = span_start
-    return start
+        if count_tokens(text[span_start:next_end]) > size_tokens:
+            break
+        best = span_start
+    return best

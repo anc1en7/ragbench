@@ -363,6 +363,57 @@ def test_recursive_md_chunks_text_before_the_first_heading() -> None:
     assert any(c.metadata["heading_path"] == "Title" for c in chunks)
 
 
+def test_recursive_md_size_holds_when_paragraphs_pack_in_one_flush() -> None:
+    cfg = ChunkerCfg(type="recursive_md", size_tokens=16, overlap_tokens=0)
+    text = "\n\n".join(
+        [
+            "Alpha 1 talks about dogs and cats",
+            "Alpha 2 talks about dogs and cats",
+            "Alpha 3 talks about dogs and cats",
+            "Alpha 4 talks about dogs and cats",
+            "Alpha 5 talks about dogs and cats",
+            "Alpha 6 talks about dogs and cats",
+            "Beta is tiny",
+            "Beta is tiny again",
+        ]
+    )
+    doc = _make_doc(text)
+    chunks = RecursiveMarkdownChunker(cfg).chunk(doc)
+    assert chunks
+    for chunk in chunks:
+        assert _count_tokens(chunk.text) <= 16, chunk
+    assert any("\n\n" in chunk.text for chunk in chunks)
+
+
+def test_recursive_md_overlap_stays_within_budget_when_paragraphs_are_dense() -> None:
+    cfg = ChunkerCfg(type="recursive_md", size_tokens=16, overlap_tokens=6)
+    text = "\n\n".join(
+        [
+            "cats and more",
+            "birds fly far",
+            "dogs run fast",
+            "cats sleep now",
+            "birds sing loud",
+            "dogs bark here",
+            "cats play out",
+            "birds glide by",
+        ]
+    )
+    doc = _make_doc(text)
+    chunks = RecursiveMarkdownChunker(cfg).chunk(doc)
+    assert len(chunks) >= 2
+    overlapped = 0
+    for prev, cur in zip(chunks, chunks[1:], strict=False):
+        if cur.start >= prev.end:
+            continue
+        overlapped += 1
+        overlap_text = doc.text[cur.start : prev.end]
+        assert _count_tokens(overlap_text) <= 6, overlap_text
+    assert overlapped >= 1
+    for chunk in chunks:
+        assert _count_tokens(chunk.text) <= 16, chunk
+
+
 # ------------------------------------------------------------------------- semantic
 
 
