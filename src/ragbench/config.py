@@ -10,9 +10,11 @@ from __future__ import annotations
 
 import hashlib
 import json
+from pathlib import Path
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, model_validator
+import yaml
+from pydantic import BaseModel, ConfigDict, ValidationError, model_validator
 
 _DEFAULT_SEMANTIC_THRESHOLD: float = 0.5
 
@@ -164,3 +166,21 @@ class PipelineConfig(BaseModel):
         """
         canonical = json.dumps(self.model_dump(mode="json"), sort_keys=True, separators=(",", ":"))
         return hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:12]
+
+
+def load_pipeline_config(path: str | Path) -> PipelineConfig:
+    """Load and validate a pipeline YAML file into a :class:`PipelineConfig`.
+
+    ``yaml.safe_load`` + ``PipelineConfig.model_validate`` (Task 2.2 flagged this
+    helper's absence). A missing file raises :class:`FileNotFoundError` and invalid
+    YAML or schema violations raise :class:`ValueError` — both messages name the file.
+    """
+    config_path = Path(path)
+    if not config_path.exists():
+        raise FileNotFoundError(f"pipeline config not found: {config_path}")
+    text = config_path.read_text(encoding="utf-8")
+    try:
+        data = yaml.safe_load(text)
+        return PipelineConfig.model_validate(data)
+    except (yaml.YAMLError, ValidationError) as exc:
+        raise ValueError(f"invalid pipeline config {config_path}: {exc}") from exc

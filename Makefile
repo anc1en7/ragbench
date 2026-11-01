@@ -1,7 +1,7 @@
 # Keep uv downloads on the project drive (C: is space-constrained).
 export UV_CACHE_DIR := $(CURDIR)/.uv_cache
 
-.PHONY: setup lint test test-integration up down ingest goldset goldset-review sweep report reproduce dashboard update-baseline
+.PHONY: setup lint test test-integration up down ingest index goldset goldset-review sweep report reproduce dashboard update-baseline
 
 setup:
 	uv sync --all-extras
@@ -26,6 +26,9 @@ down:
 
 ingest:
 	uv run ragbench corpus ingest
+
+index:
+	uv run ragbench index --config configs/pipeline.example.yaml
 
 goldset:
 	uv run ragbench goldset generate

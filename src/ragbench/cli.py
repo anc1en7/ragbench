@@ -221,6 +221,87 @@ def llm_probe_cmd(
     )
 
 
+@app.command("query")
+def query_cmd(
+    question: str = typer.Argument(..., help="Question to retrieve ranked chunks for"),
+    config: Path = typer.Option(..., "--config", "-c", help="Pipeline YAML config"),
+) -> None:
+    """Retrieve ranked chunks for a question and print hits with stage timings."""
+    from rich.console import Console
+    from rich.table import Table
+
+    from ragbench.config import load_pipeline_config
+    from ragbench.pipeline import build_pipeline
+
+    try:
+        cfg = load_pipeline_config(config)
+        pipeline = build_pipeline(cfg)
+        hits, timings = pipeline.retrieve(question)
+    except (FileNotFoundError, ValueError, RuntimeError) as exc:
+        typer.secho(str(exc), fg="red", err=True)
+        raise typer.Exit(code=1) from exc
+
+    console = Console()
+    table = Table()
+    table.add_column("#", justify="right")
+    table.add_column("score", justify="right")
+    table.add_column("source")
+    table.add_column("doc_id")
+    table.add_column("chunk_id")
+    table.add_column("text")
+    for row, hit in enumerate(hits, start=1):
+        text = " ".join(hit.chunk.text.split())
+        table.add_row(
+            str(row),
+            f"{hit.score:.6f}",
+            hit.source,
+            hit.chunk.doc_id,
+            hit.chunk.chunk_id[:8],
+            text[:80] + ("..." if len(text) > 80 else ""),
+        )
+    console.print(table)
+    if not hits:
+        typer.echo(f"no chunks retrieved — run `ragbench index --config {config}` first")
+
+    timings_table = Table(title="timings")
+    timings_table.add_column("stage")
+    timings_table.add_column("ms", justify="right")
+    for stage in ("embed_query", "dense", "sparse", "fusion", "rerank", "total"):
+        timings_table.add_row(stage, f"{timings[stage]:.3f}")
+    console.print(timings_table)
+
+
+@app.command("index")
+def index_cmd(
+    config: Path = typer.Option(..., "--config", "-c", help="Pipeline YAML config"),
+    documents: Path = typer.Option(
+        Path("data/documents.jsonl"), "--documents", help="Corpus JSONL to index"
+    ),
+    limit: int | None = typer.Option(
+        None, "--limit", help="Index only the first N documents (quick runs)"
+    ),
+) -> None:
+    """Chunk, embed and store the corpus for a pipeline config."""
+    from ragbench.config import load_pipeline_config
+    from ragbench.goldset.generate import load_documents
+    from ragbench.pipeline import build_pipeline, index_documents
+
+    try:
+        cfg = load_pipeline_config(config)
+        docs = load_documents(documents)
+        if limit is not None:
+            docs = docs[:limit]
+        stats = index_documents(docs, build_pipeline(cfg))
+    except (FileNotFoundError, ValueError, RuntimeError) as exc:
+        typer.secho(str(exc), fg="red", err=True)
+        raise typer.Exit(code=1) from exc
+    typer.echo(
+        f"config_id={cfg.config_id} backend={cfg.backend} docs={stats['docs']} "
+        f"chunks={stats['chunks']} embed_seconds={stats['embed_seconds']:.3f} "
+        f"index_seconds={stats['index_seconds']:.3f}"
+    )
+
+
 def main() -> None:
     app()
 
