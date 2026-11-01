@@ -10,6 +10,10 @@ data/**
 data/goldset/**
 !data/goldset/verified.jsonl
 !data/goldset/splits.json
+!data/fixtures/
+!data/fixtures/mini/
+!data/fixtures/mini/documents.jsonl
+!data/fixtures/mini/questions.jsonl
 
 # large result artifacts (summary.csv and per-run json ARE committed)
 results/*.parquet
