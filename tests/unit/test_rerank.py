@@ -168,19 +168,25 @@ def test_cross_encoder_returns_new_hits_without_mutating_inputs():
 def test_cross_encoder_non_positive_k_returns_empty_without_predict_or_load(
     monkeypatch: pytest.MonkeyPatch,
 ):
+    # model=None exercises the LAZY path: any load attempt hits _boom and fails.
     monkeypatch.setattr(cross_encoder_module, "_load_cross_encoder", _boom)
-    stub = _StubModel([])
-    reranker = CrossEncoderReranker(model=stub)
     hits = [_hit("a", 0.1, "fused")]
-    assert reranker.rerank("query", hits, k=0) == []
-    assert reranker.rerank("query", hits, k=-3) == []
+    assert CrossEncoderReranker().rerank("query", hits, k=0) == []
+    assert CrossEncoderReranker().rerank("query", hits, k=-3) == []
+    # Stub seam pins the no-predict half (predict would be recorded if called).
+    stub = _StubModel([])
+    assert CrossEncoderReranker(model=stub).rerank("query", hits, k=0) == []
+    assert CrossEncoderReranker(model=stub).rerank("query", hits, k=-3) == []
     assert stub.predict_calls == []
 
 
 def test_cross_encoder_empty_hits_return_empty_without_predict_or_load(
     monkeypatch: pytest.MonkeyPatch,
 ):
+    # model=None exercises the LAZY path: any load attempt hits _boom and fails.
     monkeypatch.setattr(cross_encoder_module, "_load_cross_encoder", _boom)
+    assert CrossEncoderReranker().rerank("query", [], k=5) == []
+    # Stub seam pins the no-predict half (predict would be recorded if called).
     stub = _StubModel([])
     assert CrossEncoderReranker(model=stub).rerank("query", [], k=5) == []
     assert stub.predict_calls == []
