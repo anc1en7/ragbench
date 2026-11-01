@@ -2,7 +2,7 @@
 
 A config-driven platform for benchmarking Retrieval-Augmented Generation (RAG) pipelines on a fixed, pinned corpus with a **human-verified gold question set**. It compares chunking strategies, embedding models, retrieval modes (dense, BM25, hybrid-RRF), rerankers, and two vector backends (pgvector and Qdrant), and reports retrieval quality, generation quality, latency and cost with confidence intervals.
 
-> **Status: under construction (Phase 1 of 6).** The corpus pipeline and gold-set tooling are built and tested. The retrieval/eval/sweep/dashboard phases are not started. Every number below is generated from files in `results/`; where a stage has not run, it says so rather than guessing.
+> **Status: under construction (Phase 2 of 6 complete).** Corpus, gold set, and all pipeline components are built and tested — chunkers, embedders, pgvector + Qdrant stores, RRF fusion, cross-encoder reranker, and the `ragbench query` CLI. The eval/sweep/dashboard phases are not started. Every number below is generated from files in `results/`; where a stage has not run, it says so rather than guessing.
 
 ## Why this exists
 
@@ -53,6 +53,10 @@ make ingest
 
 # 5. Start the vector backends (pgvector + Qdrant)
 make up
+
+# 6. Index the corpus with a pipeline config and run a query
+make index
+ragbench query --config configs/pipeline.example.yaml "How do I declare a query parameter?"
 ```
 
 ### LLM endpoint
@@ -86,6 +90,22 @@ Thresholds and per-stage drop counts are written to `data/goldset/generate_stats
 
 `ragbench goldset review` is a terminal tool (`a`ccept / `e`dit / `r`eject / `f`lag / `q`uit) that writes verified questions to `verified.jsonl`. Accepted questions are split into **dev (30%)** and **test (70%)**, stratified by question type and seeded.
 
+## Pipeline
+
+`ragbench index --config <yaml>` chunks all documents, embeds them, and stores them in the configured backend. `ragbench query --config <yaml> "<question>"` runs the full retrieval pipeline and prints ranked hits with per-stage timings.
+
+Pipeline config controls:
+
+| Field | Options |
+|---|---|
+| `chunker.type` | `fixed`, `recursive_md`, `semantic` |
+| `embedder.name` | any sentence-transformers model (e.g. `BAAI/bge-small-en-v1.5`) |
+| `backend` | `pgvector`, `qdrant` |
+| `retrieval.mode` | `dense`, `sparse`, `hybrid` (RRF, k=60); `control_bm25` is a backend-agnostic in-process BM25 |
+| `rerank.type` | `none`, `cross_encoder` (BAAI/bge-reranker-base) |
+
+See [`configs/pipeline.example.yaml`](configs/pipeline.example.yaml) for the full schema.
+
 ## Commands
 
 | Command | What it does |
@@ -93,17 +113,19 @@ Thresholds and per-stage drop counts are written to `data/goldset/generate_stats
 | `make setup` | Install deps and pre-commit hooks |
 | `make lint` | Ruff check + format check + mypy |
 | `make test` | Unit tests |
+| `make test-integration` | Integration tests (needs `make up`) |
 | `make ingest` | Fetch pinned corpus, build `documents.jsonl` |
 | `make goldset` | Generate filtered gold-set candidates |
 | `make goldset-review` | Interactively review candidates |
 | `make up` / `make down` | Start/stop pgvector + Qdrant |
+| `make index` | Index corpus with `configs/pipeline.example.yaml` |
 | `make sweep` | Run the config sweep |
 | `make report` | Generate the results report |
 | `make reproduce` | Rerun the full pipeline end-to-end |
 
 ## Results
 
-> **Phase 1 complete.** Retrieval/eval/sweep results are not yet run — this section will grow as phases land. Gold-set numbers below are generated from `data/goldset/`.
+> **Phase 2 complete.** Retrieval/eval/sweep results are not yet run — this section will grow as phases land. Gold-set numbers below are generated from `data/goldset/`.
 
 ### Gold set (Phase 1)
 
@@ -143,11 +165,20 @@ ragbench/
 ├── src/ragbench/
 │   ├── corpus/              # fetch, clean, section parsing
 │   ├── goldset/             # generate, filters, review, split
-│   ├── chunking/            # fixed, recursive_md, semantic
-│   ├── embedding/           # embedders with disk cache
-│   ├── stores/              # pgvector, qdrant
-│   └── eval/                # harness, metrics
-├── data/                    # gitignored: raw corpus, documents, gold set
+│   ├── chunking/            # fixed, recursive_md, semantic chunkers
+│   ├── embedding/           # sentence-transformers embedders with disk cache
+│   ├── stores/              # pgvector_store, qdrant_store, control_bm25
+│   ├── retrieval/           # dense, sparse, hybrid-RRF pipeline
+│   ├── rerank/              # none, cross_encoder rerankers
+│   ├── pipeline.py          # index_documents + retrieve assembly
+│   ├── cli.py               # ragbench CLI (query, index, …)
+│   └── eval/                # harness, metrics (Phase 3)
+├── data/
+│   ├── fixtures/mini/       # 30-doc / 40-question CI fixture
+│   └── goldset/             # verified.jsonl, splits.json (committed)
+├── tests/
+│   ├── unit/                # 245 tests, no docker required
+│   └── integration/         # pgvector + qdrant service containers
 ├── results/                 # hardware.json, sweep outputs
 └── docs/                    # spec, methodology, limitations, open questions
 ```
