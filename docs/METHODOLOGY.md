@@ -133,8 +133,10 @@
   `context_k` (5) chunks, temperature 0, generator `LLM_MODEL`.
 - Judging: `ragas==0.4.3` collections metrics (faithfulness, answer relevancy with
   strictness 3 and local `BAAI/bge-small-en-v1.5` query embeddings, reference-based context
-  precision, context recall). Judge temperature 0, `seed=42` sent (providers may ignore
-  it), instructor JSON mode. Run on a fixed seeded subset of 100 test questions per
+  precision, context recall). Judge temperature 0 and `top_p=1.0` (ragas defaults to 0.1,
+  which Mistral models behind the `rag` combo reject under greedy sampling). No `seed` is
+  sent because some routed providers reject it as an unknown parameter. Instructor JSON
+  mode. Per-metric judge error counts are logged after each finalist. Run on a fixed seeded subset of 100 test questions per
   finalist. Failed or NaN judge outputs are stored as missing and excluded per metric;
   `n_valid` is reported. Every generation block records the generator and judge models,
   prompt version, ragas version and embedder.

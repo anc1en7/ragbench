@@ -35,7 +35,7 @@ Format: status, decision, reason, date.
 | P4-5 | `generation.enabled` in sweep configs | Stays `false` (retrieval sweep); RAGAS on finalists still uses each config's `context_k`/`temperature` | Flipping it would change every `config_id` and orphan the retrieval runs |
 | P4-6 | Stage parents | A child stage expands the parent stage's `top_n` configs; the child's own `top_n` controls what it passes on | Makes `estimate` exact and keeps the grid readable |
 | P4-7 | First (CPU) sweep attempt | The 12 CPU-measured runs and the CPU-computed embedding cache were set aside (not committed) and everything was re-run on the GPU, including the Phase 3 baseline (`3384ade0ba3e`) | Latency is only comparable when measured on one device |
-| P4-8 | RAGAS run deferred | Finalist test runs, leaderboard and findings draft are done; the RAGAS generation run (5 finalists x 100 test questions) and `docs/judge_spotcheck.md` are deferred | Human decision 2026-11-02. Resume with `UV_NO_SYNC=1 .venv/Scripts/ragbench.exe finalize --grid configs/grid.yaml` (reuses all retrieval runs) |
+| P4-8 | RAGAS run in progress | 1 of 5 finalists judged (`4443d42bc98a`: 100/100 valid on all four metrics, 0 judge errors); the other 4 finalists and `docs/judge_spotcheck.md` remain. The first attempt was stopped because the judge sent `seed` (rejected by some routed providers) and ragas' default `top_p=0.1` (rejected by Mistral at temperature 0); both were fixed before this run | Paused by the human 2026-11-02. Resume with `UV_NO_SYNC=1 .venv/Scripts/ragbench.exe finalize --grid configs/grid.yaml` (reuses all retrieval runs and finalist 1's RAGAS) |
 
 ## Pending human actions
 
