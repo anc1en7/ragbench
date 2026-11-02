@@ -6,8 +6,9 @@ at ``<root>/{sha}.npy`` where ``<root>`` defaults to repo-root ``.hf_cache/embed
 (``$HF_HOME/embeddings`` when ``HF_HOME`` is set — same project-drive rule as model
 downloads). The stored vector is the embedding of the PREFIXED text, while the key uses
 the raw input text you were given (ruling 4): a cache hit therefore skips prefixing and
-model compute entirely. Because the prefix is not part of the key, the same raw text
-embedded once as a query and once as a document shares one entry (first writer wins).
+model compute entirely. Only DOCUMENT embeddings go through this cache: queries are always
+computed live (``SentenceTransformerEmbedder.embed_query``), so query/document roles never
+share an entry and query latency measures real inference.
 """
 
 from __future__ import annotations

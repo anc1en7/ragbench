@@ -183,3 +183,31 @@ def test_embedder_construction_is_offline_and_lazy() -> None:
 def test_embedder_keeps_requested_revision_before_resolution() -> None:
     embedder = SentenceTransformerEmbedder(MODEL, revision="requested-sha")
     assert embedder.model_revision == "requested-sha"
+
+
+class _CountingModel:
+    """Stand-in SentenceTransformer: records every encode batch."""
+
+    def __init__(self) -> None:
+        self.batches: list[list[str]] = []
+
+    def encode(self, batch: list[str], normalize_embeddings: bool = True) -> np.ndarray:
+        self.batches.append(list(batch))
+        return np.ones((len(batch), 4), dtype=np.float32) / 2.0
+
+
+def test_embed_query_bypasses_disk_cache(tmp_path: Path) -> None:
+    # Query latency must measure model inference, never a disk read (Phase 3 fix): every
+    # embed_query call reaches the model with the query prefix, and nothing is written.
+    embedder = SentenceTransformerEmbedder("BAAI/bge-small-en-v1.5", cache_dir=tmp_path)
+    model = _CountingModel()
+    embedder._model = model  # type: ignore[assignment]
+    embedder._dim = 4
+
+    first = embedder.embed_query("how do I declare a query parameter?")
+    embedder.embed_query("how do I declare a query parameter?")
+
+    prefixed = query_prefix("BAAI/bge-small-en-v1.5") + "how do I declare a query parameter?"
+    assert model.batches == [[prefixed], [prefixed]]
+    assert first.shape == (4,) and first.dtype == np.float32
+    assert not (tmp_path / "embeddings").exists() or not any((tmp_path / "embeddings").iterdir())

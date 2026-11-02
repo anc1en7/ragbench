@@ -3,8 +3,9 @@
 Implements the :class:`~ragbench.types.Embedder` protocol. The model loads on the first
 embed call (never at construction), downloads land in ``$HF_HOME`` or repo-root
 ``.hf_cache`` (``cache_dir`` overrides both model and vector-cache locations), and
-vectors are cached per ``(model_name, model_revision, sha256(raw_text))`` — prefixes are
-applied only inside the model call, so cache hits skip prefixing and compute.
+DOCUMENT vectors are cached per ``(model_name, model_revision, sha256(raw_text))`` — prefixes
+are applied only inside the model call, so cache hits skip prefixing and compute. Query
+vectors are never cached (see ``embed_query``).
 
 Contract (ruling 3): ``embed_documents`` returns ``(len(texts), dim)`` and
 ``embed_query`` returns ``(dim,)``, both ``float32`` and L2-normalized
@@ -77,16 +78,15 @@ class SentenceTransformerEmbedder:
         )
 
     def embed_query(self, text: str) -> np.ndarray:
-        """``(dim,)`` float32 L2-normalized query embedding."""
+        """``(dim,)`` float32 L2-normalized query embedding, always computed by the model.
+
+        Queries bypass the disk cache (Phase 3 fix): query latency must measure model
+        inference as a live request would see it, not an ``np.load`` of a vector cached
+        on an earlier pass. This also means query and document roles never share a cache
+        entry.
+        """
         model = self._ensure_loaded()
-        vectors = encode_with_cache(
-            [text],
-            cache=self._cache,
-            model_name=self.name,
-            model_revision=self.model_revision,
-            prefix=query_prefix(self.name),
-            compute=lambda batch: model.encode(batch, normalize_embeddings=True),
-        )
+        vectors = model.encode([query_prefix(self.name) + text], normalize_embeddings=True)
         return np.asarray(vectors[0], dtype=np.float32)
 
     def _ensure_loaded(self) -> SentenceTransformer:
