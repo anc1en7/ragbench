@@ -7,11 +7,12 @@ license = "MIT"
 authors = [
     { name = "Harshit Sinha", email = "harshitsinha1024@gmail.com" }
 ]
-requires-python = ">=3.13"
+requires-python = ">=3.13,<3.15"
 dependencies = [
     "bm25s==0.3.16",
     "fastembed==0.9.1",
     "httpx==0.28.1",
+    "langchain-community==0.4.1",
     "numpy==2.5.4",
     "pgvector==0.5.1",
     "psutil==7.2.2",
@@ -20,7 +21,8 @@ dependencies = [
     "python-dotenv==1.2.4",
     "pyyaml==6.0.3",
     "qdrant-client==1.20.0",
-    "rich==15.0.0",
+    "ragas==0.4.3",
+    "rich==14.3.4",
     "sentence-transformers==6.2.0",
     "tiktoken==0.14.0",
     "torch==2.15.0",
