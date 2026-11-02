@@ -213,7 +213,6 @@ def test_build_ragas_scorer_constructs_real_ragas_043_metrics_offline():
     scorer = build_ragas_scorer(
         LLMSettings(base_url="http://127.0.0.1:9/v1", api_key="x", model="judge-model"),
         FakeEmbedder(),
-        seed=42,
     )
     names = {n: type(m).__name__ for n, m in scorer.metrics.items()}
     assert names == {
@@ -223,6 +222,11 @@ def test_build_ragas_scorer_constructs_real_ragas_043_metrics_offline():
         "context_recall": "ContextRecall",
     }
     assert scorer.metrics["answer_relevancy"].strictness == 3
+    # no `seed`: some providers behind the OpenAI-compatible endpoint reject unknown params
+    llm = scorer.metrics["faithfulness"].llm
+    assert "seed" not in llm.model_args
+    assert llm.model_args["temperature"] == 0.0
+    assert llm.model_args["top_p"] == 1.0  # Mistral rejects top_p != 1 at temperature 0
 
 
 def test_run_generation_eval_aggregates_with_missing_values():

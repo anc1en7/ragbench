@@ -521,7 +521,7 @@ def finalize_cmd(
     if not skip_ragas:
         settings = settings_from_env()
         ragas_embedder = SentenceTransformerEmbedder(RAGAS_EMBEDDER)
-        scorer = build_ragas_scorer(settings, ragas_embedder, seed=grid_obj.seed)  # type: ignore[arg-type]
+        scorer = build_ragas_scorer(settings, ragas_embedder)  # type: ignore[arg-type]
         dataset = resolve_dataset(grid_obj.corpus)
         documents = load_documents(dataset.documents)
         questions = load_split_questions(dataset.questions, SPLITS_PATH, "test")

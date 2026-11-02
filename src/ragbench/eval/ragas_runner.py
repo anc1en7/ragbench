@@ -15,8 +15,11 @@ The judge is reached through the same OpenAI-compatible endpoint as generation
 because ragas 0.4 drives structured output through ``instructor``, which patches that
 client; ``OpenAICompatClient`` is still the generator. The judge model is
 ``LLM_JUDGE_MODEL`` when set, else ``LLM_MODEL``. When the two are the same model,
-self-preference bias applies (docs/LIMITATIONS.md). Judge temperature is 0 and the
-OpenAI ``seed`` parameter is sent; providers may ignore it.
+self-preference bias applies (docs/LIMITATIONS.md). Judge temperature is 0. No ``seed`` is
+sent: the ``rag`` combo routes to upstream models that reject it as an unknown parameter
+(every such call failed), so determinism relies on temperature 0 only. ``top_p`` is set to
+1.0 because ragas defaults it to 0.1, which Mistral rejects with greedy (temperature 0)
+sampling; at temperature 0 ``top_p`` does not change the output.
 
 AnswerRelevancy embeds questions with the local ``BAAI/bge-small-en-v1.5`` (query side,
 via :class:`RagbenchEmbeddings`) so no embedding API is needed. Metric failures
@@ -113,6 +116,7 @@ class RagasScorer:
             raise ValueError(f"RagasScorer needs metrics {sorted(missing)}")
         self.metrics = dict(metrics)
         self.errors: dict[str, int] = dict.fromkeys(GENERATION_METRICS, 0)
+        self.last_error: dict[str, str] = {}
 
     def _kwargs(self, name: str, s: GenSample) -> dict[str, Any]:
         if name == "faithfulness":
@@ -132,8 +136,9 @@ class RagasScorer:
     async def _one(self, name: str, sample: GenSample) -> float | None:
         try:
             result = await self.metrics[name].ascore(**self._kwargs(name, sample))
-        except Exception:  # noqa: BLE001 - judge/provider failures become missing values
+        except Exception as exc:  # noqa: BLE001 - judge/provider failures become missing
             self.errors[name] += 1
+            self.last_error[name] = f"{type(exc).__name__}: {str(exc)[:300]}"
             return None
         return _clean(getattr(result, "value", result))
 
@@ -146,7 +151,7 @@ def judge_model_name(settings: LLMSettings) -> str:
     return os.environ.get(ENV_JUDGE_MODEL) or settings.model
 
 
-def build_ragas_scorer(settings: LLMSettings, embedder: Embedder, *, seed: int) -> RagasScorer:
+def build_ragas_scorer(settings: LLMSettings, embedder: Embedder) -> RagasScorer:
     """Real ragas 0.4.3 metrics against the configured OpenAI-compatible endpoint."""
     from openai import AsyncOpenAI
     from ragas.llms.base import llm_factory
@@ -162,8 +167,8 @@ def build_ragas_scorer(settings: LLMSettings, embedder: Embedder, *, seed: int) 
         judge_model_name(settings),
         client=client,
         temperature=JUDGE_TEMPERATURE,
+        top_p=1.0,  # ragas defaults to 0.1; Mistral rejects top_p != 1 with temperature 0
         max_tokens=JUDGE_MAX_TOKENS,
-        seed=seed,
     )
     embeddings = RagbenchEmbeddings(embedder)
     return RagasScorer(
@@ -249,6 +254,9 @@ def run_generation_eval(
         samples = list(pool.map(generate, retrieved))
     log(f"generated {len(samples)} answers; judging with {judge_model}")
     scores = asyncio.run(_score_all(scorer, samples, concurrency))
+    errors = getattr(scorer, "errors", None)
+    if errors is not None:
+        log(f"judge errors per metric (recorded as missing): {dict(errors)}")
 
     metrics: dict[str, MetricCI] = {}
     n_valid: dict[str, int] = {}
