@@ -50,3 +50,6 @@ models/
 # os
 Thumbs.db
 .DS_Store
+
+# sweep resume state (informational; run JSONs are the source of truth)
+results/.sweep_state.json

@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import Any
 
 import typer
 
@@ -384,6 +385,100 @@ def eval_cmd(
     console.print(f"wrote {path} and {results_dir / 'summary.csv'}")
     if update_baseline:
         console.print(f"baseline updated: {write_baseline(result, baseline)}")
+
+
+@app.command("sweep")
+def sweep_cmd(
+    grid: Path = typer.Option(Path("configs/grid.yaml"), "--grid", help="Sweep grid YAML"),
+    results_dir: Path = typer.Option(Path("results"), "--results-dir", help="Results root"),
+    estimate_only: bool = typer.Option(
+        False, "--estimate-only", help="Print the planned run counts and exit"
+    ),
+) -> None:
+    """Run the staged sweep on the dev split (resumes; reuses completed runs)."""
+    from ragbench.eval.results import run_path
+    from ragbench.sweep.runner import run_sweep
+    from ragbench.sweep.stages import estimate, expand_stage, load_grid
+
+    try:
+        grid_obj = load_grid(grid)
+    except (FileNotFoundError, ValueError) as exc:
+        typer.secho(str(exc), fg="red", err=True)
+        raise typer.Exit(code=1) from exc
+
+    plan = estimate(grid_obj)
+    stage_a = expand_stage(grid_obj, grid_obj.stages[0], None)
+    done_a = sum(run_path(results_dir, c.config_id, grid_obj.split).exists() for c in stage_a)
+    typer.echo(f"sweep plan ({grid_obj.split} split, select by {grid_obj.selection.metric}):")
+    for name, count in plan:
+        typer.echo(f"  stage {name}: {count} configs (before reuse of completed runs)")
+    typer.echo(f"  total planned: {sum(c for _, c in plan)}; stage A already complete: {done_a}")
+    typer.echo(f"  then: top {grid_obj.finalists} finalists -> test split (`ragbench finalize`)")
+    if estimate_only:
+        return
+
+    try:
+        report = run_sweep(grid_obj, results_dir, log=typer.echo)
+    except KeyboardInterrupt:
+        typer.secho(
+            f"\ninterrupted — state saved; rerun `ragbench sweep --grid {grid}` to resume",
+            fg="yellow",
+            err=True,
+        )
+        raise typer.Exit(code=130) from None
+    except (FileNotFoundError, ValueError, RuntimeError) as exc:
+        typer.secho(str(exc), fg="red", err=True)
+        raise typer.Exit(code=1) from exc
+
+    typer.echo(
+        f"sweep complete: ran={report.total_ran} reused={report.total_reused} "
+        f"elapsed={report.elapsed_seconds / 60:.1f} min"
+    )
+    typer.echo(f"finalists (dev, by {grid_obj.selection.metric}): {report.finalists}")
+
+
+@app.command("bench-embed")
+def bench_embed_cmd(
+    embedder: list[str] = typer.Option(
+        [
+            "BAAI/bge-small-en-v1.5",
+            "sentence-transformers/all-MiniLM-L6-v2",
+            "intfloat/e5-small-v2",
+        ],
+        "--embedder",
+        help="Embedder(s) to benchmark",
+    ),
+    documents: Path = typer.Option(
+        Path("data/documents.jsonl"), "--documents", help="Corpus JSONL"
+    ),
+    out: Path = typer.Option(
+        Path("results/embedder_throughput.json"), "--out", help="Throughput JSON (merged)"
+    ),
+) -> None:
+    """Cold (cache-bypassing) embedding throughput on recursive_md-512 chunks of the corpus."""
+    from ragbench.chunking import get_chunker
+    from ragbench.config import ChunkerCfg
+    from ragbench.embedding.base import document_prefix
+    from ragbench.embedding.st_embedder import SentenceTransformerEmbedder
+    from ragbench.goldset.generate import load_documents
+    from ragbench.sweep.throughput import measure_throughput, write_throughput
+
+    chunker = get_chunker(ChunkerCfg(type="recursive_md", size_tokens=512, overlap_tokens=64))
+    texts = [c.text for doc in load_documents(documents) for c in chunker.chunk(doc)]
+    entries = {}
+    for name in embedder:
+        emb = SentenceTransformerEmbedder(name)
+        model = emb._ensure_loaded()
+        prefix = document_prefix(name)
+
+        def encode(batch: list[str], m: Any = model, p: str = prefix) -> Any:
+            return m.encode([p + t for t in batch], normalize_embeddings=True)
+
+        stats = measure_throughput(encode, texts)
+        entries[name] = {**stats, "model_revision": emb.model_revision, "device": "cpu"}
+        typer.echo(f"{name}: {stats['chunks_per_sec']:.1f} chunks/s ({len(texts)} chunks)")
+    write_throughput(out, entries, "recursive_md size 512 overlap 64 over data/documents.jsonl")
+    typer.echo(f"wrote {out}")
 
 
 def main() -> None:
