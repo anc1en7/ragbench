@@ -62,23 +62,61 @@
 
 ## Relevance scoring
 
-- Span-overlap rule and minimum-fraction setting: (Phase 3)
-- nDCG first-hit-per-gold-span handling: (Phase 3)
+- Relevance is defined on gold source spans (half-open `[start, end)` char offsets into
+  the cleaned document text), never on chunks, so every chunker is scored against the
+  same labels (`src/ragbench/eval/spans.py`).
+- A chunk hits a gold span of the same document when the overlap is positive and
+  `overlap >= f * len(chunk)` **or** `overlap >= f * len(gold span)`, with
+  `f = --min-overlap-frac`, default **0.2** (recorded per run as `min_overlap_frac`).
+  The OR form follows spec section 5.6: a small chunk wholly inside a large section, or a
+  large chunk wholly containing a small span, both count.
+- First-hit crediting (used by every metric): each gold span is credited once, to the
+  first ranked chunk that hits it; a later chunk is relevant only if it hits a span not
+  yet credited. Fine-grained chunkers therefore cannot inflate nDCG by returning several
+  slices of one section. All 157 verified questions have exactly one gold span.
+- Metrics per question, averaged over the split: Recall@{1,3,5,10} (any relevant chunk
+  in the top k), MRR@10, and binary-gain nDCG@10 with an ideal DCG of
+  `min(n_gold_spans, 10)` leading hits (`src/ragbench/eval/retrieval_metrics.py`).
 
 ## Retrieval index parameters
 
 - HNSW parameters, equalized across pgvector and Qdrant: `m=16`, `ef_construction=64`,
   query-time `hnsw.ef_search=100` (pgvector, Task 2.5; Qdrant parity Task 2.6)
 - control_bm25 rationale: separates backend effect from lexical-scorer effect (Phase 2)
-- Exact-search (brute-force) sanity check vs ANN: (Phase 3)
+- Exact-search sanity check (`ann_sanity_recall` in every dense/hybrid run JSON): for up
+  to 50 seeded split questions, the store's HNSW top-`final_k` is compared with
+  brute-force cosine over every chunk vector. An ANN result counts as correct when its
+  exact cosine is at least the exact k-th best (minus 1e-6), so ties between identical
+  chunk texts are not misses. Expected >= 0.98.
 
 ## Statistics
 
-- Bootstrap settings (resamples, seed) and paired bootstrap for deltas: (Phase 3)
+- Percentile bootstrap over questions: `numpy.random.default_rng(seed)` draws an index
+  matrix `(n_resamples, n)`, each row's mean is taken, and the 2.5 / 97.5 percentiles
+  (linear interpolation) form the 95% CI. Defaults: **1000 resamples, seed 42** (the
+  config seed); both are recorded per run (`src/ragbench/eval/stats.py`).
+- Config-vs-baseline deltas use a paired bootstrap: the same procedure over
+  per-question differences on identical question sets. A difference whose paired CI
+  contains 0 is not claimed.
+- At a metric's ceiling (every question scores 1.0) the CI collapses to `[1, 1]`. That
+  shows saturation, not certainty.
 
 ## Latency and resources
 
-- Warm-up/measure protocol, stage breakdown, hardware: (Phase 3), `results/hardware.json`
+- Query latency: single request at a time, every split question in order, `--passes`
+  passes (default 3, minimum 3); pass 0 is warm-up and discarded; p50/p95 per stage
+  (`embed_query, dense, sparse, fusion, rerank, total`; stages a mode skips report 0)
+  come from the remaining passes (`src/ragbench/eval/latency.py`). Hardware:
+  `results/hardware.json` (referenced by every run).
+- Query embeddings are always computed by the model, never served from the disk cache,
+  so `embed_query` measures real inference (only document embeddings are cached).
+- Indexing: wall time, `embed_seconds`, chunks/sec (`chunks / embed_seconds`), store
+  `size_bytes` (pgvector `pg_total_relation_size`; Qdrant per Task 2.6; control_bm25 an
+  in-process approximation), and peak process RSS sampled every 50 ms with psutil.
+  **Caveat:** document embeddings are disk-cached, so `embed_seconds` and chunks/sec
+  reflect the cache state at index time (and include the lazy model load on the first
+  embed). Throughput is only comparable across configs when measured cold. See
+  OPEN_QUESTIONS.
 
 ## Generation judging
 

@@ -431,44 +431,44 @@
 
 **Files:** Create: `src/ragbench/eval/spans.py`, `tests/unit/test_spans.py`
 
-- [ ] **Step 1: Write failing tests with hand-worked examples** — hit if overlap ≥ max(20% of chunk length, 20% of gold span) (configurable `--min-overlap-frac`, default 0.2); boundary cases: zero overlap, partial, contained, multiple gold spans; a chunk overlapping 2 spans counts each span at most once (first hit only, per spec §5.7 nDCG rule).
-- [ ] **Step 2: Implement** `is_hit(chunk, gold_spans, min_frac) -> bool` and `span_hits(ranked_hits, gold_spans) -> list[bool]`.
-- [ ] **Step 3: Commit** — `feat: chunker-agnostic span-overlap relevance scoring`
+- [x] **Step 1: Write failing tests with hand-worked examples** — hit if overlap ≥ max(20% of chunk length, 20% of gold span) (configurable `--min-overlap-frac`, default 0.2); boundary cases: zero overlap, partial, contained, multiple gold spans; a chunk overlapping 2 spans counts each span at most once (first hit only, per spec §5.7 nDCG rule).
+- [x] **Step 2: Implement** `is_hit(chunk, gold_spans, min_frac) -> bool` and `span_hits(ranked_hits, gold_spans) -> list[bool]`.
+- [x] **Step 3: Commit** — `feat: chunker-agnostic span-overlap relevance scoring`
 
 ### Task 3.2: Retrieval metrics + bootstrap CIs
 
 **Files:** Create: `src/ragbench/eval/retrieval_metrics.py`, `src/ragbench/eval/stats.py`, `tests/unit/test_retrieval_metrics.py`, `tests/unit/test_stats.py`
 
-- [ ] **Step 1: Write failing tests with hand-computed examples** — 3-query fixture where Recall@{1,3,5,10}, MRR@10, nDCG@10 are computed by hand in the test; assert exact equality (float tol 1e-9).
-- [ ] **Step 2: Implement metrics** per query → aggregate mean.
-- [ ] **Step 3: Write failing CI tests** — seeded bootstrap (1000 resamples, `seed=42`) returns `(lo, hi)` with `lo <= mean <= hi`; paired bootstrap on per-question differences returns CI; deterministic across runs.
-- [ ] **Step 4: Implement `bootstrap_ci(values, n=1000, seed=42)` and `paired_bootstrap_ci(a, b, ...)`.**
-- [ ] **Step 5: Commit** — `feat: retrieval metrics with bootstrap confidence intervals`
+- [x] **Step 1: Write failing tests with hand-computed examples** — 3-query fixture where Recall@{1,3,5,10}, MRR@10, nDCG@10 are computed by hand in the test; assert exact equality (float tol 1e-9).
+- [x] **Step 2: Implement metrics** per query → aggregate mean.
+- [x] **Step 3: Write failing CI tests** — seeded bootstrap (1000 resamples, `seed=42`) returns `(lo, hi)` with `lo <= mean <= hi`; paired bootstrap on per-question differences returns CI; deterministic across runs.
+- [x] **Step 4: Implement `bootstrap_ci(values, n=1000, seed=42)` and `paired_bootstrap_ci(a, b, ...)`.**
+- [x] **Step 5: Commit** — `feat: retrieval metrics with bootstrap confidence intervals`
 
 ### Task 3.3: Latency + resource measurement
 
 **Files:** Create: `src/ragbench/eval/latency.py`, `tests/unit/test_latency.py`
 
-- [ ] **Step 1: Test** — profiler records per-stage durations, discards pass 0 (warm-up), computes p50/p95 from ≥3 passes over given query list.
-- [ ] **Step 2: Implement** — also capture index wall-time, chunks/sec throughput, `store.size_bytes`, peak RAM via `psutil` during indexing, tokens/query for generation runs (from prompt+context token counts).
-- [ ] **Step 3: Commit** — `feat: latency profiler and indexing resource metrics`
+- [x] **Step 1: Test** — profiler records per-stage durations, discards pass 0 (warm-up), computes p50/p95 from ≥3 passes over given query list.
+- [x] **Step 2: Implement** — also capture index wall-time, chunks/sec throughput, `store.size_bytes`, peak RAM via `psutil` during indexing, tokens/query for generation runs (from prompt+context token counts).
+- [x] **Step 3: Commit** — `feat: latency profiler and indexing resource metrics`
 
 ### Task 3.4: Results schema + writer
 
 **Files:** Create: `src/ragbench/eval/results.py`, `tests/unit/test_results.py`
 
-- [ ] **Step 1: Write failing test** — a constructed run result round-trips through `RunResult` pydantic model to `results/runs/{config_id}.json` and validates; includes config, `config_id`, seed, corpus SHA (from `corpus.lock`), package versions, hardware ref, split, metrics + CIs, latencies, index stats.
-- [ ] **Step 2: Implement writer + `results/summary.csv` appender** (header written once; idempotent re-run updates the row for the same `config_id` rather than duplicating).
-- [ ] **Step 3: Commit** — `feat: schema-validated run results and summary.csv writer`
+- [x] **Step 1: Write failing test** — a constructed run result round-trips through `RunResult` pydantic model to `results/runs/{config_id}.json` and validates; includes config, `config_id`, seed, corpus SHA (from `corpus.lock`), package versions, hardware ref, split, metrics + CIs, latencies, index stats.
+- [x] **Step 2: Implement writer + `results/summary.csv` appender** (header written once; idempotent re-run updates the row for the same `config_id` rather than duplicating).
+- [x] **Step 3: Commit** — `feat: schema-validated run results and summary.csv writer`
 
 ### Task 3.5: `ragbench eval` + ANN exact-search sanity check
 
 **Files:** Create: extend `src/ragbench/cli.py`, `tests/integration/test_eval_dev.py`
 
-- [ ] **Step 1: Write failing integration test** — evaluate baseline dense config (spec §5.1 example) on the **dev** split with mini fixture; assert metrics + CIs present, results file written and schema-valid.
-- [ ] **Step 2: Implement CLI** — `ragbench eval --config ... --split dev|test [--update-baseline]`.
-- [ ] **Step 3: Exact-search check** — brute-force cosine over all vectors vs HNSW result on a sample; report recall@10 agreement (should be ≥ 0.98) in the run JSON field `ann_sanity_recall`.
-- [ ] **Step 4: Checkpoint 3:** print baseline dev metrics + CIs + latency table; unit tests prove metrics against hand examples. **STOP, summary, wait for "continue".**
+- [x] **Step 1: Write failing integration test** — evaluate baseline dense config (spec §5.1 example) on the **dev** split with mini fixture; assert metrics + CIs present, results file written and schema-valid.
+- [x] **Step 2: Implement CLI** — `ragbench eval --config ... --split dev|test [--update-baseline]`.
+- [x] **Step 3: Exact-search check** — brute-force cosine over all vectors vs HNSW result on a sample; report recall@10 agreement (should be ≥ 0.98) in the run JSON field `ann_sanity_recall`.
+- [x] **Step 4: Checkpoint 3:** print baseline dev metrics + CIs + latency table; unit tests prove metrics against hand examples. **STOP, summary, wait for "continue".**
 
 ---
 
