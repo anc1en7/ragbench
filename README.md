@@ -2,7 +2,7 @@
 
 A config-driven platform for benchmarking Retrieval-Augmented Generation (RAG) pipelines on a fixed, pinned corpus with a **human-verified gold question set**. It compares chunking strategies, embedding models, retrieval modes (dense, BM25, hybrid-RRF), rerankers, and two vector backends (pgvector and Qdrant), and reports retrieval quality, generation quality, latency and cost with confidence intervals.
 
-> **Status: under construction (Phase 2 of 6 complete).** Corpus, gold set, and all pipeline components are built and tested — chunkers, embedders, pgvector + Qdrant stores, RRF fusion, cross-encoder reranker, and the `ragbench query` CLI. The eval/sweep/dashboard phases are not started. Every number below is generated from files in `results/`; where a stage has not run, it says so rather than guessing.
+> **Status: under construction (Phase 3 of 6 complete).** Corpus, gold set, all pipeline components, and the evaluation harness are built and tested: span-overlap scoring, Recall/MRR/nDCG with bootstrap CIs, per-stage latency, schema-validated run results, and the `ragbench eval` CLI. The sweep, generation-metric, API and dashboard phases have not started. Every number below is generated from files in `results/`; where a stage has not run, it says so rather than guessing.
 
 ## Why this exists
 
@@ -57,6 +57,9 @@ make up
 # 6. Index the corpus with a pipeline config and run a query
 make index
 ragbench query --config configs/pipeline.example.yaml "How do I declare a query parameter?"
+
+# 7. Evaluate a config on the dev split (indexes in-process, writes results/)
+ragbench eval --config configs/baseline_dense.yaml --split dev
 ```
 
 ### LLM endpoint
@@ -104,7 +107,20 @@ Pipeline config controls:
 | `retrieval.mode` | `dense`, `sparse`, `hybrid` (RRF, k=60); `control_bm25` is a backend-agnostic in-process BM25 |
 | `rerank.type` | `none`, `cross_encoder` (BAAI/bge-reranker-base) |
 
-See [`configs/pipeline.example.yaml`](configs/pipeline.example.yaml) for the full schema.
+See [`configs/pipeline.example.yaml`](configs/pipeline.example.yaml) for the full schema. The `corpus` field selects the dataset: `fastapi_docs` (full corpus + verified gold set) or `mini` (the 30-doc / 40-question CI fixture).
+
+## Evaluation
+
+`ragbench eval --config <yaml> --split dev|test` indexes the config's corpus, runs every split question through the pipeline, and records the run:
+
+- **Relevance:** a retrieved chunk hits a gold span of the same document when the overlap is at least 20% of the chunk **or** 20% of the gold span (`--min-overlap-frac`, default 0.2). Each gold span is credited once, to its first hit, so fine-grained chunkers cannot inflate scores.
+- **Metrics:** Recall@{1,3,5,10}, MRR@10, nDCG@10. Each is reported with a seeded 95% percentile-bootstrap CI (1000 resamples over questions). A paired bootstrap is available for config-vs-baseline deltas.
+- **Latency:** p50/p95 for each stage (`embed_query, dense, sparse, fusion, rerank, total`). Requests run warm, one at a time, over at least 3 passes, and the first pass is dropped as warm-up. Query embeddings are always computed live, never served from the cache.
+- **Indexing:** wall time, embedding throughput, index size on disk, and peak RSS.
+- **ANN sanity check:** the HNSW top-k is compared with brute-force cosine search; the agreement is recorded as `ann_sanity_recall` and expected to be ≥ 0.98.
+- **Output:** `results/runs/{config_id}__{split}.json` (full config, corpus pin, package versions, metrics + CIs, latencies, per-question ranked hits) plus one row per `(config_id, split)` in `results/summary.csv`. `--update-baseline` also writes `eval/baseline.json` for the CI regression gate.
+
+Full details are in [`docs/METHODOLOGY.md`](docs/METHODOLOGY.md).
 
 ## Commands
 
@@ -119,13 +135,14 @@ See [`configs/pipeline.example.yaml`](configs/pipeline.example.yaml) for the ful
 | `make goldset-review` | Interactively review candidates |
 | `make up` / `make down` | Start/stop pgvector + Qdrant |
 | `make index` | Index corpus with `configs/pipeline.example.yaml` |
+| `ragbench eval --config <yaml> --split dev` | Evaluate a config; write run JSON + `summary.csv` row |
 | `make sweep` | Run the config sweep |
 | `make report` | Generate the results report |
 | `make reproduce` | Rerun the full pipeline end-to-end |
 
 ## Results
 
-> **Phase 2 complete.** Retrieval/eval/sweep results are not yet run — this section will grow as phases land. Gold-set numbers below are generated from `data/goldset/`.
+> **Phase 3 complete.** One baseline config has been evaluated on the dev split. The staged sweep and test-split headline numbers have not been run yet; they land in Phase 4. Numbers below are copied from `results/runs/` and `data/goldset/`.
 
 ### Gold set (Phase 1)
 
@@ -142,6 +159,29 @@ See [`configs/pipeline.example.yaml`](configs/pipeline.example.yaml) for the ful
 Filter thresholds (recorded in `data/goldset/generate_stats.json`): heading-copy ratio 0.6, lexical overlap 0.6, dedup cosine 0.92, max code-fence ratio 0.6, min section tokens 80.
 
 Drop counts during generation: 9 generation errors, 5 answerability-judge rejections, 9 embedding duplicates. Verified-only vs all-synthetic metric separation is unnecessary — the full 157-question set is human-verified.
+
+### Baseline dense config, dev split (Phase 3)
+
+Config [`configs/baseline_dense.yaml`](configs/baseline_dense.yaml) (`config_id` `3384ade0ba3e`): recursive_md 512/64 chunks, `BAAI/bge-small-en-v1.5`, pgvector, dense retrieval, no reranker. Evaluated on 47 dev questions, all human-verified. Source: [`results/runs/3384ade0ba3e__dev.json`](results/runs/3384ade0ba3e__dev.json).
+
+| Metric | Mean | 95% CI |
+|---|---|---|
+| Recall@1 | 0.745 | [0.617, 0.872] |
+| Recall@3 | 0.957 | [0.894, 1.000] |
+| Recall@5 | 1.000 | [1.000, 1.000] |
+| Recall@10 | 1.000 | [1.000, 1.000] |
+| MRR@10 | 0.848 | [0.769, 0.922] |
+| nDCG@10 | 0.886 | [0.828, 0.942] |
+
+| Stage | p50 ms | p95 ms |
+|---|---|---|
+| embed_query | 38.3 | 63.2 |
+| dense | 5.3 | 9.1 |
+| total | 44.3 | 69.8 |
+
+Index: 156 docs, 2,354 chunks, 11.8 MiB in pgvector. ANN sanity recall@10: 1.000.
+
+Recall@5 and Recall@10 sit at the ceiling on this config, so Recall@1, MRR@10 and nDCG@10 are the metrics that separate configs (see [`docs/OPEN_QUESTIONS.md`](docs/OPEN_QUESTIONS.md)). These are dev-split numbers, used for selection only. Headline numbers will come from the test split.
 
 ## Hardware & environment
 
@@ -172,14 +212,14 @@ ragbench/
 │   ├── rerank/              # none, cross_encoder rerankers
 │   ├── pipeline.py          # index_documents + retrieve assembly
 │   ├── cli.py               # ragbench CLI (query, index, …)
-│   └── eval/                # harness, metrics (Phase 3)
+│   └── eval/                # spans, metrics, bootstrap stats, latency, results, runner
 ├── data/
 │   ├── fixtures/mini/       # 30-doc / 40-question CI fixture
 │   └── goldset/             # verified.jsonl, splits.json (committed)
 ├── tests/
-│   ├── unit/                # 245 tests, no docker required
-│   └── integration/         # pgvector + qdrant service containers
-├── results/                 # hardware.json, sweep outputs
+│   ├── unit/                # 307 tests, no docker required
+│   └── integration/         # 19 tests against pgvector + qdrant service containers
+├── results/                 # hardware.json, summary.csv, runs/*.json
 └── docs/                    # spec, methodology, limitations, open questions
 ```
 
