@@ -7,7 +7,8 @@ Every run records what is needed to reproduce it: the full config and its id, se
 corpus pin (from ``corpus.lock``), gold-set provenance, package versions, a hardware
 reference, the overlap threshold, bootstrap settings, metrics with CIs, per-stage
 latency, index stats, the ANN sanity recall, and per-question ranked hits (offsets, no
-text: chunk text is recoverable from ``documents.jsonl``) for dashboard replay.
+text: chunk text is recoverable from ``documents.jsonl``) for dashboard replay, and
+optionally a RAGAS ``generation`` block (finalists on the test split only).
 
 ``results/summary.csv`` holds one flattened row per ``(config_id, split)``: re-running a
 config replaces its row in place; the header is written once.
@@ -113,6 +114,49 @@ class GoldsetInfo(_Strict):
     provisional: bool
 
 
+GENERATION_METRICS: tuple[str, ...] = (
+    "faithfulness",
+    "answer_relevancy",
+    "context_precision",
+    "context_recall",
+)
+
+
+class TokenStats(_Strict):
+    mean: float
+    p50: float
+    p95: float
+
+
+class GenerationQuery(_Strict):
+    qid: str
+    answer: str
+    context_chunk_ids: list[str]
+    tokens: int
+    scores: dict[str, float | None]  # None = the judge failed or returned NaN
+
+
+class GenerationMetrics(_Strict):
+    """RAGAS generation metrics for one config on a fixed test-question subset (Task 4.3)."""
+
+    generator_model: str
+    judge_model: str
+    prompt_version: str
+    ragas_version: str
+    ragas_embedder: str
+    answer_relevancy_strictness: int
+    temperature: float
+    judge_temperature: float
+    context_k: int
+    subset_seed: int
+    n_questions: int
+    metrics: dict[str, MetricCI]
+    n_valid: dict[str, int]
+    tokens_per_query: TokenStats
+    per_query: list[GenerationQuery]
+    created_at: str
+
+
 class RunResult(_Strict):
     schema_version: int = SCHEMA_VERSION
     config_id: str
@@ -133,6 +177,7 @@ class RunResult(_Strict):
     ann_sanity_recall: float | None
     per_query: list[QueryResult]
     created_at: str
+    generation: GenerationMetrics | None = None
 
     @model_validator(mode="after")
     def _consistent(self) -> RunResult:
@@ -208,6 +253,8 @@ SUMMARY_COLUMNS: tuple[str, ...] = (
     "chunks",
     "size_bytes",
     "ann_sanity_recall",
+    *GENERATION_METRICS,
+    "tokens_per_query",
     "created_at",
 )
 
@@ -239,6 +286,11 @@ def summary_row(result: RunResult) -> dict[str, str]:
         "ann_sanity_recall": result.ann_sanity_recall,
         "created_at": result.created_at,
     }
+    gen = result.generation
+    for name in GENERATION_METRICS:
+        gen_metric = gen.metrics.get(name) if gen is not None else None
+        row[name] = gen_metric.mean if gen_metric is not None else None
+    row["tokens_per_query"] = gen.tokens_per_query.mean if gen is not None else None
     for name in METRIC_NAMES:
         metric = result.metrics[name]
         row[name] = metric.mean

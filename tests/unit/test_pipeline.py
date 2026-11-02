@@ -325,16 +325,44 @@ def test_namespace_passed_to_every_store_call_is_config_id() -> None:
     assert [ns for ns, _q, _k in store.sparse_calls] == [cfg.config_id]
 
 
-# --- ruling 5: generate() stub -----------------------------------------------------------
+# --- generate(): grounded answer from the top context_k hits (Phase 4) ------------------
 
 
-def test_generate_raises_not_implemented_with_phase_4_message() -> None:
-    pipeline = _pipeline(_cfg(), FakeStore())
+class _FakeChat:
+    def __init__(self) -> None:
+        self.calls: list[tuple[list[dict[str, str]], float]] = []
 
-    with pytest.raises(NotImplementedError) as exc_info:
-        pipeline.generate("what is a query parameter?", [])
+    def chat(self, messages, *, model=None, temperature=0.0, max_tokens=512):  # type: ignore[no-untyped-def]
+        self.calls.append((messages, temperature))
+        return "  Declare a function parameter.  "
 
-    assert str(exc_info.value) == "generation lands in Phase 4 (RAGAS runner)"
+
+def test_generate_uses_top_context_k_hits_and_config_temperature() -> None:
+    from ragbench.generation import PROMPT_VERSION
+
+    gen = _cfg().generation.model_copy(update={"context_k": 2, "temperature": 0.3})
+    cfg = _cfg().model_copy(update={"generation": gen})
+    chat = _FakeChat()
+    pipeline = Pipeline(
+        cfg,
+        store=FakeStore(),
+        embedder=FakeEmbedder(),
+        reranker=RerankNone(),
+        chunker=FakeChunker(),
+        llm=chat,
+    )
+    hits = [_hit(i, 1.0 - i / 10, "dense") for i in range(4)]
+
+    answer = pipeline.generate("what is a query parameter?", hits)
+
+    assert answer == "Declare a function parameter."
+    ((messages, temperature),) = chat.calls
+    assert temperature == 0.3
+    user = messages[1]["content"]
+    assert "[1] chunk 0 body" in user and "[2] chunk 1 body" in user
+    assert "chunk 2 body" not in user  # only context_k=2 passages
+    assert "what is a query parameter?" in user
+    assert PROMPT_VERSION == "gen-v1"
 
 
 # --- ruling 1: build_pipeline seams and defaults -----------------------------------------

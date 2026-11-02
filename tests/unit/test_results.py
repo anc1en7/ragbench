@@ -205,3 +205,51 @@ def test_package_versions_reports_installed_pins():
     assert versions["numpy"]
     assert versions["pydantic"]
     assert "ragbench" in versions
+
+
+def test_generation_block_round_trips_and_fills_summary_columns(tmp_path: Path):
+    from ragbench.eval.results import GenerationMetrics, GenerationQuery, TokenStats
+
+    gen = GenerationMetrics(
+        generator_model="rag",
+        judge_model="rag",
+        prompt_version="gen-v1",
+        ragas_version="0.4.3",
+        ragas_embedder="BAAI/bge-small-en-v1.5",
+        answer_relevancy_strictness=3,
+        temperature=0.0,
+        judge_temperature=0.0,
+        context_k=5,
+        subset_seed=42,
+        n_questions=1,
+        metrics={
+            name: MetricCI(mean=0.8, ci_lo=0.7, ci_hi=0.9)
+            for name in ("faithfulness", "answer_relevancy", "context_precision", "context_recall")
+        },
+        n_valid={"faithfulness": 1},
+        tokens_per_query=TokenStats(mean=900.0, p50=880.0, p95=1200.0),
+        per_query=[
+            GenerationQuery(
+                qid="q1",
+                answer="a",
+                context_chunk_ids=["c1"],
+                tokens=900,
+                scores={"faithfulness": 0.8, "context_recall": None},
+            )
+        ],
+        created_at="2026-11-02T00:00:00+00:00",
+    )
+    result = _result("test").model_copy(update={"generation": gen})
+    path = write_run(result, tmp_path)
+    assert load_run(path) == result  # None scores survive JSON (no NaN)
+
+    upsert_summary(result, tmp_path)
+    row = _rows(tmp_path / "summary.csv")[0]
+    assert float(row["faithfulness"]) == pytest.approx(0.8)
+    assert float(row["tokens_per_query"]) == pytest.approx(900.0)
+
+
+def test_summary_generation_columns_blank_without_generation(tmp_path: Path):
+    upsert_summary(_result(), tmp_path)
+    row = _rows(tmp_path / "summary.csv")[0]
+    assert row["faithfulness"] == "" and row["tokens_per_query"] == ""

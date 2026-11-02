@@ -18,7 +18,8 @@ Dense embedding is SKIPPED for :class:`ControlBM25Store` (ruling 10): the BM25 c
 never stores vectors (its ``add`` ignores them), so ``embed_seconds`` is ``0.0`` there
 and the vectors passed are a shape-valid empty-width placeholder.
 
-``generate`` is a Phase-4 stub (ruling 5): no prompt plumbing yet (YAGNI).
+``generate`` answers from the top ``generation.context_k`` hits via an OpenAI-compatible
+chat client (Phase 4; injectable ``llm`` seam for tests).
 """
 
 from __future__ import annotations
@@ -32,6 +33,7 @@ import numpy as np
 from ragbench.chunking import get_chunker
 from ragbench.config import PipelineConfig
 from ragbench.embedding.st_embedder import SentenceTransformerEmbedder
+from ragbench.generation.prompt import ChatClient
 from ragbench.rerank import CrossEncoderReranker, RerankNone
 from ragbench.rerank.cross_encoder import DEFAULT_RERANK_MODEL
 from ragbench.retrieval import fuse
@@ -60,7 +62,9 @@ class Pipeline:
         embedder: Embedder,
         reranker: Reranker,
         chunker: Chunker,
+        llm: ChatClient | None = None,
     ) -> None:
+        self.llm = llm
         self.cfg = cfg
         self.store = store
         self.embedder = embedder
@@ -117,11 +121,22 @@ class Pipeline:
         return hits, timings
 
     def generate(self, question: str, contexts: Sequence[Hit]) -> str:
-        """Phase-4 stub: generation lands with the RAGAS runner (ruling 5).
+        """Answer ``question`` from the top ``generation.context_k`` hits (Phase 4).
 
-        No prompt plumbing yet — YAGNI until Phase 4 wires the generation stage.
+        Uses the injected ``llm`` chat client, or lazily builds an
+        :class:`~ragbench.llm_client.OpenAICompatClient` from the ``LLM_*`` env vars.
+        Prompt: :mod:`ragbench.generation.prompt` (versioned by ``PROMPT_VERSION``).
         """
-        raise NotImplementedError("generation lands in Phase 4 (RAGAS runner)")
+        from ragbench.generation import generate_answer
+
+        if self.llm is None:
+            from ragbench.llm_client import OpenAICompatClient, settings_from_env
+
+            self.llm = OpenAICompatClient(settings_from_env())
+        texts = [hit.chunk.text for hit in contexts[: self.cfg.generation.context_k]]
+        return generate_answer(
+            self.llm, question, texts, temperature=self.cfg.generation.temperature
+        )
 
 
 def build_pipeline(
