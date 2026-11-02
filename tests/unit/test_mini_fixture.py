@@ -21,6 +21,8 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+import pytest
+
 ROOT = Path(__file__).resolve().parents[2]
 VERIFIED_PATH = ROOT / "data" / "goldset" / "verified.jsonl"
 DOCUMENTS_PATH = ROOT / "data" / "documents.jsonl"
@@ -65,22 +67,29 @@ def _expected_type_allocation(
     return alloc
 
 
-def test_documents_fixture_is_top30_ranking_of_corpus_copies():
+def test_documents_fixture_is_top30_ranking():
+    """Runs everywhere (CI included): only committed files are read."""
     docs = _load_jsonl(MINI_DOCUMENTS_PATH)
     assert len(docs) == N_DOCS
     doc_ids = [rec["doc_id"] for rec in docs]
     assert len(set(doc_ids)) == N_DOCS, "duplicate doc_ids in mini documents"
-
-    corpus_by_id = {rec["doc_id"]: rec for rec in _load_jsonl(DOCUMENTS_PATH)}
-    for rec in docs:
-        assert rec["doc_id"] in corpus_by_id, f"{rec['doc_id']} missing from corpus"
-        assert rec == corpus_by_id[rec["doc_id"]], f"{rec['doc_id']} is not a verbatim copy"
 
     verified = _load_jsonl(VERIFIED_PATH)
     assert doc_ids == _expected_doc_ranking(verified), (
         "fixture docs must be exactly the top-30 (count DESC, doc_id ASC) ranking; "
         "regenerate with scripts/build_mini_fixture.py"
     )
+
+
+@pytest.mark.skipif(
+    not DOCUMENTS_PATH.exists(),
+    reason="data/documents.jsonl is gitignored (fetched by `make ingest`); verbatim check is local",
+)
+def test_documents_fixture_records_are_verbatim_corpus_copies():
+    corpus_by_id = {rec["doc_id"]: rec for rec in _load_jsonl(DOCUMENTS_PATH)}
+    for rec in _load_jsonl(MINI_DOCUMENTS_PATH):
+        assert rec["doc_id"] in corpus_by_id, f"{rec['doc_id']} missing from corpus"
+        assert rec == corpus_by_id[rec["doc_id"]], f"{rec['doc_id']} is not a verbatim copy"
 
 
 def test_questions_fixture_is_stratified_verified_copies():
