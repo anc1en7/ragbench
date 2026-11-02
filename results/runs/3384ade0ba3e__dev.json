@@ -51,7 +51,7 @@
   "package_versions": {
     "ragbench": "0.1.0",
     "numpy": "2.5.4",
-    "torch": "2.15.0+cpu",
+    "torch": "2.15.0+cu132",
     "sentence-transformers": "6.2.0",
     "transformers": "5.22.1",
     "qdrant-client": "1.20.0",
@@ -100,12 +100,12 @@
   },
   "latency_ms": {
     "embed_query": {
-      "p50": 38.327000103890896,
-      "p95": 63.15456996671853
+      "p50": 19.430399988777936,
+      "p95": 25.734779983758926
     },
     "dense": {
-      "p50": 5.27600001078099,
-      "p95": 9.06926011666655
+      "p50": 3.493149997666478,
+      "p95": 4.419599997345357
     },
     "sparse": {
       "p50": 0.0,
@@ -116,23 +116,23 @@
       "p95": 0.0
     },
     "rerank": {
-      "p50": 0.07655005902051926,
-      "p95": 0.09422494331374763
+      "p50": 0.06210000719875097,
+      "p95": 0.10672503849491473
     },
     "total": {
-      "p50": 44.26630004309118,
-      "p95": 69.75341993384062
+      "p50": 23.192599997855723,
+      "p95": 29.475689970422533
     }
   },
   "latency_passes": 3,
   "index": {
     "docs": 156,
     "chunks": 2354,
-    "embed_seconds": 2.152573100058362,
-    "index_seconds": 1.7231970001012087,
-    "wall_seconds": 4.4446668000891805,
-    "peak_rss_bytes": 690098176,
-    "chunks_per_sec": 1093.574940584446,
+    "embed_seconds": 8.381565199932083,
+    "index_seconds": 3.0248910998925567,
+    "wall_seconds": 12.347319300053641,
+    "peak_rss_bytes": 1860640768,
+    "chunks_per_sec": 280.85446379622203,
     "size_bytes": 12328960
   },
   "ann_sanity_recall": 1.0,
@@ -174,7 +174,7 @@
           "doc_id": "tutorial/cookie-param-models.md",
           "start": 2953,
           "end": 3516,
-          "score": 0.7347289830296335,
+          "score": 0.7347297650550584,
           "source": "dense"
         },
         {
@@ -182,7 +182,7 @@
           "doc_id": "release-notes.md",
           "start": 1346,
           "end": 1888,
-          "score": 0.7293978311798657,
+          "score": 0.7293978599274922,
           "source": "dense"
         },
         {
@@ -190,7 +190,7 @@
           "doc_id": "tutorial/request-form-models.md",
           "start": 2068,
           "end": 2850,
-          "score": 0.5674778521489825,
+          "score": 0.5674777554935839,
           "source": "dense"
         },
         {
@@ -198,7 +198,7 @@
           "doc_id": "tutorial/query-param-models.md",
           "start": 1956,
           "end": 3256,
-          "score": 0.5320609507315428,
+          "score": 0.5320610370776341,
           "source": "dense"
         },
         {
@@ -206,7 +206,7 @@
           "doc_id": "tutorial/header-param-models.md",
           "start": 996,
           "end": 1819,
-          "score": 0.5035159836611937,
+          "score": 0.5035154697851473,
           "source": "dense"
         },
         {
@@ -214,7 +214,7 @@
           "doc_id": "release-notes.md",
           "start": 278169,
           "end": 279324,
-          "score": 0.47483151223126163,
+          "score": 0.4748307608864495,
           "source": "dense"
         },
         {
@@ -222,7 +222,7 @@
           "doc_id": "tutorial/header-param-models.md",
           "start": 3316,
           "end": 4039,
-          "score": 0.4549610085724281,
+          "score": 0.45496070980848574,
           "source": "dense"
         },
         {
@@ -230,7 +230,7 @@
           "doc_id": "tutorial/query-param-models.md",
           "start": 1005,
           "end": 1954,
-          "score": 0.40308188670876577,
+          "score": 0.4030816021570089,
           "source": "dense"
         },
         {
@@ -238,7 +238,7 @@
           "doc_id": "release-notes.md",
           "start": 282995,
           "end": 283670,
-          "score": 0.3809687403012705,
+          "score": 0.3809684373053884,
           "source": "dense"
         }
       ]
@@ -280,7 +280,7 @@
           "doc_id": "release-notes.md",
           "start": 141847,
           "end": 142340,
-          "score": 0.454965611219632,
+          "score": 0.45496449250897075,
           "source": "dense"
         },
         {
@@ -288,7 +288,7 @@
           "doc_id": "release-notes.md",
           "start": 31679,
           "end": 31876,
-          "score": 0.40821515707743233,
+          "score": 0.408214322254173,
           "source": "dense"
         },
         {
@@ -296,7 +296,7 @@
           "doc_id": "reference/status.md",
           "start": 0,
           "end": 622,
-          "score": 0.34366629431649376,
+          "score": 0.3436655465464602,
           "source": "dense"
         },
         {
@@ -304,7 +304,7 @@
           "doc_id": "reference/security/index.md",
           "start": 1122,
           "end": 1250,
-          "score": 0.3220842960926747,
+          "score": 0.32208446785864986,
           "source": "dense"
         },
         {
@@ -312,7 +312,7 @@
           "doc_id": "tutorial/path-operation-configuration.md",
           "start": 308,
           "end": 1017,
-          "score": 0.31900619357399673,
+          "score": 0.3190049922456768,
           "source": "dense"
         },
         {
@@ -320,7 +320,7 @@
           "doc_id": "release-notes.md",
           "start": 498387,
           "end": 498601,
-          "score": 0.2828410476542129,
+          "score": 0.28284149081010257,
           "source": "dense"
         },
         {
@@ -328,7 +328,7 @@
           "doc_id": "release-notes.md",
           "start": 699685,
           "end": 700940,
-          "score": 0.28029268478121017,
+          "score": 0.2802930366746474,
           "source": "dense"
         },
         {
@@ -336,7 +336,7 @@
           "doc_id": "reference/security/index.md",
           "start": 1252,
           "end": 1365,
-          "score": 0.24542762272934626,
+          "score": 0.2454268797376807,
           "source": "dense"
         },
         {
@@ -344,7 +344,7 @@
           "doc_id": "release-notes.md",
           "start": 689154,
           "end": 689489,
-          "score": 0.24228299392932753,
+          "score": 0.2422828042253371,
           "source": "dense"
         }
       ]
@@ -386,7 +386,7 @@
           "doc_id": "tutorial/first-steps.md",
           "start": 9740,
           "end": 10378,
-          "score": 0.902453176573543,
+          "score": 0.902453398751419,
           "source": "dense"
         },
         {
@@ -394,7 +394,7 @@
           "doc_id": "tutorial/body-updates.md",
           "start": 954,
           "end": 1545,
-          "score": 0.6547298167878598,
+          "score": 0.6547271169887479,
           "source": "dense"
         },
         {
@@ -402,7 +402,7 @@
           "doc_id": "advanced/response-change-status-code.md",
           "start": 260,
           "end": 634,
-          "score": 0.6363146141413837,
+          "score": 0.636315635536223,
           "source": "dense"
         },
         {
@@ -410,7 +410,7 @@
           "doc_id": "release-notes.md",
           "start": 406927,
           "end": 409346,
-          "score": 0.6111781283427546,
+          "score": 0.6111780094418395,
           "source": "dense"
         },
         {
@@ -418,7 +418,7 @@
           "doc_id": "tutorial/body-updates.md",
           "start": 2476,
           "end": 4090,
-          "score": 0.5060466837711937,
+          "score": 0.5060468083564689,
           "source": "dense"
         },
         {
@@ -426,7 +426,7 @@
           "doc_id": "release-notes.md",
           "start": 6316,
           "end": 6498,
-          "score": 0.3726754748927508,
+          "score": 0.37267412075037987,
           "source": "dense"
         },
         {
@@ -434,7 +434,7 @@
           "doc_id": "tutorial/dependencies/dependencies-with-yield.md",
           "start": 3747,
           "end": 4700,
-          "score": 0.3336740402916244,
+          "score": 0.33367239296254775,
           "source": "dense"
         },
         {
@@ -442,7 +442,7 @@
           "doc_id": "release-notes.md",
           "start": 615597,
           "end": 616734,
-          "score": 0.322061467340125,
+          "score": 0.322060681890797,
           "source": "dense"
         },
         {
@@ -450,7 +450,7 @@
           "doc_id": "alternatives.md",
           "start": 7319,
           "end": 7962,
-          "score": 0.30834267888818445,
+          "score": 0.3083424673806501,
           "source": "dense"
         }
       ]
@@ -492,7 +492,7 @@
           "doc_id": "tutorial/security/simple-oauth2.md",
           "start": 1020,
           "end": 1780,
-          "score": 0.7572835044899634,
+          "score": 0.7572843777882869,
           "source": "dense"
         },
         {
@@ -500,7 +500,7 @@
           "doc_id": "advanced/security/oauth2-scopes.md",
           "start": 2729,
           "end": 3423,
-          "score": 0.7203156716230082,
+          "score": 0.7203149294685431,
           "source": "dense"
         },
         {
@@ -508,7 +508,7 @@
           "doc_id": "advanced/security/oauth2-scopes.md",
           "start": 8756,
           "end": 10918,
-          "score": 0.6540883681427105,
+          "score": 0.654088776350186,
           "source": "dense"
         },
         {
@@ -516,7 +516,7 @@
           "doc_id": "tutorial/security/oauth2-jwt.md",
           "start": 8914,
           "end": 9319,
-          "score": 0.4986649768935935,
+          "score": 0.4986643454203341,
           "source": "dense"
         },
         {
@@ -524,7 +524,7 @@
           "doc_id": "tutorial/security/get-current-user.md",
           "start": 0,
           "end": 339,
-          "score": 0.44951416529206184,
+          "score": 0.44951379994862545,
           "source": "dense"
         },
         {
@@ -532,7 +532,7 @@
           "doc_id": "advanced/security/oauth2-scopes.md",
           "start": 5747,
           "end": 6478,
-          "score": 0.37352696502951377,
+          "score": 0.37352581040149535,
           "source": "dense"
         },
         {
@@ -540,7 +540,7 @@
           "doc_id": "advanced/security/oauth2-scopes.md",
           "start": 1331,
           "end": 2306,
-          "score": 0.37223941832762536,
+          "score": 0.37223871682761417,
           "source": "dense"
         },
         {
@@ -548,7 +548,7 @@
           "doc_id": "advanced/security/oauth2-scopes.md",
           "start": 3425,
           "end": 4080,
-          "score": 0.34317059249916926,
+          "score": 0.3431701895331518,
           "source": "dense"
         },
         {
@@ -556,7 +556,7 @@
           "doc_id": "advanced/security/oauth2-scopes.md",
           "start": 10920,
           "end": 11619,
-          "score": 0.3383789403073197,
+          "score": 0.33837944208396625,
           "source": "dense"
         }
       ]
@@ -598,7 +598,7 @@
           "doc_id": "tutorial/request-files.md",
           "start": 497,
           "end": 1473,
-          "score": 0.34689581993481666,
+          "score": 0.34689551776359134,
           "source": "dense"
         },
         {
@@ -606,7 +606,7 @@
           "doc_id": "tutorial/request-files.md",
           "start": 1475,
           "end": 2440,
-          "score": 0.267730062509154,
+          "score": 0.2677296855293612,
           "source": "dense"
         },
         {
@@ -614,7 +614,7 @@
           "doc_id": "advanced/json-base64-bytes.md",
           "start": 1738,
           "end": 2077,
-          "score": 0.2494322579187513,
+          "score": 0.24943176305905507,
           "source": "dense"
         },
         {
@@ -622,7 +622,7 @@
           "doc_id": "index.md",
           "start": 16476,
           "end": 17912,
-          "score": 0.2380479000609497,
+          "score": 0.23804769756804658,
           "source": "dense"
         },
         {
@@ -630,7 +630,7 @@
           "doc_id": "tutorial/request-files.md",
           "start": 2442,
           "end": 4357,
-          "score": 0.2254089389442673,
+          "score": 0.22540894790489402,
           "source": "dense"
         },
         {
@@ -638,7 +638,7 @@
           "doc_id": "reference/uploadfile.md",
           "start": 0,
           "end": 471,
-          "score": 0.22167645488521062,
+          "score": 0.22167603438652458,
           "source": "dense"
         },
         {
@@ -646,7 +646,7 @@
           "doc_id": "alternatives.md",
           "start": 12405,
           "end": 13542,
-          "score": 0.2199696431100129,
+          "score": 0.21996953598561622,
           "source": "dense"
         },
         {
@@ -654,7 +654,7 @@
           "doc_id": "advanced/stream-data.md",
           "start": 1977,
           "end": 2182,
-          "score": 0.219687627471269,
+          "score": 0.21968752008043513,
           "source": "dense"
         },
         {
@@ -662,7 +662,7 @@
           "doc_id": "release-notes.md",
           "start": 103022,
           "end": 103226,
-          "score": 0.2078860125333293,
+          "score": 0.20788568206869126,
           "source": "dense"
         }
       ]
@@ -704,7 +704,7 @@
           "doc_id": "release-notes.md",
           "start": 652240,
           "end": 652536,
-          "score": 0.885310142406651,
+          "score": 0.8853094770604487,
           "source": "dense"
         },
         {
@@ -712,7 +712,7 @@
           "doc_id": "advanced/custom-response.md",
           "start": 9988,
           "end": 10574,
-          "score": 0.7538414982984045,
+          "score": 0.7538411372622915,
           "source": "dense"
         },
         {
@@ -720,7 +720,7 @@
           "doc_id": "advanced/custom-response.md",
           "start": 6032,
           "end": 6522,
-          "score": 0.7460237613174384,
+          "score": 0.7460230313649017,
           "source": "dense"
         },
         {
@@ -728,7 +728,7 @@
           "doc_id": "advanced/custom-response.md",
           "start": 1073,
           "end": 1979,
-          "score": 0.5860641504630065,
+          "score": 0.5860637312707176,
           "source": "dense"
         },
         {
@@ -736,7 +736,7 @@
           "doc_id": "release-notes.md",
           "start": 96597,
           "end": 97025,
-          "score": 0.5248732894405791,
+          "score": 0.5248728959070743,
           "source": "dense"
         },
         {
@@ -744,7 +744,7 @@
           "doc_id": "advanced/response-directly.md",
           "start": 1430,
           "end": 2320,
-          "score": 0.5199007499162976,
+          "score": 0.5199003584677676,
           "source": "dense"
         },
         {
@@ -752,7 +752,7 @@
           "doc_id": "index.md",
           "start": 1226,
           "end": 2560,
-          "score": 0.4881271948185681,
+          "score": 0.48812648904146727,
           "source": "dense"
         },
         {
@@ -760,7 +760,7 @@
           "doc_id": "tutorial/schema-extra-example.md",
           "start": 4797,
           "end": 6248,
-          "score": 0.417147517571484,
+          "score": 0.41714746636529115,
           "source": "dense"
         },
         {
@@ -768,7 +768,7 @@
           "doc_id": "advanced/response-directly.md",
           "start": 805,
           "end": 1428,
-          "score": 0.4163471809264023,
+          "score": 0.41634715199578387,
           "source": "dense"
         }
       ]
@@ -810,7 +810,7 @@
           "doc_id": "advanced/templates.md",
           "start": 1838,
           "end": 2128,
-          "score": 0.5515401282093982,
+          "score": 0.5515401383709201,
           "source": "dense"
         },
         {
@@ -818,7 +818,7 @@
           "doc_id": "advanced/templates.md",
           "start": 442,
           "end": 1640,
-          "score": 0.4818071924206626,
+          "score": 0.4818072897122379,
           "source": "dense"
         },
         {
@@ -826,7 +826,7 @@
           "doc_id": "advanced/templates.md",
           "start": 2804,
           "end": 3631,
-          "score": 0.4666313770100147,
+          "score": 0.4666309554304265,
           "source": "dense"
         },
         {
@@ -834,7 +834,7 @@
           "doc_id": "advanced/templates.md",
           "start": 1642,
           "end": 1836,
-          "score": 0.38358481618749724,
+          "score": 0.38358420285217054,
           "source": "dense"
         },
         {
@@ -842,7 +842,7 @@
           "doc_id": "advanced/templates.md",
           "start": 3633,
           "end": 4208,
-          "score": 0.34228291284879003,
+          "score": 0.3422825146833682,
           "source": "dense"
         },
         {
@@ -850,7 +850,7 @@
           "doc_id": "reference/templating.md",
           "start": 0,
           "end": 364,
-          "score": 0.2827421777208727,
+          "score": 0.28274161680012605,
           "source": "dense"
         },
         {
@@ -858,7 +858,7 @@
           "doc_id": "release-notes.md",
           "start": 542132,
           "end": 543675,
-          "score": 0.14509202339705934,
+          "score": 0.14509148458984011,
           "source": "dense"
         },
         {
@@ -866,7 +866,7 @@
           "doc_id": "advanced/security/oauth2-scopes.md",
           "start": 6480,
           "end": 7393,
-          "score": 0.13625601503574725,
+          "score": 0.13625444633046682,
           "source": "dense"
         },
         {
@@ -874,7 +874,7 @@
           "doc_id": "advanced/settings.md",
           "start": 10927,
           "end": 11422,
-          "score": 0.13383785470121187,
+          "score": 0.13383765620780522,
           "source": "dense"
         }
       ]
@@ -916,7 +916,7 @@
           "doc_id": "how-to/custom-docs-ui-assets.md",
           "start": 2894,
           "end": 3273,
-          "score": 0.6981471871304888,
+          "score": 0.6981467113679816,
           "source": "dense"
         },
         {
@@ -924,7 +924,7 @@
           "doc_id": "tutorial/first-steps.md",
           "start": 3743,
           "end": 4077,
-          "score": 0.6853235328041087,
+          "score": 0.6853217629737305,
           "source": "dense"
         },
         {
@@ -932,7 +932,7 @@
           "doc_id": "index.md",
           "start": 14014,
           "end": 14348,
-          "score": 0.6853235328041087,
+          "score": 0.6853217629737305,
           "source": "dense"
         },
         {
@@ -940,7 +940,7 @@
           "doc_id": "advanced/sub-applications.md",
           "start": 1297,
           "end": 2300,
-          "score": 0.6700315815962629,
+          "score": 0.670031098999126,
           "source": "dense"
         },
         {
@@ -948,7 +948,7 @@
           "doc_id": "tutorial/metadata.md",
           "start": 2432,
           "end": 2746,
-          "score": 0.6110243644908034,
+          "score": 0.6110243305453105,
           "source": "dense"
         },
         {
@@ -956,7 +956,7 @@
           "doc_id": "tutorial/bigger-applications.md",
           "start": 18121,
           "end": 18665,
-          "score": 0.5993251765033896,
+          "score": 0.5993250910442887,
           "source": "dense"
         },
         {
@@ -964,7 +964,7 @@
           "doc_id": "reference/openapi/docs.md",
           "start": 0,
           "end": 359,
-          "score": 0.5972542611503293,
+          "score": 0.5972524699111696,
           "source": "dense"
         },
         {
@@ -972,7 +972,7 @@
           "doc_id": "how-to/custom-docs-ui-assets.md",
           "start": 5634,
           "end": 7046,
-          "score": 0.5546782622084299,
+          "score": 0.5546782112072582,
           "source": "dense"
         },
         {
@@ -980,7 +980,7 @@
           "doc_id": "tutorial/response-model.md",
           "start": 8588,
           "end": 8934,
-          "score": 0.5466165512044879,
+          "score": 0.5466149339743334,
           "source": "dense"
         }
       ]
@@ -1022,7 +1022,7 @@
           "doc_id": "fastapi-people.md",
           "start": 1252,
           "end": 1898,
-          "score": 0.9804157940082789,
+          "score": 0.9804154399350434,
           "source": "dense"
         },
         {
@@ -1030,7 +1030,7 @@
           "doc_id": "about/index.md",
           "start": 0,
           "end": 70,
-          "score": 0.5239972994760232,
+          "score": 0.5239970439758324,
           "source": "dense"
         },
         {
@@ -1038,7 +1038,7 @@
           "doc_id": "fastapi-people.md",
           "start": 1900,
           "end": 2744,
-          "score": 0.510531445678592,
+          "score": 0.5105309466858127,
           "source": "dense"
         },
         {
@@ -1046,7 +1046,7 @@
           "doc_id": "management.md",
           "start": 457,
           "end": 630,
-          "score": 0.49963843094819277,
+          "score": 0.49963853901168864,
           "source": "dense"
         },
         {
@@ -1054,7 +1054,7 @@
           "doc_id": "fastapi-people.md",
           "start": 4743,
           "end": 6065,
-          "score": 0.3785960464589662,
+          "score": 0.37859594212721814,
           "source": "dense"
         },
         {
@@ -1062,7 +1062,7 @@
           "doc_id": "management.md",
           "start": 110,
           "end": 455,
-          "score": 0.27614432478144213,
+          "score": 0.27614365794975504,
           "source": "dense"
         },
         {
@@ -1070,7 +1070,7 @@
           "doc_id": "alternatives.md",
           "start": 0,
           "end": 180,
-          "score": 0.2644849139871679,
+          "score": 0.2644847145340611,
           "source": "dense"
         },
         {
@@ -1078,7 +1078,7 @@
           "doc_id": "history-design-future.md",
           "start": 3349,
           "end": 3615,
-          "score": 0.25764634366588385,
+          "score": 0.25764650399259215,
           "source": "dense"
         },
         {
@@ -1086,7 +1086,7 @@
           "doc_id": "release-notes.md",
           "start": 91571,
           "end": 92037,
-          "score": 0.2486189005534054,
+          "score": 0.24861893531653317,
           "source": "dense"
         }
       ]
@@ -1128,7 +1128,7 @@
           "doc_id": "tutorial/extra-models.md",
           "start": 6133,
           "end": 6564,
-          "score": 0.6296601745208719,
+          "score": 0.6296604243453958,
           "source": "dense"
         },
         {
@@ -1136,7 +1136,7 @@
           "doc_id": "advanced/json-base64-bytes.md",
           "start": 817,
           "end": 1736,
-          "score": 0.5636824650936598,
+          "score": 0.5636826394791464,
           "source": "dense"
         },
         {
@@ -1144,7 +1144,7 @@
           "doc_id": "python-types.md",
           "start": 7894,
           "end": 8707,
-          "score": 0.4404862555514781,
+          "score": 0.4404874466710551,
           "source": "dense"
         },
         {
@@ -1152,7 +1152,7 @@
           "doc_id": "tutorial/extra-models.md",
           "start": 2458,
           "end": 2988,
-          "score": 0.4117594441683793,
+          "score": 0.4117589505843384,
           "source": "dense"
         },
         {
@@ -1160,7 +1160,7 @@
           "doc_id": "tutorial/extra-data-types.md",
           "start": 409,
           "end": 2291,
-          "score": 0.41111395270683565,
+          "score": 0.41111468348145686,
           "source": "dense"
         },
         {
@@ -1168,7 +1168,7 @@
           "doc_id": "advanced/json-base64-bytes.md",
           "start": 1738,
           "end": 2077,
-          "score": 0.36041711831535495,
+          "score": 0.3604163088905438,
           "source": "dense"
         },
         {
@@ -1176,7 +1176,7 @@
           "doc_id": "advanced/json-base64-bytes.md",
           "start": 2079,
           "end": 2473,
-          "score": 0.3502390298869024,
+          "score": 0.35023884199684924,
           "source": "dense"
         },
         {
@@ -1184,7 +1184,7 @@
           "doc_id": "features.md",
           "start": 7315,
           "end": 9137,
-          "score": 0.3477753494540179,
+          "score": 0.34777601609914266,
           "source": "dense"
         },
         {
@@ -1192,7 +1192,7 @@
           "doc_id": "advanced/additional-responses.md",
           "start": 546,
           "end": 2176,
-          "score": 0.32421594456186825,
+          "score": 0.3242171907043359,
           "source": "dense"
         }
       ]
@@ -1234,7 +1234,7 @@
           "doc_id": "tutorial/stream-json-lines.md",
           "start": 3852,
           "end": 4161,
-          "score": 0.9943201870647849,
+          "score": 0.9943197570705856,
           "source": "dense"
         },
         {
@@ -1242,7 +1242,7 @@
           "doc_id": "tutorial/stream-json-lines.md",
           "start": 2575,
           "end": 3422,
-          "score": 0.7851198441309075,
+          "score": 0.7851198699138389,
           "source": "dense"
         },
         {
@@ -1250,7 +1250,7 @@
           "doc_id": "tutorial/server-sent-events.md",
           "start": 2291,
           "end": 2533,
-          "score": 0.7369065488060348,
+          "score": 0.7369062257624835,
           "source": "dense"
         },
         {
@@ -1258,7 +1258,7 @@
           "doc_id": "tutorial/response-model.md",
           "start": 9195,
           "end": 9747,
-          "score": 0.5345940921884355,
+          "score": 0.5345941480312126,
           "source": "dense"
         },
         {
@@ -1266,7 +1266,7 @@
           "doc_id": "tutorial/response-model.md",
           "start": 10086,
           "end": 10907,
-          "score": 0.5192869245066483,
+          "score": 0.5192857791943551,
           "source": "dense"
         },
         {
@@ -1274,7 +1274,7 @@
           "doc_id": "tutorial/response-model.md",
           "start": 6126,
           "end": 7434,
-          "score": 0.4135594591129498,
+          "score": 0.41355986481693124,
           "source": "dense"
         },
         {
@@ -1282,7 +1282,7 @@
           "doc_id": "tutorial/response-model.md",
           "start": 0,
           "end": 1329,
-          "score": 0.40119604870015885,
+          "score": 0.40119559379911185,
           "source": "dense"
         },
         {
@@ -1290,7 +1290,7 @@
           "doc_id": "tutorial/response-model.md",
           "start": 8044,
           "end": 8586,
-          "score": 0.3669789538889533,
+          "score": 0.36697850105398405,
           "source": "dense"
         },
         {
@@ -1298,7 +1298,7 @@
           "doc_id": "advanced/response-directly.md",
           "start": 805,
           "end": 1428,
-          "score": 0.3524398691424073,
+          "score": 0.35243964990049814,
           "source": "dense"
         }
       ]
@@ -1340,7 +1340,7 @@
           "doc_id": "alternatives.md",
           "start": 3280,
           "end": 4654,
-          "score": 0.6498473406763174,
+          "score": 0.6498472359835356,
           "source": "dense"
         },
         {
@@ -1348,7 +1348,7 @@
           "doc_id": "advanced/using-request-directly.md",
           "start": 0,
           "end": 442,
-          "score": 0.5667369526109401,
+          "score": 0.5667378978194523,
           "source": "dense"
         },
         {
@@ -1356,7 +1356,7 @@
           "doc_id": "tutorial/body.md",
           "start": 5278,
           "end": 6363,
-          "score": 0.5067557420969763,
+          "score": 0.5067563870460846,
           "source": "dense"
         },
         {
@@ -1364,7 +1364,7 @@
           "doc_id": "advanced/using-request-directly.md",
           "start": 1157,
           "end": 1930,
-          "score": 0.4736847660966963,
+          "score": 0.47368440473550266,
           "source": "dense"
         },
         {
@@ -1372,7 +1372,7 @@
           "doc_id": "reference/request.md",
           "start": 0,
           "end": 651,
-          "score": 0.4660148454417188,
+          "score": 0.46601511110403965,
           "source": "dense"
         },
         {
@@ -1380,7 +1380,7 @@
           "doc_id": "tutorial/body.md",
           "start": 0,
           "end": 1058,
-          "score": 0.37085268848385444,
+          "score": 0.37085336974336947,
           "source": "dense"
         },
         {
@@ -1388,7 +1388,7 @@
           "doc_id": "how-to/custom-request-and-route.md",
           "start": 0,
           "end": 482,
-          "score": 0.36062042923523424,
+          "score": 0.3606202467127147,
           "source": "dense"
         },
         {
@@ -1396,7 +1396,7 @@
           "doc_id": "tutorial/body-multiple-params.md",
           "start": 4449,
           "end": 4927,
-          "score": 0.32684666734849677,
+          "score": 0.3268472721803633,
           "source": "dense"
         },
         {
@@ -1404,7 +1404,7 @@
           "doc_id": "reference/parameters.md",
           "start": 0,
           "end": 602,
-          "score": 0.3237147569620616,
+          "score": 0.323715450815923,
           "source": "dense"
         }
       ]
@@ -1446,7 +1446,7 @@
           "doc_id": "tutorial/frontend.md",
           "start": 5588,
           "end": 6056,
-          "score": 0.9914922119320305,
+          "score": 0.9914930653816671,
           "source": "dense"
         },
         {
@@ -1454,7 +1454,7 @@
           "doc_id": "tutorial/middleware.md",
           "start": 0,
           "end": 978,
-          "score": 0.8872864153218348,
+          "score": 0.8872878954892325,
           "source": "dense"
         },
         {
@@ -1462,7 +1462,7 @@
           "doc_id": "tutorial/middleware.md",
           "start": 980,
           "end": 2220,
-          "score": 0.7554001197300911,
+          "score": 0.7554004491093983,
           "source": "dense"
         },
         {
@@ -1470,7 +1470,7 @@
           "doc_id": "tutorial/middleware.md",
           "start": 3639,
           "end": 3939,
-          "score": 0.4692718212555788,
+          "score": 0.46927228028100104,
           "source": "dense"
         },
         {
@@ -1478,7 +1478,7 @@
           "doc_id": "advanced/middleware.md",
           "start": 1528,
           "end": 2001,
-          "score": 0.45018259995403076,
+          "score": 0.45018317055087415,
           "source": "dense"
         },
         {
@@ -1486,7 +1486,7 @@
           "doc_id": "tutorial/middleware.md",
           "start": 2222,
           "end": 2861,
-          "score": 0.4220079904324672,
+          "score": 0.4220086215067073,
           "source": "dense"
         },
         {
@@ -1494,7 +1494,7 @@
           "doc_id": "advanced/middleware.md",
           "start": 0,
           "end": 306,
-          "score": 0.37107734894721356,
+          "score": 0.37107836781329423,
           "source": "dense"
         },
         {
@@ -1502,7 +1502,7 @@
           "doc_id": "release-notes.md",
           "start": 598167,
           "end": 598966,
-          "score": 0.3557655198000173,
+          "score": 0.3557657434645244,
           "source": "dense"
         },
         {
@@ -1510,7 +1510,7 @@
           "doc_id": "tutorial/cors.md",
           "start": 4876,
           "end": 5368,
-          "score": 0.3222379188222841,
+          "score": 0.3222389199335714,
           "source": "dense"
         }
       ]
@@ -1552,7 +1552,7 @@
           "doc_id": "deployment/docker.md",
           "start": 4491,
           "end": 5361,
-          "score": 0.5178568876684501,
+          "score": 0.517856411340939,
           "source": "dense"
         },
         {
@@ -1560,7 +1560,7 @@
           "doc_id": "deployment/docker.md",
           "start": 8863,
           "end": 9658,
-          "score": 0.382479050578713,
+          "score": 0.3824794067760765,
           "source": "dense"
         },
         {
@@ -1568,7 +1568,7 @@
           "doc_id": "deployment/docker.md",
           "start": 3133,
           "end": 4489,
-          "score": 0.3717363918077677,
+          "score": 0.37173694144495234,
           "source": "dense"
         },
         {
@@ -1576,7 +1576,7 @@
           "doc_id": "deployment/docker.md",
           "start": 28204,
           "end": 28835,
-          "score": 0.34339800673922766,
+          "score": 0.3433986637786305,
           "source": "dense"
         },
         {
@@ -1584,7 +1584,7 @@
           "doc_id": "deployment/docker.md",
           "start": 16293,
           "end": 16981,
-          "score": 0.32558170851420976,
+          "score": 0.32558198333280186,
           "source": "dense"
         },
         {
@@ -1592,7 +1592,7 @@
           "doc_id": "deployment/docker.md",
           "start": 997,
           "end": 1847,
-          "score": 0.31287629535743455,
+          "score": 0.31287693052202104,
           "source": "dense"
         },
         {
@@ -1600,7 +1600,7 @@
           "doc_id": "deployment/docker.md",
           "start": 13818,
           "end": 14017,
-          "score": 0.30191853980934913,
+          "score": 0.30191917562702586,
           "source": "dense"
         },
         {
@@ -1608,7 +1608,7 @@
           "doc_id": "deployment/docker.md",
           "start": 11237,
           "end": 13292,
-          "score": 0.2982225125904816,
+          "score": 0.298223054419652,
           "source": "dense"
         },
         {
@@ -1616,7 +1616,7 @@
           "doc_id": "deployment/docker.md",
           "start": 27596,
           "end": 27963,
-          "score": 0.2837016473805655,
+          "score": 0.2837017281372358,
           "source": "dense"
         }
       ]
@@ -1658,7 +1658,7 @@
           "doc_id": "async.md",
           "start": 2054,
           "end": 4103,
-          "score": 0.8343749918807137,
+          "score": 0.8343764598863339,
           "source": "dense"
         },
         {
@@ -1666,7 +1666,7 @@
           "doc_id": "async.md",
           "start": 0,
           "end": 208,
-          "score": 0.7458283346815767,
+          "score": 0.7458290587574931,
           "source": "dense"
         },
         {
@@ -1674,7 +1674,7 @@
           "doc_id": "async.md",
           "start": 20605,
           "end": 20965,
-          "score": 0.6439095525404896,
+          "score": 0.6439085832569454,
           "source": "dense"
         },
         {
@@ -1682,7 +1682,7 @@
           "doc_id": "async.md",
           "start": 11441,
           "end": 12570,
-          "score": 0.6140028940884863,
+          "score": 0.6140021153090827,
           "source": "dense"
         },
         {
@@ -1690,7 +1690,7 @@
           "doc_id": "async.md",
           "start": 15644,
           "end": 17528,
-          "score": 0.6016664913864314,
+          "score": 0.6016664477522569,
           "source": "dense"
         },
         {
@@ -1698,7 +1698,7 @@
           "doc_id": "async.md",
           "start": 210,
           "end": 1738,
-          "score": 0.590852372199271,
+          "score": 0.5908527894035194,
           "source": "dense"
         },
         {
@@ -1706,7 +1706,7 @@
           "doc_id": "async.md",
           "start": 1740,
           "end": 2052,
-          "score": 0.5757891005601781,
+          "score": 0.57578916042449,
           "source": "dense"
         },
         {
@@ -1714,7 +1714,7 @@
           "doc_id": "async.md",
           "start": 20092,
           "end": 20603,
-          "score": 0.5102208820442632,
+          "score": 0.5102210394647195,
           "source": "dense"
         },
         {
@@ -1722,7 +1722,7 @@
           "doc_id": "async.md",
           "start": 19383,
           "end": 20090,
-          "score": 0.5088476832415595,
+          "score": 0.5088476513260121,
           "source": "dense"
         }
       ]
@@ -1764,7 +1764,7 @@
           "doc_id": "advanced/dataclasses.md",
           "start": 1632,
           "end": 3739,
-          "score": 0.7789260443993891,
+          "score": 0.778924306114898,
           "source": "dense"
         },
         {
@@ -1772,7 +1772,7 @@
           "doc_id": "advanced/dataclasses.md",
           "start": 1234,
           "end": 1630,
-          "score": 0.6489035433205702,
+          "score": 0.6489047938739524,
           "source": "dense"
         },
         {
@@ -1780,7 +1780,7 @@
           "doc_id": "advanced/generate-clients.md",
           "start": 7816,
           "end": 8706,
-          "score": 0.5205686231531649,
+          "score": 0.5205662344714713,
           "source": "dense"
         },
         {
@@ -1788,7 +1788,7 @@
           "doc_id": "release-notes.md",
           "start": 548944,
           "end": 549136,
-          "score": 0.51397584130746,
+          "score": 0.5139743140823296,
           "source": "dense"
         },
         {
@@ -1796,7 +1796,7 @@
           "doc_id": "tutorial/path-params.md",
           "start": 2837,
           "end": 3449,
-          "score": 0.4953621672229329,
+          "score": 0.4953612789687368,
           "source": "dense"
         },
         {
@@ -1804,7 +1804,7 @@
           "doc_id": "advanced/generate-clients.md",
           "start": 1479,
           "end": 1986,
-          "score": 0.4427335557184249,
+          "score": 0.4427303728354025,
           "source": "dense"
         },
         {
@@ -1812,7 +1812,7 @@
           "doc_id": "_llm-test.md",
           "start": 7182,
           "end": 9026,
-          "score": 0.3764803791962628,
+          "score": 0.37647772738525564,
           "source": "dense"
         },
         {
@@ -1820,7 +1820,7 @@
           "doc_id": "alternatives.md",
           "start": 16617,
           "end": 18845,
-          "score": 0.34383032334412356,
+          "score": 0.3438293056747116,
           "source": "dense"
         },
         {
@@ -1828,7 +1828,7 @@
           "doc_id": "tutorial/bigger-applications.md",
           "start": 18121,
           "end": 18665,
-          "score": 0.34238487389614386,
+          "score": 0.3423814634383122,
           "source": "dense"
         }
       ]
@@ -1870,7 +1870,7 @@
           "doc_id": "how-to/custom-docs-ui-assets.md",
           "start": 7293,
           "end": 7588,
-          "score": 0.49905957038363946,
+          "score": 0.49905999552952934,
           "source": "dense"
         },
         {
@@ -1878,7 +1878,7 @@
           "doc_id": "advanced/behind-a-proxy.md",
           "start": 1734,
           "end": 2493,
-          "score": 0.3555661527491321,
+          "score": 0.35556619491738783,
           "source": "dense"
         },
         {
@@ -1886,7 +1886,7 @@
           "doc_id": "how-to/conditional-openapi.md",
           "start": 211,
           "end": 1525,
-          "score": 0.3315696217124308,
+          "score": 0.33156942445506776,
           "source": "dense"
         },
         {
@@ -1894,7 +1894,7 @@
           "doc_id": "advanced/behind-a-proxy.md",
           "start": 5696,
           "end": 6350,
-          "score": 0.3045345683699231,
+          "score": 0.30453477541770346,
           "source": "dense"
         },
         {
@@ -1902,7 +1902,7 @@
           "doc_id": "advanced/behind-a-proxy.md",
           "start": 7697,
           "end": 8344,
-          "score": 0.2850515158079089,
+          "score": 0.2850511119270641,
           "source": "dense"
         },
         {
@@ -1910,7 +1910,7 @@
           "doc_id": "advanced/behind-a-proxy.md",
           "start": 0,
           "end": 200,
-          "score": 0.27467091381646913,
+          "score": 0.27467101625072127,
           "source": "dense"
         },
         {
@@ -1918,7 +1918,7 @@
           "doc_id": "advanced/behind-a-proxy.md",
           "start": 3902,
           "end": 5865,
-          "score": 0.2733401913329635,
+          "score": 0.2733405188463499,
           "source": "dense"
         },
         {
@@ -1926,7 +1926,7 @@
           "doc_id": "tutorial/metadata.md",
           "start": 5444,
           "end": 5973,
-          "score": 0.2722913589264117,
+          "score": 0.27229136507506,
           "source": "dense"
         },
         {
@@ -1934,7 +1934,7 @@
           "doc_id": "deployment/https.md",
           "start": 11885,
           "end": 13776,
-          "score": 0.2687261506286879,
+          "score": 0.2687266844072685,
           "source": "dense"
         }
       ]
@@ -1976,7 +1976,7 @@
           "doc_id": "release-notes.md",
           "start": 545343,
           "end": 545851,
-          "score": 0.6887183057459662,
+          "score": 0.6887190341653481,
           "source": "dense"
         },
         {
@@ -1984,7 +1984,7 @@
           "doc_id": "history-design-future.md",
           "start": 1991,
           "end": 2831,
-          "score": 0.6758758814128415,
+          "score": 0.6758771433133197,
           "source": "dense"
         },
         {
@@ -1992,7 +1992,7 @@
           "doc_id": "release-notes.md",
           "start": 369383,
           "end": 370210,
-          "score": 0.5816137761913537,
+          "score": 0.5816170969356417,
           "source": "dense"
         },
         {
@@ -2000,7 +2000,7 @@
           "doc_id": "tutorial/handling-errors.md",
           "start": 8629,
           "end": 9155,
-          "score": 0.564713057633877,
+          "score": 0.5647136563754659,
           "source": "dense"
         },
         {
@@ -2008,7 +2008,7 @@
           "doc_id": "release-notes.md",
           "start": 126364,
           "end": 126567,
-          "score": 0.5417587644622351,
+          "score": 0.5417602108421627,
           "source": "dense"
         },
         {
@@ -2016,7 +2016,7 @@
           "doc_id": "deployment/concepts.md",
           "start": 7475,
           "end": 7879,
-          "score": 0.4638745087193166,
+          "score": 0.4638736140363967,
           "source": "dense"
         },
         {
@@ -2024,7 +2024,7 @@
           "doc_id": "release-notes.md",
           "start": 706818,
           "end": 707615,
-          "score": 0.39996981481443566,
+          "score": 0.39997028965505904,
           "source": "dense"
         },
         {
@@ -2032,7 +2032,7 @@
           "doc_id": "release-notes.md",
           "start": 11991,
           "end": 12192,
-          "score": 0.3322859132768401,
+          "score": 0.3322883582276733,
           "source": "dense"
         },
         {
@@ -2040,7 +2040,7 @@
           "doc_id": "advanced/additional-status-codes.md",
           "start": 0,
           "end": 300,
-          "score": 0.2665033428806739,
+          "score": 0.26650247894976037,
           "source": "dense"
         }
       ]
@@ -2082,7 +2082,7 @@
           "doc_id": "async.md",
           "start": 210,
           "end": 1738,
-          "score": 0.589270084173971,
+          "score": 0.5892712215207505,
           "source": "dense"
         },
         {
@@ -2090,7 +2090,7 @@
           "doc_id": "async.md",
           "start": 15644,
           "end": 17528,
-          "score": 0.5000208522749667,
+          "score": 0.500020420748712,
           "source": "dense"
         },
         {
@@ -2098,7 +2098,7 @@
           "doc_id": "advanced/stream-data.md",
           "start": 2951,
           "end": 4005,
-          "score": 0.48021392476156,
+          "score": 0.4802145285110419,
           "source": "dense"
         },
         {
@@ -2106,7 +2106,7 @@
           "doc_id": "tutorial/dependencies/index.md",
           "start": 5393,
           "end": 6024,
-          "score": 0.42461480792723993,
+          "score": 0.42461527611039834,
           "source": "dense"
         },
         {
@@ -2114,7 +2114,7 @@
           "doc_id": "async.md",
           "start": 17530,
           "end": 18218,
-          "score": 0.4028925288571527,
+          "score": 0.4028929611282065,
           "source": "dense"
         },
         {
@@ -2122,7 +2122,7 @@
           "doc_id": "tutorial/request-files.md",
           "start": 2442,
           "end": 4357,
-          "score": 0.3199997483518871,
+          "score": 0.31999889607970333,
           "source": "dense"
         },
         {
@@ -2130,7 +2130,7 @@
           "doc_id": "async.md",
           "start": 20605,
           "end": 20965,
-          "score": 0.29382103397484904,
+          "score": 0.2938208884940543,
           "source": "dense"
         },
         {
@@ -2138,7 +2138,7 @@
           "doc_id": "async.md",
           "start": 0,
           "end": 208,
-          "score": 0.29275171475090567,
+          "score": 0.29275237994483483,
           "source": "dense"
         },
         {
@@ -2146,7 +2146,7 @@
           "doc_id": "advanced/custom-response.md",
           "start": 7260,
           "end": 8289,
-          "score": 0.28773745992567085,
+          "score": 0.2877379753181823,
           "source": "dense"
         }
       ]
@@ -2188,7 +2188,7 @@
           "doc_id": "async.md",
           "start": 15644,
           "end": 17528,
-          "score": 0.7135213867543025,
+          "score": 0.7135212879900493,
           "source": "dense"
         },
         {
@@ -2196,7 +2196,7 @@
           "doc_id": "async.md",
           "start": 1740,
           "end": 2052,
-          "score": 0.706411637948106,
+          "score": 0.7064119288873808,
           "source": "dense"
         },
         {
@@ -2204,7 +2204,7 @@
           "doc_id": "async.md",
           "start": 17530,
           "end": 18218,
-          "score": 0.6448365004198412,
+          "score": 0.6448365638946275,
           "source": "dense"
         },
         {
@@ -2212,7 +2212,7 @@
           "doc_id": "async.md",
           "start": 20605,
           "end": 20965,
-          "score": 0.6405869369887375,
+          "score": 0.6405868312405996,
           "source": "dense"
         },
         {
@@ -2220,7 +2220,7 @@
           "doc_id": "async.md",
           "start": 210,
           "end": 1738,
-          "score": 0.5996158536720606,
+          "score": 0.5996158212554991,
           "source": "dense"
         },
         {
@@ -2228,7 +2228,7 @@
           "doc_id": "async.md",
           "start": 0,
           "end": 208,
-          "score": 0.4839896838847403,
+          "score": 0.4839901065975061,
           "source": "dense"
         },
         {
@@ -2236,7 +2236,7 @@
           "doc_id": "async.md",
           "start": 19383,
           "end": 20090,
-          "score": 0.4542447947443814,
+          "score": 0.45424429705316793,
           "source": "dense"
         },
         {
@@ -2244,7 +2244,7 @@
           "doc_id": "tutorial/dependencies/index.md",
           "start": 5393,
           "end": 6024,
-          "score": 0.34306836252742096,
+          "score": 0.3430686156492363,
           "source": "dense"
         },
         {
@@ -2252,7 +2252,7 @@
           "doc_id": "advanced/custom-response.md",
           "start": 7260,
           "end": 8289,
-          "score": 0.31543502100225945,
+          "score": 0.31543537894441875,
           "source": "dense"
         }
       ]
@@ -2294,7 +2294,7 @@
           "doc_id": "tutorial/schema-extra-example.md",
           "start": 8253,
           "end": 8655,
-          "score": 0.5861276442346199,
+          "score": 0.5861274176183713,
           "source": "dense"
         },
         {
@@ -2302,7 +2302,7 @@
           "doc_id": "how-to/configure-swagger-ui.md",
           "start": 0,
           "end": 550,
-          "score": 0.5517653532652818,
+          "score": 0.5517659404469855,
           "source": "dense"
         },
         {
@@ -2310,7 +2310,7 @@
           "doc_id": "release-notes.md",
           "start": 546196,
           "end": 546499,
-          "score": 0.3899196380043685,
+          "score": 0.38991959091830725,
           "source": "dense"
         },
         {
@@ -2318,7 +2318,7 @@
           "doc_id": "release-notes.md",
           "start": 440813,
           "end": 441841,
-          "score": 0.3574566415031326,
+          "score": 0.3574573495982537,
           "source": "dense"
         },
         {
@@ -2326,7 +2326,7 @@
           "doc_id": "release-notes.md",
           "start": 309537,
           "end": 310048,
-          "score": 0.33969155150756764,
+          "score": 0.3396922294081756,
           "source": "dense"
         },
         {
@@ -2334,7 +2334,7 @@
           "doc_id": "tutorial/schema-extra-example.md",
           "start": 2961,
           "end": 3763,
-          "score": 0.3234176720182264,
+          "score": 0.3234181199597862,
           "source": "dense"
         },
         {
@@ -2342,7 +2342,7 @@
           "doc_id": "release-notes.md",
           "start": 506895,
           "end": 507668,
-          "score": 0.2898869408844918,
+          "score": 0.28988740969143173,
           "source": "dense"
         },
         {
@@ -2350,7 +2350,7 @@
           "doc_id": "how-to/configure-swagger-ui.md",
           "start": 1455,
           "end": 1997,
-          "score": 0.2638347313843882,
+          "score": 0.26383472453304263,
           "source": "dense"
         },
         {
@@ -2358,7 +2358,7 @@
           "doc_id": "release-notes.md",
           "start": 603438,
           "end": 603946,
-          "score": 0.24689785673170603,
+          "score": 0.24689828047984544,
           "source": "dense"
         }
       ]
@@ -2400,7 +2400,7 @@
           "doc_id": "release-notes.md",
           "start": 157833,
           "end": 159140,
-          "score": 0.8311890004140098,
+          "score": 0.831188335643748,
           "source": "dense"
         },
         {
@@ -2408,7 +2408,7 @@
           "doc_id": "advanced/advanced-dependencies.md",
           "start": 4940,
           "end": 6989,
-          "score": 0.7990409828269042,
+          "score": 0.7990395105715392,
           "source": "dense"
         },
         {
@@ -2416,7 +2416,7 @@
           "doc_id": "tutorial/dependencies/dependencies-with-yield.md",
           "start": 842,
           "end": 1602,
-          "score": 0.7711671576017015,
+          "score": 0.7711670820522082,
           "source": "dense"
         },
         {
@@ -2424,7 +2424,7 @@
           "doc_id": "advanced/stream-data.md",
           "start": 705,
           "end": 1124,
-          "score": 0.6601075500988143,
+          "score": 0.6601061172770561,
           "source": "dense"
         },
         {
@@ -2432,7 +2432,7 @@
           "doc_id": "tutorial/dependencies/dependencies-with-yield.md",
           "start": 5882,
           "end": 7791,
-          "score": 0.5996320793525336,
+          "score": 0.5996320122381399,
           "source": "dense"
         },
         {
@@ -2440,7 +2440,7 @@
           "doc_id": "tutorial/dependencies/dependencies-with-yield.md",
           "start": 7793,
           "end": 9065,
-          "score": 0.5989963404046487,
+          "score": 0.5989963405357053,
           "source": "dense"
         },
         {
@@ -2448,7 +2448,7 @@
           "doc_id": "advanced/advanced-dependencies.md",
           "start": 7616,
           "end": 9248,
-          "score": 0.5222443460117476,
+          "score": 0.5222441882799697,
           "source": "dense"
         },
         {
@@ -2456,7 +2456,7 @@
           "doc_id": "release-notes.md",
           "start": 406927,
           "end": 409346,
-          "score": 0.5159684296087641,
+          "score": 0.5159678695991894,
           "source": "dense"
         },
         {
@@ -2464,7 +2464,7 @@
           "doc_id": "advanced/custom-response.md",
           "start": 7260,
           "end": 8289,
-          "score": 0.506675329837691,
+          "score": 0.5066745066629517,
           "source": "dense"
         }
       ]
@@ -2506,7 +2506,7 @@
           "doc_id": "tutorial/frontend.md",
           "start": 1312,
           "end": 2640,
-          "score": 0.6059950806615335,
+          "score": 0.6059958408873228,
           "source": "dense"
         },
         {
@@ -2514,7 +2514,7 @@
           "doc_id": "tutorial/frontend.md",
           "start": 3291,
           "end": 3837,
-          "score": 0.5901308826383778,
+          "score": 0.5901303645786153,
           "source": "dense"
         },
         {
@@ -2522,7 +2522,7 @@
           "doc_id": "tutorial/frontend.md",
           "start": 3839,
           "end": 4085,
-          "score": 0.40706869672687607,
+          "score": 0.40706902214513013,
           "source": "dense"
         },
         {
@@ -2530,7 +2530,7 @@
           "doc_id": "release-notes.md",
           "start": 47819,
           "end": 48043,
-          "score": 0.27660699040767883,
+          "score": 0.2766063309872901,
           "source": "dense"
         },
         {
@@ -2538,7 +2538,7 @@
           "doc_id": "advanced/behind-a-proxy.md",
           "start": 1734,
           "end": 2493,
-          "score": 0.21679296862646694,
+          "score": 0.2167926154966453,
           "source": "dense"
         },
         {
@@ -2546,7 +2546,7 @@
           "doc_id": "tutorial/handling-errors.md",
           "start": 2031,
           "end": 2785,
-          "score": 0.1974198604827795,
+          "score": 0.1974195848755647,
           "source": "dense"
         },
         {
@@ -2554,7 +2554,7 @@
           "doc_id": "release-notes.md",
           "start": 37682,
           "end": 37870,
-          "score": 0.18502682797562395,
+          "score": 0.18502584486536897,
           "source": "dense"
         },
         {
@@ -2562,7 +2562,7 @@
           "doc_id": "tutorial/static-files.md",
           "start": 1298,
           "end": 1780,
-          "score": 0.16695014919044945,
+          "score": 0.166950106846918,
           "source": "dense"
         },
         {
@@ -2570,7 +2570,7 @@
           "doc_id": "release-notes.md",
           "start": 596561,
           "end": 598477,
-          "score": 0.16579165225294143,
+          "score": 0.16579206520480733,
           "source": "dense"
         }
       ]
@@ -2612,7 +2612,7 @@
           "doc_id": "release-notes.md",
           "start": 668996,
           "end": 670195,
-          "score": 0.9444027118243673,
+          "score": 0.9444008937123599,
           "source": "dense"
         },
         {
@@ -2620,7 +2620,7 @@
           "doc_id": "advanced/advanced-dependencies.md",
           "start": 3833,
           "end": 4938,
-          "score": 0.9304498773810682,
+          "score": 0.9304479609527236,
           "source": "dense"
         },
         {
@@ -2628,7 +2628,7 @@
           "doc_id": "tutorial/dependencies/dependencies-with-yield.md",
           "start": 0,
           "end": 840,
-          "score": 0.917459558913682,
+          "score": 0.9174587375798432,
           "source": "dense"
         },
         {
@@ -2636,7 +2636,7 @@
           "doc_id": "advanced/advanced-dependencies.md",
           "start": 3168,
           "end": 3831,
-          "score": 0.8957418493975297,
+          "score": 0.8957403325718745,
           "source": "dense"
         },
         {
@@ -2644,7 +2644,7 @@
           "doc_id": "tutorial/dependencies/dependencies-with-yield.md",
           "start": 842,
           "end": 1602,
-          "score": 0.7939822136705313,
+          "score": 0.793981894376865,
           "source": "dense"
         },
         {
@@ -2652,7 +2652,7 @@
           "doc_id": "advanced/advanced-dependencies.md",
           "start": 7616,
           "end": 9248,
-          "score": 0.7668299714657162,
+          "score": 0.7668289050840311,
           "source": "dense"
         },
         {
@@ -2660,7 +2660,7 @@
           "doc_id": "tutorial/dependencies/dependencies-with-yield.md",
           "start": 7793,
           "end": 9065,
-          "score": 0.7595737088922636,
+          "score": 0.7595724240213019,
           "source": "dense"
         },
         {
@@ -2668,7 +2668,7 @@
           "doc_id": "release-notes.md",
           "start": 404865,
           "end": 407152,
-          "score": 0.6353981228580268,
+          "score": 0.6353978891512901,
           "source": "dense"
         },
         {
@@ -2676,7 +2676,7 @@
           "doc_id": "release-notes.md",
           "start": 157833,
           "end": 159140,
-          "score": 0.5829479731604467,
+          "score": 0.5829478422283288,
           "source": "dense"
         }
       ]
@@ -2718,7 +2718,7 @@
           "doc_id": "release-notes.md",
           "start": 710075,
           "end": 710424,
-          "score": 0.5695173291044504,
+          "score": 0.5695184994888702,
           "source": "dense"
         },
         {
@@ -2726,7 +2726,7 @@
           "doc_id": "tutorial/response-model.md",
           "start": 13513,
           "end": 14262,
-          "score": 0.47564934158185335,
+          "score": 0.4756489119325614,
           "source": "dense"
         },
         {
@@ -2734,7 +2734,7 @@
           "doc_id": "tutorial/body-nested-models.md",
           "start": 1179,
           "end": 1786,
-          "score": 0.45589027852890995,
+          "score": 0.455889935280968,
           "source": "dense"
         },
         {
@@ -2742,7 +2742,7 @@
           "doc_id": "tutorial/extra-data-types.md",
           "start": 409,
           "end": 2291,
-          "score": 0.3686213765569433,
+          "score": 0.36862119820608935,
           "source": "dense"
         },
         {
@@ -2750,7 +2750,7 @@
           "doc_id": "release-notes.md",
           "start": 277034,
           "end": 277624,
-          "score": 0.3614807906190173,
+          "score": 0.36148081825477113,
           "source": "dense"
         },
         {
@@ -2758,7 +2758,7 @@
           "doc_id": "tutorial/body-multiple-params.md",
           "start": 2019,
           "end": 2999,
-          "score": 0.2162435367613205,
+          "score": 0.21624238323640288,
           "source": "dense"
         },
         {
@@ -2766,7 +2766,7 @@
           "doc_id": "tutorial/body-multiple-params.md",
           "start": 690,
           "end": 2017,
-          "score": 0.21415041657564707,
+          "score": 0.21415086879332082,
           "source": "dense"
         },
         {
@@ -2774,7 +2774,7 @@
           "doc_id": "tutorial/path-params.md",
           "start": 863,
           "end": 1437,
-          "score": 0.20254518201488858,
+          "score": 0.2025453095394871,
           "source": "dense"
         },
         {
@@ -2782,7 +2782,7 @@
           "doc_id": "index.md",
           "start": 16476,
           "end": 17912,
-          "score": 0.20099903790198062,
+          "score": 0.20099896429890493,
           "source": "dense"
         }
       ]
@@ -2824,7 +2824,7 @@
           "doc_id": "release-notes.md",
           "start": 524860,
           "end": 526679,
-          "score": 0.9981956316543305,
+          "score": 0.9981946267640445,
           "source": "dense"
         },
         {
@@ -2832,7 +2832,7 @@
           "doc_id": "tutorial/path-params-numeric-validations.md",
           "start": 1292,
           "end": 2508,
-          "score": 0.9854277164979025,
+          "score": 0.9854277081416931,
           "source": "dense"
         },
         {
@@ -2840,7 +2840,7 @@
           "doc_id": "tutorial/query-params-str-validations.md",
           "start": 3252,
           "end": 4842,
-          "score": 0.8120246138735783,
+          "score": 0.8120234911302652,
           "source": "dense"
         },
         {
@@ -2848,7 +2848,7 @@
           "doc_id": "tutorial/query-params-str-validations.md",
           "start": 0,
           "end": 692,
-          "score": 0.7912063657756605,
+          "score": 0.7912054276545025,
           "source": "dense"
         },
         {
@@ -2856,7 +2856,7 @@
           "doc_id": "release-notes.md",
           "start": 526455,
           "end": 527008,
-          "score": 0.7909228066116655,
+          "score": 0.7909220661457328,
           "source": "dense"
         },
         {
@@ -2864,7 +2864,7 @@
           "doc_id": "tutorial/query-params.md",
           "start": 1558,
           "end": 2020,
-          "score": 0.7363485505745977,
+          "score": 0.7363477820669124,
           "source": "dense"
         },
         {
@@ -2872,7 +2872,7 @@
           "doc_id": "tutorial/body-multiple-params.md",
           "start": 690,
           "end": 2017,
-          "score": 0.7277409077307895,
+          "score": 0.727743005201701,
           "source": "dense"
         },
         {
@@ -2880,7 +2880,7 @@
           "doc_id": "release-notes.md",
           "start": 697970,
           "end": 698705,
-          "score": 0.699662503593326,
+          "score": 0.6996631497625025,
           "source": "dense"
         },
         {
@@ -2888,7 +2888,7 @@
           "doc_id": "release-notes.md",
           "start": 673205,
           "end": 674121,
-          "score": 0.680067954346093,
+          "score": 0.6800678734451663,
           "source": "dense"
         }
       ]
@@ -2930,7 +2930,7 @@
           "doc_id": "advanced/opentelemetry.md",
           "start": 2841,
           "end": 3287,
-          "score": 0.25987511210282593,
+          "score": 0.25987530058810276,
           "source": "dense"
         },
         {
@@ -2938,7 +2938,7 @@
           "doc_id": "deployment/https.md",
           "start": 2384,
           "end": 3179,
-          "score": 0.255637235436424,
+          "score": 0.2556366955562462,
           "source": "dense"
         },
         {
@@ -2946,7 +2946,7 @@
           "doc_id": "tutorial/security/index.md",
           "start": 2241,
           "end": 4137,
-          "score": 0.25223973973757124,
+          "score": 0.2522391668117314,
           "source": "dense"
         },
         {
@@ -2954,7 +2954,7 @@
           "doc_id": "deployment/https.md",
           "start": 13778,
           "end": 14300,
-          "score": 0.2347694172301333,
+          "score": 0.23476886221466783,
           "source": "dense"
         },
         {
@@ -2962,7 +2962,7 @@
           "doc_id": "tutorial/security/first-steps.md",
           "start": 4243,
           "end": 6462,
-          "score": 0.2335768789418331,
+          "score": 0.23357694674654073,
           "source": "dense"
         },
         {
@@ -2970,7 +2970,7 @@
           "doc_id": "release-notes.md",
           "start": 154488,
           "end": 154665,
-          "score": 0.21106782955552061,
+          "score": 0.21106886468234892,
           "source": "dense"
         },
         {
@@ -2978,7 +2978,7 @@
           "doc_id": "release-notes.md",
           "start": 568630,
           "end": 570224,
-          "score": 0.20270548135221805,
+          "score": 0.20270588757199734,
           "source": "dense"
         },
         {
@@ -2986,7 +2986,7 @@
           "doc_id": "tutorial/security/oauth2-jwt.md",
           "start": 9321,
           "end": 10761,
-          "score": 0.20152553603537235,
+          "score": 0.20152511252012167,
           "source": "dense"
         },
         {
@@ -2994,7 +2994,7 @@
           "doc_id": "tutorial/security/index.md",
           "start": 4139,
           "end": 4546,
-          "score": 0.20141974704519433,
+          "score": 0.2014203078548907,
           "source": "dense"
         }
       ]
@@ -3036,7 +3036,7 @@
           "doc_id": "tutorial/body.md",
           "start": 4852,
           "end": 5276,
-          "score": 0.7292329368592784,
+          "score": 0.729232855887796,
           "source": "dense"
         },
         {
@@ -3044,7 +3044,7 @@
           "doc_id": "tutorial/body-multiple-params.md",
           "start": 690,
           "end": 2017,
-          "score": 0.4814966810124038,
+          "score": 0.48149716944064846,
           "source": "dense"
         },
         {
@@ -3052,7 +3052,7 @@
           "doc_id": "tutorial/body-multiple-params.md",
           "start": 4449,
           "end": 4927,
-          "score": 0.4703813046007817,
+          "score": 0.4703822024669376,
           "source": "dense"
         },
         {
@@ -3060,7 +3060,7 @@
           "doc_id": "tutorial/dependencies/index.md",
           "start": 6371,
           "end": 7226,
-          "score": 0.4669583757149272,
+          "score": 0.46695685154427,
           "source": "dense"
         },
         {
@@ -3068,7 +3068,7 @@
           "doc_id": "reference/parameters.md",
           "start": 0,
           "end": 602,
-          "score": 0.4587004228954928,
+          "score": 0.4587009737778856,
           "source": "dense"
         },
         {
@@ -3076,7 +3076,7 @@
           "doc_id": "advanced/using-request-directly.md",
           "start": 1157,
           "end": 1930,
-          "score": 0.4556180142085232,
+          "score": 0.4556179017780723,
           "source": "dense"
         },
         {
@@ -3084,7 +3084,7 @@
           "doc_id": "tutorial/query-params.md",
           "start": 2982,
           "end": 3329,
-          "score": 0.4271652804032861,
+          "score": 0.4271653990561281,
           "source": "dense"
         },
         {
@@ -3092,7 +3092,7 @@
           "doc_id": "tutorial/body-multiple-params.md",
           "start": 173,
           "end": 688,
-          "score": 0.39465851677588054,
+          "score": 0.39465903443019823,
           "source": "dense"
         },
         {
@@ -3100,7 +3100,7 @@
           "doc_id": "advanced/using-request-directly.md",
           "start": 444,
           "end": 1155,
-          "score": 0.3032360708004487,
+          "score": 0.30323562871213977,
           "source": "dense"
         }
       ]
@@ -3142,7 +3142,7 @@
           "doc_id": "tutorial/dependencies/dependencies-with-yield.md",
           "start": 10913,
           "end": 11634,
-          "score": 0.9557906146634045,
+          "score": 0.9557910693417826,
           "source": "dense"
         },
         {
@@ -3150,7 +3150,7 @@
           "doc_id": "tutorial/dependencies/dependencies-with-yield.md",
           "start": 10870,
           "end": 10911,
-          "score": 0.717119544518237,
+          "score": 0.7171176359180091,
           "source": "dense"
         },
         {
@@ -3158,7 +3158,7 @@
           "doc_id": "advanced/events.md",
           "start": 3451,
           "end": 4650,
-          "score": 0.7034228414822519,
+          "score": 0.7034221022259056,
           "source": "dense"
         },
         {
@@ -3166,7 +3166,7 @@
           "doc_id": "tutorial/dependencies/classes-as-dependencies.md",
           "start": 1235,
           "end": 3066,
-          "score": 0.44643272884091584,
+          "score": 0.44643325228912223,
           "source": "dense"
         },
         {
@@ -3174,7 +3174,7 @@
           "doc_id": "tutorial/first-steps.md",
           "start": 10380,
           "end": 11656,
-          "score": 0.4416624128956061,
+          "score": 0.44166231134873274,
           "source": "dense"
         },
         {
@@ -3182,7 +3182,7 @@
           "doc_id": "tutorial/dependencies/index.md",
           "start": 1244,
           "end": 2449,
-          "score": 0.33133068837982865,
+          "score": 0.33133039478110315,
           "source": "dense"
         },
         {
@@ -3190,7 +3190,7 @@
           "doc_id": "features.md",
           "start": 1360,
           "end": 2449,
-          "score": 0.2947888913644995,
+          "score": 0.2947882348514812,
           "source": "dense"
         },
         {
@@ -3198,7 +3198,7 @@
           "doc_id": "tutorial/dependencies/classes-as-dependencies.md",
           "start": 5156,
           "end": 6914,
-          "score": 0.2752020966028672,
+          "score": 0.2752012701333403,
           "source": "dense"
         },
         {
@@ -3206,7 +3206,7 @@
           "doc_id": "release-notes.md",
           "start": 464401,
           "end": 466647,
-          "score": 0.26206349163977893,
+          "score": 0.26206220713101125,
           "source": "dense"
         }
       ]
@@ -3248,7 +3248,7 @@
           "doc_id": "tutorial/schema-extra-example.md",
           "start": 4797,
           "end": 6248,
-          "score": 0.5234523479052442,
+          "score": 0.5234520469775052,
           "source": "dense"
         },
         {
@@ -3256,7 +3256,7 @@
           "doc_id": "release-notes.md",
           "start": 423800,
           "end": 424116,
-          "score": 0.4437915043041734,
+          "score": 0.4437911937081861,
           "source": "dense"
         },
         {
@@ -3264,7 +3264,7 @@
           "doc_id": "tutorial/schema-extra-example.md",
           "start": 7246,
           "end": 8251,
-          "score": 0.42585599221631426,
+          "score": 0.42585609616378417,
           "source": "dense"
         },
         {
@@ -3272,7 +3272,7 @@
           "doc_id": "tutorial/schema-extra-example.md",
           "start": 8253,
           "end": 8655,
-          "score": 0.41743084648481366,
+          "score": 0.41743095118298673,
           "source": "dense"
         },
         {
@@ -3280,7 +3280,7 @@
           "doc_id": "tutorial/schema-extra-example.md",
           "start": 2961,
           "end": 3763,
-          "score": 0.4092114057338628,
+          "score": 0.40921261169828527,
           "source": "dense"
         },
         {
@@ -3288,7 +3288,7 @@
           "doc_id": "tutorial/schema-extra-example.md",
           "start": 4600,
           "end": 4795,
-          "score": 0.39485942082473807,
+          "score": 0.3948603198922511,
           "source": "dense"
         },
         {
@@ -3296,7 +3296,7 @@
           "doc_id": "python-types.md",
           "start": 9973,
           "end": 11205,
-          "score": 0.3615031195653178,
+          "score": 0.3615026513734969,
           "source": "dense"
         },
         {
@@ -3304,7 +3304,7 @@
           "doc_id": "tutorial/schema-extra-example.md",
           "start": 6250,
           "end": 7244,
-          "score": 0.31404601096074297,
+          "score": 0.31404682355324787,
           "source": "dense"
         },
         {
@@ -3312,7 +3312,7 @@
           "doc_id": "tutorial/path-operation-configuration.md",
           "start": 2768,
           "end": 3392,
-          "score": 0.2686359598846124,
+          "score": 0.2686358850760132,
           "source": "dense"
         }
       ]
@@ -3354,7 +3354,7 @@
           "doc_id": "advanced/custom-response.md",
           "start": 5741,
           "end": 5852,
-          "score": 0.8716373203167412,
+          "score": 0.8716374368427325,
           "source": "dense"
         },
         {
@@ -3362,7 +3362,7 @@
           "doc_id": "advanced/custom-response.md",
           "start": 2277,
           "end": 2806,
-          "score": 0.6470456399413477,
+          "score": 0.6470455040382321,
           "source": "dense"
         },
         {
@@ -3370,7 +3370,7 @@
           "doc_id": "advanced/custom-response.md",
           "start": 2808,
           "end": 3506,
-          "score": 0.5014126456467477,
+          "score": 0.5014129669670135,
           "source": "dense"
         },
         {
@@ -3378,7 +3378,7 @@
           "doc_id": "advanced/response-directly.md",
           "start": 805,
           "end": 1428,
-          "score": 0.4805464797304286,
+          "score": 0.4805463981566765,
           "source": "dense"
         },
         {
@@ -3386,7 +3386,7 @@
           "doc_id": "tutorial/response-model.md",
           "start": 9195,
           "end": 9747,
-          "score": 0.42947002114218624,
+          "score": 0.4294695034665727,
           "source": "dense"
         },
         {
@@ -3394,7 +3394,7 @@
           "doc_id": "tutorial/handling-errors.md",
           "start": 2031,
           "end": 2785,
-          "score": 0.4181007689507906,
+          "score": 0.418100681382383,
           "source": "dense"
         },
         {
@@ -3402,7 +3402,7 @@
           "doc_id": "advanced/custom-response.md",
           "start": 0,
           "end": 1071,
-          "score": 0.4000477737154931,
+          "score": 0.4000473459191893,
           "source": "dense"
         },
         {
@@ -3410,7 +3410,7 @@
           "doc_id": "advanced/custom-response.md",
           "start": 10576,
           "end": 11077,
-          "score": 0.38582938001975675,
+          "score": 0.3858285240905199,
           "source": "dense"
         },
         {
@@ -3418,7 +3418,7 @@
           "doc_id": "advanced/response-cookies.md",
           "start": 855,
           "end": 1599,
-          "score": 0.35999436099154536,
+          "score": 0.35999350814208253,
           "source": "dense"
         }
       ]
@@ -3460,7 +3460,7 @@
           "doc_id": "async.md",
           "start": 10172,
           "end": 11439,
-          "score": 0.9965897420196771,
+          "score": 0.9965893807199723,
           "source": "dense"
         },
         {
@@ -3468,7 +3468,7 @@
           "doc_id": "async.md",
           "start": 4790,
           "end": 6756,
-          "score": 0.7664581680682936,
+          "score": 0.7664579766487153,
           "source": "dense"
         },
         {
@@ -3476,7 +3476,7 @@
           "doc_id": "async.md",
           "start": 4339,
           "end": 4788,
-          "score": 0.6788003563024474,
+          "score": 0.6788003551708397,
           "source": "dense"
         },
         {
@@ -3484,7 +3484,7 @@
           "doc_id": "async.md",
           "start": 6587,
           "end": 8431,
-          "score": 0.6596007672782775,
+          "score": 0.6596010314066849,
           "source": "dense"
         },
         {
@@ -3492,7 +3492,7 @@
           "doc_id": "async.md",
           "start": 11441,
           "end": 12570,
-          "score": 0.6078359961057399,
+          "score": 0.6078359165576774,
           "source": "dense"
         },
         {
@@ -3500,7 +3500,7 @@
           "doc_id": "async.md",
           "start": 3846,
           "end": 4337,
-          "score": 0.3632549135952805,
+          "score": 0.3632548444425192,
           "source": "dense"
         },
         {
@@ -3508,7 +3508,7 @@
           "doc_id": "async.md",
           "start": 15644,
           "end": 17528,
-          "score": 0.32130750570273386,
+          "score": 0.32130753869409284,
           "source": "dense"
         },
         {
@@ -3516,7 +3516,7 @@
           "doc_id": "async.md",
           "start": 12572,
           "end": 14857,
-          "score": 0.23986756084382316,
+          "score": 0.2398677898679359,
           "source": "dense"
         },
         {
@@ -3524,7 +3524,7 @@
           "doc_id": "async.md",
           "start": 2054,
           "end": 4103,
-          "score": 0.15240773002195673,
+          "score": 0.152407963781009,
           "source": "dense"
         }
       ]
@@ -3566,7 +3566,7 @@
           "doc_id": "tutorial/handling-errors.md",
           "start": 7606,
           "end": 8627,
-          "score": 0.8180272775332696,
+          "score": 0.8180271861126742,
           "source": "dense"
         },
         {
@@ -3574,7 +3574,7 @@
           "doc_id": "tutorial/path-params.md",
           "start": 863,
           "end": 1437,
-          "score": 0.7916096256644305,
+          "score": 0.7916073352274584,
           "source": "dense"
         },
         {
@@ -3582,7 +3582,7 @@
           "doc_id": "tutorial/body.md",
           "start": 2298,
           "end": 3139,
-          "score": 0.7237943808975846,
+          "score": 0.723794103834883,
           "source": "dense"
         },
         {
@@ -3590,7 +3590,7 @@
           "doc_id": "tutorial/handling-errors.md",
           "start": 5750,
           "end": 6829,
-          "score": 0.6553541171359129,
+          "score": 0.6553527187136939,
           "source": "dense"
         },
         {
@@ -3598,7 +3598,7 @@
           "doc_id": "tutorial/handling-errors.md",
           "start": 4729,
           "end": 5748,
-          "score": 0.6041553597650787,
+          "score": 0.6041543316377345,
           "source": "dense"
         },
         {
@@ -3606,7 +3606,7 @@
           "doc_id": "tutorial/handling-errors.md",
           "start": 4387,
           "end": 4727,
-          "score": 0.534309833170498,
+          "score": 0.5343093000241991,
           "source": "dense"
         },
         {
@@ -3614,7 +3614,7 @@
           "doc_id": "tutorial/schema-extra-example.md",
           "start": 4797,
           "end": 6248,
-          "score": 0.5282625906092154,
+          "score": 0.5282609859577135,
           "source": "dense"
         },
         {
@@ -3622,7 +3622,7 @@
           "doc_id": "tutorial/body-multiple-params.md",
           "start": 690,
           "end": 2017,
-          "score": 0.4409501907388611,
+          "score": 0.44095096721783805,
           "source": "dense"
         },
         {
@@ -3630,7 +3630,7 @@
           "doc_id": "tutorial/first-steps.md",
           "start": 5396,
           "end": 6148,
-          "score": 0.4170402454219201,
+          "score": 0.41703968892909543,
           "source": "dense"
         }
       ]
@@ -3672,7 +3672,7 @@
           "doc_id": "deployment/concepts.md",
           "start": 11841,
           "end": 12959,
-          "score": 0.8776479865671446,
+          "score": 0.8776475521295103,
           "source": "dense"
         },
         {
@@ -3680,7 +3680,7 @@
           "doc_id": "deployment/concepts.md",
           "start": 9630,
           "end": 9963,
-          "score": 0.7854044045335181,
+          "score": 0.7854043340145941,
           "source": "dense"
         },
         {
@@ -3688,7 +3688,7 @@
           "doc_id": "deployment/concepts.md",
           "start": 11387,
           "end": 11839,
-          "score": 0.6874757442669388,
+          "score": 0.6874757185208038,
           "source": "dense"
         },
         {
@@ -3696,7 +3696,7 @@
           "doc_id": "deployment/docker.md",
           "start": 23929,
           "end": 25068,
-          "score": 0.6487741070181122,
+          "score": 0.6487737422480093,
           "source": "dense"
         },
         {
@@ -3704,7 +3704,7 @@
           "doc_id": "deployment/concepts.md",
           "start": 9965,
           "end": 10437,
-          "score": 0.6076336755835753,
+          "score": 0.6076329711334668,
           "source": "dense"
         },
         {
@@ -3712,7 +3712,7 @@
           "doc_id": "deployment/concepts.md",
           "start": 16401,
           "end": 18319,
-          "score": 0.5866017984979108,
+          "score": 0.5866021140863504,
           "source": "dense"
         },
         {
@@ -3720,7 +3720,7 @@
           "doc_id": "deployment/docker.md",
           "start": 21451,
           "end": 22136,
-          "score": 0.4339438236935611,
+          "score": 0.4339432170021695,
           "source": "dense"
         },
         {
@@ -3728,7 +3728,7 @@
           "doc_id": "deployment/server-workers.md",
           "start": 7801,
           "end": 8370,
-          "score": 0.4185568583805906,
+          "score": 0.4185564316801448,
           "source": "dense"
         },
         {
@@ -3736,7 +3736,7 @@
           "doc_id": "tutorial/background-tasks.md",
           "start": 3936,
           "end": 4640,
-          "score": 0.3986878490484195,
+          "score": 0.3986876514494787,
           "source": "dense"
         }
       ]
@@ -3778,7 +3778,7 @@
           "doc_id": "advanced/generate-clients.md",
           "start": 4618,
           "end": 5130,
-          "score": 0.978605264809553,
+          "score": 0.9786067843469087,
           "source": "dense"
         },
         {
@@ -3786,7 +3786,7 @@
           "doc_id": "advanced/path-operation-advanced-configuration.md",
           "start": 485,
           "end": 1111,
-          "score": 0.8050249650235869,
+          "score": 0.8050247402811654,
           "source": "dense"
         },
         {
@@ -3794,7 +3794,7 @@
           "doc_id": "release-notes.md",
           "start": 540449,
           "end": 540753,
-          "score": 0.7381186829321944,
+          "score": 0.7381188199716421,
           "source": "dense"
         },
         {
@@ -3802,7 +3802,7 @@
           "doc_id": "advanced/generate-clients.md",
           "start": 6194,
           "end": 7333,
-          "score": 0.5850502828506358,
+          "score": 0.5850498045494605,
           "source": "dense"
         },
         {
@@ -3810,7 +3810,7 @@
           "doc_id": "release-notes.md",
           "start": 369383,
           "end": 370210,
-          "score": 0.4920234729719718,
+          "score": 0.4920233437319482,
           "source": "dense"
         },
         {
@@ -3818,7 +3818,7 @@
           "doc_id": "advanced/path-operation-advanced-configuration.md",
           "start": 84,
           "end": 483,
-          "score": 0.46704699020501544,
+          "score": 0.4670469812947248,
           "source": "dense"
         },
         {
@@ -3826,7 +3826,7 @@
           "doc_id": "tutorial/security/get-current-user.md",
           "start": 3093,
           "end": 3860,
-          "score": 0.3756796632730461,
+          "score": 0.375680557603967,
           "source": "dense"
         },
         {
@@ -3834,7 +3834,7 @@
           "doc_id": "tutorial/sql-databases.md",
           "start": 7426,
           "end": 8140,
-          "score": 0.3672454179689261,
+          "score": 0.3672457210257426,
           "source": "dense"
         },
         {
@@ -3842,7 +3842,7 @@
           "doc_id": "release-notes.md",
           "start": 679992,
           "end": 681089,
-          "score": 0.366115250482944,
+          "score": 0.36611554597168244,
           "source": "dense"
         }
       ]
@@ -3884,7 +3884,7 @@
           "doc_id": "deployment/docker.md",
           "start": 19271,
           "end": 20112,
-          "score": 0.4592298652309345,
+          "score": 0.4592293802527944,
           "source": "dense"
         },
         {
@@ -3892,7 +3892,7 @@
           "doc_id": "deployment/server-workers.md",
           "start": 7801,
           "end": 8370,
-          "score": 0.38361775704619416,
+          "score": 0.38361764624435524,
           "source": "dense"
         },
         {
@@ -3900,7 +3900,7 @@
           "doc_id": "deployment/docker.md",
           "start": 23929,
           "end": 25068,
-          "score": 0.35265113132785336,
+          "score": 0.3526507911373064,
           "source": "dense"
         },
         {
@@ -3908,7 +3908,7 @@
           "doc_id": "deployment/docker.md",
           "start": 18278,
           "end": 19269,
-          "score": 0.3126843695651833,
+          "score": 0.31268404153533996,
           "source": "dense"
         },
         {
@@ -3916,7 +3916,7 @@
           "doc_id": "deployment/docker.md",
           "start": 25275,
           "end": 26116,
-          "score": 0.2599811611351673,
+          "score": 0.259981087952347,
           "source": "dense"
         },
         {
@@ -3924,7 +3924,7 @@
           "doc_id": "deployment/concepts.md",
           "start": 12961,
           "end": 14527,
-          "score": 0.21267126123378186,
+          "score": 0.21267137038156853,
           "source": "dense"
         },
         {
@@ -3932,7 +3932,7 @@
           "doc_id": "deployment/concepts.md",
           "start": 9965,
           "end": 10437,
-          "score": 0.18878800792879535,
+          "score": 0.18878771759701654,
           "source": "dense"
         },
         {
@@ -3940,7 +3940,7 @@
           "doc_id": "index.md",
           "start": 7679,
           "end": 9440,
-          "score": 0.17076239453313838,
+          "score": 0.1707626700267861,
           "source": "dense"
         },
         {
@@ -3948,7 +3948,7 @@
           "doc_id": "deployment/concepts.md",
           "start": 15735,
           "end": 16399,
-          "score": 0.15308710034942963,
+          "score": 0.15308683641066445,
           "source": "dense"
         }
       ]
@@ -3990,7 +3990,7 @@
           "doc_id": "tutorial/body-multiple-params.md",
           "start": 4449,
           "end": 4927,
-          "score": 0.9615909561366769,
+          "score": 0.9615904776300552,
           "source": "dense"
         },
         {
@@ -3998,7 +3998,7 @@
           "doc_id": "tutorial/body.md",
           "start": 5278,
           "end": 6363,
-          "score": 0.7786702512822327,
+          "score": 0.778669353579276,
           "source": "dense"
         },
         {
@@ -4006,7 +4006,7 @@
           "doc_id": "tutorial/body.md",
           "start": 4852,
           "end": 5276,
-          "score": 0.7082193484950987,
+          "score": 0.7082194750435795,
           "source": "dense"
         },
         {
@@ -4014,7 +4014,7 @@
           "doc_id": "tutorial/body-multiple-params.md",
           "start": 173,
           "end": 688,
-          "score": 0.5995312615214284,
+          "score": 0.5995308158514042,
           "source": "dense"
         },
         {
@@ -4022,7 +4022,7 @@
           "doc_id": "tutorial/body-multiple-params.md",
           "start": 2019,
           "end": 2999,
-          "score": 0.573214998531729,
+          "score": 0.5732136060411194,
           "source": "dense"
         },
         {
@@ -4030,7 +4030,7 @@
           "doc_id": "advanced/using-request-directly.md",
           "start": 444,
           "end": 1155,
-          "score": 0.5594805706465197,
+          "score": 0.5594805020786984,
           "source": "dense"
         },
         {
@@ -4038,7 +4038,7 @@
           "doc_id": "tutorial/query-params.md",
           "start": 2982,
           "end": 3329,
-          "score": 0.4505120629766663,
+          "score": 0.4505116007403067,
           "source": "dense"
         },
         {
@@ -4046,7 +4046,7 @@
           "doc_id": "tutorial/body-multiple-params.md",
           "start": 3578,
           "end": 4447,
-          "score": 0.3940592011787541,
+          "score": 0.3940572412211445,
           "source": "dense"
         },
         {
@@ -4054,7 +4054,7 @@
           "doc_id": "release-notes.md",
           "start": 208907,
           "end": 209405,
-          "score": 0.3127136804296965,
+          "score": 0.3127127309271011,
           "source": "dense"
         }
       ]
@@ -4096,7 +4096,7 @@
           "doc_id": "tutorial/dependencies/index.md",
           "start": 336,
           "end": 1040,
-          "score": 0.975220407861664,
+          "score": 0.9752201138053729,
           "source": "dense"
         },
         {
@@ -4104,7 +4104,7 @@
           "doc_id": "_llm-test.md",
           "start": 8795,
           "end": 10766,
-          "score": 0.9665285148246743,
+          "score": 0.9665288872401179,
           "source": "dense"
         },
         {
@@ -4112,7 +4112,7 @@
           "doc_id": "tutorial/dependencies/sub-dependencies.md",
           "start": 3318,
           "end": 3826,
-          "score": 0.8539102407165158,
+          "score": 0.8539100429106147,
           "source": "dense"
         },
         {
@@ -4120,7 +4120,7 @@
           "doc_id": "features.md",
           "start": 5015,
           "end": 5801,
-          "score": 0.8483520559196229,
+          "score": 0.8483520065267105,
           "source": "dense"
         },
         {
@@ -4128,7 +4128,7 @@
           "doc_id": "tutorial/dependencies/index.md",
           "start": 1042,
           "end": 1242,
-          "score": 0.7938267272918156,
+          "score": 0.7938272523820182,
           "source": "dense"
         },
         {
@@ -4136,7 +4136,7 @@
           "doc_id": "tutorial/security/get-current-user.md",
           "start": 3093,
           "end": 3860,
-          "score": 0.6717593365761348,
+          "score": 0.6717595954133522,
           "source": "dense"
         },
         {
@@ -4144,7 +4144,7 @@
           "doc_id": "tutorial/dependencies/index.md",
           "start": 7228,
           "end": 7904,
-          "score": 0.6568267230771988,
+          "score": 0.6568278678463985,
           "source": "dense"
         },
         {
@@ -4152,7 +4152,7 @@
           "doc_id": "tutorial/dependencies/index.md",
           "start": 0,
           "end": 334,
-          "score": 0.5710807731801897,
+          "score": 0.5710816871341068,
           "source": "dense"
         },
         {
@@ -4160,7 +4160,7 @@
           "doc_id": "tutorial/dependencies/index.md",
           "start": 6026,
           "end": 6369,
-          "score": 0.35888729728320107,
+          "score": 0.3588879623950597,
           "source": "dense"
         }
       ]
@@ -4202,7 +4202,7 @@
           "doc_id": "python-types.md",
           "start": 9973,
           "end": 11205,
-          "score": 0.9207627174817009,
+          "score": 0.9207652505146002,
           "source": "dense"
         },
         {
@@ -4210,7 +4210,7 @@
           "doc_id": "tutorial/path-operation-configuration.md",
           "start": 2768,
           "end": 3392,
-          "score": 0.8645929629649409,
+          "score": 0.8645967870723407,
           "source": "dense"
         },
         {
@@ -4218,7 +4218,7 @@
           "doc_id": "python-types.md",
           "start": 0,
           "end": 843,
-          "score": 0.7347109511353273,
+          "score": 0.734713056814611,
           "source": "dense"
         },
         {
@@ -4226,7 +4226,7 @@
           "doc_id": "advanced/additional-responses.md",
           "start": 0,
           "end": 544,
-          "score": 0.734412164083993,
+          "score": 0.7344126254683517,
           "source": "dense"
         },
         {
@@ -4234,7 +4234,7 @@
           "doc_id": "tutorial/response-model.md",
           "start": 0,
           "end": 1329,
-          "score": 0.7244947889515305,
+          "score": 0.7244952184159011,
           "source": "dense"
         },
         {
@@ -4242,7 +4242,7 @@
           "doc_id": "advanced/additional-responses.md",
           "start": 8339,
           "end": 9050,
-          "score": 0.7018988342122068,
+          "score": 0.7019001003073987,
           "source": "dense"
         },
         {
@@ -4250,7 +4250,7 @@
           "doc_id": "tutorial/response-model.md",
           "start": 10086,
           "end": 10907,
-          "score": 0.7011783600169945,
+          "score": 0.7011797973060961,
           "source": "dense"
         },
         {
@@ -4258,7 +4258,7 @@
           "doc_id": "advanced/custom-response.md",
           "start": 11079,
           "end": 11286,
-          "score": 0.6414638106432349,
+          "score": 0.6414669165888411,
           "source": "dense"
         },
         {
@@ -4266,7 +4266,7 @@
           "doc_id": "advanced/additional-responses.md",
           "start": 6400,
           "end": 7375,
-          "score": 0.6369487110532126,
+          "score": 0.6369492133390705,
           "source": "dense"
         }
       ]
@@ -4308,7 +4308,7 @@
           "doc_id": "tutorial/first-steps.md",
           "start": 4394,
           "end": 4520,
-          "score": 0.9876322302382359,
+          "score": 0.987633773749478,
           "source": "dense"
         },
         {
@@ -4316,7 +4316,7 @@
           "doc_id": "tutorial/path-params.md",
           "start": 2837,
           "end": 3449,
-          "score": 0.9869054385340117,
+          "score": 0.9869044898704198,
           "source": "dense"
         },
         {
@@ -4324,7 +4324,7 @@
           "doc_id": "index.md",
           "start": 1226,
           "end": 2560,
-          "score": 0.9525947301427741,
+          "score": 0.9525940600627243,
           "source": "dense"
         },
         {
@@ -4332,7 +4332,7 @@
           "doc_id": "tutorial/first-steps.md",
           "start": 6150,
           "end": 6588,
-          "score": 0.7411876370185349,
+          "score": 0.7411879699275775,
           "source": "dense"
         },
         {
@@ -4340,7 +4340,7 @@
           "doc_id": "alternatives.md",
           "start": 16617,
           "end": 18845,
-          "score": 0.595357667050731,
+          "score": 0.5953592135605908,
           "source": "dense"
         },
         {
@@ -4348,7 +4348,7 @@
           "doc_id": "features.md",
           "start": 107,
           "end": 769,
-          "score": 0.5781146516476735,
+          "score": 0.5781163586442023,
           "source": "dense"
         },
         {
@@ -4356,7 +4356,7 @@
           "doc_id": "how-to/extending-openapi.md",
           "start": 162,
           "end": 1855,
-          "score": 0.5677972810192077,
+          "score": 0.5677989764661917,
           "source": "dense"
         },
         {
@@ -4364,7 +4364,7 @@
           "doc_id": "history-design-future.md",
           "start": 1411,
           "end": 1989,
-          "score": 0.5610218493860146,
+          "score": 0.5610213841301841,
           "source": "dense"
         },
         {
@@ -4372,7 +4372,7 @@
           "doc_id": "release-notes.md",
           "start": 181135,
           "end": 183371,
-          "score": 0.5292978288362674,
+          "score": 0.5292979245501047,
           "source": "dense"
         }
       ]
@@ -4414,7 +4414,7 @@
           "doc_id": "deployment/https.md",
           "start": 5911,
           "end": 7687,
-          "score": 0.5550402425761451,
+          "score": 0.5550402943019407,
           "source": "dense"
         },
         {
@@ -4422,7 +4422,7 @@
           "doc_id": "deployment/docker.md",
           "start": 19271,
           "end": 20112,
-          "score": 0.5528827940998753,
+          "score": 0.5528832084316581,
           "source": "dense"
         },
         {
@@ -4430,7 +4430,7 @@
           "doc_id": "deployment/https.md",
           "start": 2384,
           "end": 3179,
-          "score": 0.515705729348382,
+          "score": 0.5157050392722896,
           "source": "dense"
         },
         {
@@ -4438,7 +4438,7 @@
           "doc_id": "deployment/https.md",
           "start": 8633,
           "end": 9257,
-          "score": 0.39698126691116975,
+          "score": 0.39698074938749717,
           "source": "dense"
         },
         {
@@ -4446,7 +4446,7 @@
           "doc_id": "deployment/concepts.md",
           "start": 1758,
           "end": 2786,
-          "score": 0.3630637596436164,
+          "score": 0.3630638019561462,
           "source": "dense"
         },
         {
@@ -4454,7 +4454,7 @@
           "doc_id": "deployment/https.md",
           "start": 8061,
           "end": 8417,
-          "score": 0.3619238058855164,
+          "score": 0.36192416747153006,
           "source": "dense"
         },
         {
@@ -4462,7 +4462,7 @@
           "doc_id": "deployment/https.md",
           "start": 8419,
           "end": 8631,
-          "score": 0.3497564676282031,
+          "score": 0.3497562616962481,
           "source": "dense"
         },
         {
@@ -4470,7 +4470,7 @@
           "doc_id": "deployment/docker.md",
           "start": 10782,
           "end": 11235,
-          "score": 0.33150005650430314,
+          "score": 0.3314999168878071,
           "source": "dense"
         },
         {
@@ -4478,7 +4478,7 @@
           "doc_id": "deployment/concepts.md",
           "start": 10439,
           "end": 10860,
-          "score": 0.3272300609710065,
+          "score": 0.3272294654239491,
           "source": "dense"
         }
       ]
@@ -4520,7 +4520,7 @@
           "doc_id": "deployment/concepts.md",
           "start": 6667,
           "end": 7018,
-          "score": 0.793975409096426,
+          "score": 0.7939758224546553,
           "source": "dense"
         },
         {
@@ -4528,7 +4528,7 @@
           "doc_id": "deployment/docker.md",
           "start": 17621,
           "end": 18276,
-          "score": 0.6260420242546394,
+          "score": 0.6260424708138385,
           "source": "dense"
         },
         {
@@ -4536,7 +4536,7 @@
           "doc_id": "deployment/docker.md",
           "start": 25070,
           "end": 25273,
-          "score": 0.6089529425837229,
+          "score": 0.608952210627456,
           "source": "dense"
         },
         {
@@ -4544,7 +4544,7 @@
           "doc_id": "deployment/server-workers.md",
           "start": 7801,
           "end": 8370,
-          "score": 0.546840680480929,
+          "score": 0.5468411707375225,
           "source": "dense"
         },
         {
@@ -4552,7 +4552,7 @@
           "doc_id": "deployment/concepts.md",
           "start": 9213,
           "end": 9628,
-          "score": 0.47482895890556914,
+          "score": 0.4748290929115864,
           "source": "dense"
         },
         {
@@ -4560,7 +4560,7 @@
           "doc_id": "deployment/docker.md",
           "start": 28204,
           "end": 28835,
-          "score": 0.4632596790379657,
+          "score": 0.46326067115746505,
           "source": "dense"
         },
         {
@@ -4568,7 +4568,7 @@
           "doc_id": "deployment/docker.md",
           "start": 25275,
           "end": 26116,
-          "score": 0.46023506015117976,
+          "score": 0.4602359941716183,
           "source": "dense"
         },
         {
@@ -4576,7 +4576,7 @@
           "doc_id": "deployment/server-workers.md",
           "start": 0,
           "end": 1292,
-          "score": 0.4553095586247894,
+          "score": 0.455309986836389,
           "source": "dense"
         },
         {
@@ -4584,7 +4584,7 @@
           "doc_id": "deployment/manually.md",
           "start": 5987,
           "end": 6587,
-          "score": 0.357782366659878,
+          "score": 0.357783120489911,
           "source": "dense"
         }
       ]
@@ -4626,7 +4626,7 @@
           "doc_id": "features.md",
           "start": 7315,
           "end": 9137,
-          "score": 0.8559145447135611,
+          "score": 0.8559150236994336,
           "source": "dense"
         },
         {
@@ -4634,7 +4634,7 @@
           "doc_id": "alternatives.md",
           "start": 19262,
           "end": 19910,
-          "score": 0.8437133649497113,
+          "score": 0.8437146782034294,
           "source": "dense"
         },
         {
@@ -4642,7 +4642,7 @@
           "doc_id": "how-to/separate-openapi-schemas.md",
           "start": 0,
           "end": 465,
-          "score": 0.8318590897301995,
+          "score": 0.8318596700407234,
           "source": "dense"
         },
         {
@@ -4650,7 +4650,7 @@
           "doc_id": "advanced/path-operation-advanced-configuration.md",
           "start": 5787,
           "end": 7119,
-          "score": 0.7258887409347619,
+          "score": 0.7258891938212793,
           "source": "dense"
         },
         {
@@ -4658,7 +4658,7 @@
           "doc_id": "tutorial/schema-extra-example.md",
           "start": 7246,
           "end": 8251,
-          "score": 0.6572032847364712,
+          "score": 0.6572030146349318,
           "source": "dense"
         },
         {
@@ -4666,7 +4666,7 @@
           "doc_id": "tutorial/query-param-models.md",
           "start": 4091,
           "end": 4346,
-          "score": 0.6482063509311674,
+          "score": 0.6482051454255726,
           "source": "dense"
         },
         {
@@ -4674,7 +4674,7 @@
           "doc_id": "release-notes.md",
           "start": 429667,
           "end": 429976,
-          "score": 0.48998676953841286,
+          "score": 0.48998600421204813,
           "source": "dense"
         },
         {
@@ -4682,7 +4682,7 @@
           "doc_id": "release-notes.md",
           "start": 279326,
           "end": 279529,
-          "score": 0.4829864569457691,
+          "score": 0.4829858352630265,
           "source": "dense"
         },
         {
@@ -4690,7 +4690,7 @@
           "doc_id": "release-notes.md",
           "start": 424342,
           "end": 424842,
-          "score": 0.4756795601153601,
+          "score": 0.47568049462943995,
           "source": "dense"
         }
       ]
@@ -4732,7 +4732,7 @@
           "doc_id": "tutorial/path-operation-configuration.md",
           "start": 1405,
           "end": 1842,
-          "score": 0.644254158334289,
+          "score": 0.6442541348677349,
           "source": "dense"
         },
         {
@@ -4740,7 +4740,7 @@
           "doc_id": "tutorial/response-model.md",
           "start": 13513,
           "end": 14262,
-          "score": 0.46885462051898685,
+          "score": 0.4688552907233788,
           "source": "dense"
         },
         {
@@ -4748,7 +4748,7 @@
           "doc_id": "tutorial/extra-data-types.md",
           "start": 409,
           "end": 2291,
-          "score": 0.41264316325302103,
+          "score": 0.412643696627782,
           "source": "dense"
         },
         {
@@ -4756,7 +4756,7 @@
           "doc_id": "tutorial/query-params-str-validations.md",
           "start": 15735,
           "end": 16594,
-          "score": 0.3407799737581492,
+          "score": 0.3407797324263251,
           "source": "dense"
         },
         {
@@ -4764,7 +4764,7 @@
           "doc_id": "tutorial/body-nested-models.md",
           "start": 608,
           "end": 1177,
-          "score": 0.251420650217965,
+          "score": 0.2514208157279573,
           "source": "dense"
         },
         {
@@ -4772,7 +4772,7 @@
           "doc_id": "release-notes.md",
           "start": 466392,
           "end": 468422,
-          "score": 0.21841803362558052,
+          "score": 0.21841745429429357,
           "source": "dense"
         },
         {
@@ -4780,7 +4780,7 @@
           "doc_id": "tutorial/extra-models.md",
           "start": 3673,
           "end": 4558,
-          "score": 0.1839713559603317,
+          "score": 0.1839713636128692,
           "source": "dense"
         },
         {
@@ -4788,7 +4788,7 @@
           "doc_id": "advanced/generate-clients.md",
           "start": 3167,
           "end": 3547,
-          "score": 0.18056873734322448,
+          "score": 0.1805676578794166,
           "source": "dense"
         },
         {
@@ -4796,7 +4796,7 @@
           "doc_id": "tutorial/metadata.md",
           "start": 3727,
           "end": 4231,
-          "score": 0.17768133831270505,
+          "score": 0.17768120755291106,
           "source": "dense"
         }
       ]
@@ -4838,7 +4838,7 @@
           "doc_id": "alternatives.md",
           "start": 859,
           "end": 1455,
-          "score": 0.9666242723009909,
+          "score": 0.9666242195572063,
           "source": "dense"
         },
         {
@@ -4846,7 +4846,7 @@
           "doc_id": "alternatives.md",
           "start": 1457,
           "end": 2165,
-          "score": 0.797308812355793,
+          "score": 0.7973085188821479,
           "source": "dense"
         },
         {
@@ -4854,7 +4854,7 @@
           "doc_id": "tutorial/extra-models.md",
           "start": 612,
           "end": 863,
-          "score": 0.7330737260254139,
+          "score": 0.7330743711199733,
           "source": "dense"
         },
         {
@@ -4862,7 +4862,7 @@
           "doc_id": "alternatives.md",
           "start": 13544,
           "end": 15136,
-          "score": 0.5451636258466853,
+          "score": 0.545164192714579,
           "source": "dense"
         },
         {
@@ -4870,7 +4870,7 @@
           "doc_id": "tutorial/body-nested-models.md",
           "start": 3590,
           "end": 4371,
-          "score": 0.3937482284666927,
+          "score": 0.3937466353081929,
           "source": "dense"
         },
         {
@@ -4878,7 +4878,7 @@
           "doc_id": "tutorial/body-nested-models.md",
           "start": 4373,
           "end": 4658,
-          "score": 0.3559351910441807,
+          "score": 0.3559343790027318,
           "source": "dense"
         },
         {
@@ -4886,7 +4886,7 @@
           "doc_id": "tutorial/extra-models.md",
           "start": 0,
           "end": 610,
-          "score": 0.31996736200064185,
+          "score": 0.319966679382283,
           "source": "dense"
         },
         {
@@ -4894,7 +4894,7 @@
           "doc_id": "tutorial/body-nested-models.md",
           "start": 0,
           "end": 164,
-          "score": 0.22998724995815412,
+          "score": 0.22998652988129975,
           "source": "dense"
         },
         {
@@ -4902,7 +4902,7 @@
           "doc_id": "advanced/wsgi.md",
           "start": 0,
           "end": 335,
-          "score": 0.22378071841193783,
+          "score": 0.22378022036443843,
           "source": "dense"
         }
       ]
@@ -4944,7 +4944,7 @@
           "doc_id": "advanced/security/oauth2-scopes.md",
           "start": 0,
           "end": 1329,
-          "score": 0.83797609022764,
+          "score": 0.8379773029486564,
           "source": "dense"
         },
         {
@@ -4952,7 +4952,7 @@
           "doc_id": "reference/security/index.md",
           "start": 1644,
           "end": 1722,
-          "score": 0.7475072760266278,
+          "score": 0.747508395080247,
           "source": "dense"
         },
         {
@@ -4960,7 +4960,7 @@
           "doc_id": "reference/security/index.md",
           "start": 0,
           "end": 987,
-          "score": 0.7210305178482804,
+          "score": 0.7210311997313599,
           "source": "dense"
         },
         {
@@ -4968,7 +4968,7 @@
           "doc_id": "tutorial/security/index.md",
           "start": 2241,
           "end": 4137,
-          "score": 0.6695552126294837,
+          "score": 0.6695565928031425,
           "source": "dense"
         },
         {
@@ -4976,7 +4976,7 @@
           "doc_id": "tutorial/security/oauth2-jwt.md",
           "start": 8914,
           "end": 9319,
-          "score": 0.6056640759811704,
+          "score": 0.6056647030584731,
           "source": "dense"
         },
         {
@@ -4984,7 +4984,7 @@
           "doc_id": "advanced/security/oauth2-scopes.md",
           "start": 2729,
           "end": 3423,
-          "score": 0.5535258743397088,
+          "score": 0.5535256079518022,
           "source": "dense"
         },
         {
@@ -4992,7 +4992,7 @@
           "doc_id": "release-notes.md",
           "start": 135348,
           "end": 135596,
-          "score": 0.5371560899515453,
+          "score": 0.5371566460987652,
           "source": "dense"
         },
         {
@@ -5000,7 +5000,7 @@
           "doc_id": "release-notes.md",
           "start": 135623,
           "end": 135848,
-          "score": 0.5249393355661266,
+          "score": 0.5249398027372715,
           "source": "dense"
         },
         {
@@ -5008,7 +5008,7 @@
           "doc_id": "tutorial/security/first-steps.md",
           "start": 6256,
           "end": 6675,
-          "score": 0.4964854747285427,
+          "score": 0.49648564364888004,
           "source": "dense"
         }
       ]
@@ -5050,7 +5050,7 @@
           "doc_id": "deployment/versions.md",
           "start": 746,
           "end": 1632,
-          "score": 0.7863455353002787,
+          "score": 0.7863463138769476,
           "source": "dense"
         },
         {
@@ -5058,7 +5058,7 @@
           "doc_id": "index.md",
           "start": 10304,
           "end": 10500,
-          "score": 0.6495306075783387,
+          "score": 0.6495307171279606,
           "source": "dense"
         },
         {
@@ -5066,7 +5066,7 @@
           "doc_id": "index.md",
           "start": 22515,
           "end": 23695,
-          "score": 0.3585611664375971,
+          "score": 0.358562199695571,
           "source": "dense"
         },
         {
@@ -5074,7 +5074,7 @@
           "doc_id": "deployment/versions.md",
           "start": 0,
           "end": 744,
-          "score": 0.34827532008925133,
+          "score": 0.3482757358593091,
           "source": "dense"
         },
         {
@@ -5082,7 +5082,7 @@
           "doc_id": "deployment/versions.md",
           "start": 3207,
           "end": 3509,
-          "score": 0.31433905527150646,
+          "score": 0.3143390849622001,
           "source": "dense"
         },
         {
@@ -5090,7 +5090,7 @@
           "doc_id": "release-notes.md",
           "start": 304853,
           "end": 305708,
-          "score": 0.2969322648104781,
+          "score": 0.2969336285989735,
           "source": "dense"
         },
         {
@@ -5098,7 +5098,7 @@
           "doc_id": "release-notes.md",
           "start": 557930,
           "end": 558307,
-          "score": 0.282256315241336,
+          "score": 0.28225743272356907,
           "source": "dense"
         },
         {
@@ -5106,7 +5106,7 @@
           "doc_id": "tutorial/index.md",
           "start": 3679,
           "end": 5947,
-          "score": 0.27777269097267304,
+          "score": 0.277773316620314,
           "source": "dense"
         },
         {
@@ -5114,11 +5114,12 @@
           "doc_id": "release-notes.md",
           "start": 678416,
           "end": 678854,
-          "score": 0.26138790131424045,
+          "score": 0.2613883915611276,
           "source": "dense"
         }
       ]
     }
   ],
-  "created_at": "2026-11-02T04:55:11.245506+00:00"
+  "created_at": "2026-11-02T06:18:43.524744+00:00",
+  "generation": null
 }

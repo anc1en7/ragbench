@@ -1,0 +1,5125 @@
+{
+  "schema_version": 1,
+  "config_id": "8e501671142a",
+  "config": {
+    "corpus": "fastapi_docs",
+    "chunker": {
+      "type": "recursive_md",
+      "size_tokens": 256,
+      "overlap_tokens": 32,
+      "min_tokens": 256,
+      "max_tokens": 512,
+      "threshold": null
+    },
+    "embedder": {
+      "name": "BAAI/bge-small-en-v1.5"
+    },
+    "backend": "control_bm25",
+    "retrieval": {
+      "mode": "sparse",
+      "k_dense": 50,
+      "k_sparse": 50,
+      "rrf_k": 60
+    },
+    "rerank": {
+      "type": "none",
+      "model": null,
+      "top_n": 50
+    },
+    "generation": {
+      "enabled": false,
+      "context_k": 5,
+      "temperature": 0.0
+    },
+    "final_k": 10,
+    "seed": 42
+  },
+  "seed": 42,
+  "split": "dev",
+  "corpus": {
+    "name": "fastapi_docs",
+    "repo": "https://github.com/fastapi/fastapi",
+    "tag": "0.162.0",
+    "commit_sha": "7a0a3f0b286c6c865cf4398ea0e957a87b8bffa4",
+    "sha256_of_files": "a15eae559d9754596d9faa8c3b9125268a0d8f1893adc824a7df0b11d8be1be5"
+  },
+  "goldset": {
+    "n_questions": 47,
+    "all_verified": true,
+    "provisional": false
+  },
+  "package_versions": {
+    "ragbench": "0.1.0",
+    "numpy": "2.5.4",
+    "torch": "2.15.0+cu132",
+    "sentence-transformers": "6.2.0",
+    "transformers": "5.22.1",
+    "qdrant-client": "1.20.0",
+    "pgvector": "0.5.1",
+    "psycopg": "3.3.6",
+    "fastembed": "0.9.1",
+    "bm25s": "0.3.16",
+    "tiktoken": "0.14.0",
+    "pydantic": "2.14.1"
+  },
+  "hardware_ref": "results/hardware.json",
+  "min_overlap_frac": 0.2,
+  "bootstrap_resamples": 1000,
+  "bootstrap_seed": 42,
+  "metrics": {
+    "recall@1": {
+      "mean": 0.723404255319149,
+      "ci_lo": 0.5957446808510638,
+      "ci_hi": 0.851063829787234
+    },
+    "recall@3": {
+      "mean": 0.8297872340425532,
+      "ci_lo": 0.723404255319149,
+      "ci_hi": 0.9361702127659575
+    },
+    "recall@5": {
+      "mean": 0.8936170212765957,
+      "ci_lo": 0.8085106382978723,
+      "ci_hi": 0.9787234042553191
+    },
+    "recall@10": {
+      "mean": 0.9148936170212766,
+      "ci_lo": 0.8297872340425532,
+      "ci_hi": 0.9787234042553191
+    },
+    "mrr@10": {
+      "mean": 0.7835106382978724,
+      "ci_lo": 0.6806515957446808,
+      "ci_hi": 0.8874335106382978
+    },
+    "ndcg@10": {
+      "mean": 0.8154368150491482,
+      "ci_lo": 0.7228015323364261,
+      "ci_hi": 0.9036198022018
+    }
+  },
+  "latency_ms": {
+    "embed_query": {
+      "p50": 0.0,
+      "p95": 0.0
+    },
+    "dense": {
+      "p50": 0.0,
+      "p95": 0.0
+    },
+    "sparse": {
+      "p50": 1.013049972243607,
+      "p95": 1.6605349839664993
+    },
+    "fusion": {
+      "p50": 0.0,
+      "p95": 0.0
+    },
+    "rerank": {
+      "p50": 0.04260009154677391,
+      "p95": 0.06879009306430815
+    },
+    "total": {
+      "p50": 1.105500035919249,
+      "p95": 1.7863699817098677
+    }
+  },
+  "latency_passes": 3,
+  "index": {
+    "docs": 156,
+    "chunks": 2671,
+    "embed_seconds": 0.0,
+    "index_seconds": 0.1406252000015229,
+    "wall_seconds": 0.4836653999518603,
+    "peak_rss_bytes": 1710661632,
+    "chunks_per_sec": null,
+    "size_bytes": 1521928
+  },
+  "ann_sanity_recall": null,
+  "per_query": [
+    {
+      "qid": "q0192db33ef84",
+      "question_type": "factual",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "bf4afe0896c1b4928b30a3495f221737cffe6e3f1e6f5e37bfdb8c782b3f504b",
+          "doc_id": "tutorial/header-param-models.md",
+          "start": 2572,
+          "end": 3314,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "10275a5265d6329fdff501822322deab5a0185e104bed4076978e334a385c077",
+          "doc_id": "tutorial/cookie-param-models.md",
+          "start": 2953,
+          "end": 3516,
+          "score": 0.7122897992212185,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "0f54203ebe32c60f2630d5eda38fa9291f83c58eab544cd40fd211a6d3f91cc0",
+          "doc_id": "release-notes.md",
+          "start": 278910,
+          "end": 279324,
+          "score": 0.603362821496121,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "f2d86a7836bb4d8c59de24f45b479a680e61df5a89beaad240230f14acf50c93",
+          "doc_id": "release-notes.md",
+          "start": 1346,
+          "end": 1888,
+          "score": 0.5911582818327354,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "877c194ecba04953d263f9757cc903c00de4e3f3385028fa53ac50313884d9e7",
+          "doc_id": "tutorial/header-param-models.md",
+          "start": 996,
+          "end": 1819,
+          "score": 0.5571793718199324,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "f46f680a16ff2f3491b0458681d53628484ed861f2d7357c42f87b2aae428065",
+          "doc_id": "tutorial/query-param-models.md",
+          "start": 1956,
+          "end": 3205,
+          "score": 0.5261470626210585,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "3c054771c02d3f6c221c83a82a42323e9c3c35f503637af9ec5574b23ea5f9cf",
+          "doc_id": "tutorial/header-param-models.md",
+          "start": 3316,
+          "end": 4039,
+          "score": 0.47774655166970625,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "1e534bc439d14c7a6cc3f2b17e32b126a6628d6c07994e2c964f215c2f558ef0",
+          "doc_id": "tutorial/header-param-models.md",
+          "start": 0,
+          "end": 379,
+          "score": 0.47676141916552367,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "8509a43309916ef29350ed5ba5e21c6337be1dc51612a452407f5e9573df2ea2",
+          "doc_id": "tutorial/query-param-models.md",
+          "start": 3258,
+          "end": 4089,
+          "score": 0.4728964430158171,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "74b7ac32c0420679daa2d93aa4accb6ebfe627b343b3b9925bf84024d733bad3",
+          "doc_id": "tutorial/request-form-models.md",
+          "start": 2068,
+          "end": 2850,
+          "score": 0.41779920088834926,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q01c9dacf4110",
+      "question_type": "factual",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "971522f4da965f440a0cd818f59e79aad45d94676c22660aa264479160e784b4",
+          "doc_id": "how-to/authentication-error-status-code.md",
+          "start": 0,
+          "end": 1051,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "2e817646201d8359bb04b52bb1ea13edb4ee6f51be4762399489af1c469d968c",
+          "doc_id": "release-notes.md",
+          "start": 141847,
+          "end": 142340,
+          "score": 0.3429437039279315,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "b28dbb56a0cffe32d8c9bbb058a2ae361882932421e3a0f6c134d4475e8bd310",
+          "doc_id": "tutorial/path-operation-configuration.md",
+          "start": 308,
+          "end": 1017,
+          "score": 0.32298633592249365,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "66ee2ae3b6d7c58bce7f1023cafc18c761d6523af7fa20f8a2b42eec9d5b7f84",
+          "doc_id": "tutorial/response-status-code.md",
+          "start": 1185,
+          "end": 1525,
+          "score": 0.3134797747664453,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "c684817027a9e6b3489f26177368693469ace69f25b64a75a78f95a1f4fd0794",
+          "doc_id": "tutorial/response-status-code.md",
+          "start": 2690,
+          "end": 2927,
+          "score": 0.31098834824125043,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "47b98bb43f7638aa6d9f0aa01f86c36b529b42dd75430822d1ab45b4e9c5f283",
+          "doc_id": "tutorial/handling-errors.md",
+          "start": 0,
+          "end": 852,
+          "score": 0.25644173041888785,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d0521209cc5542d398a76fc077353fe90d3de47eeda148abfd375e5159333c3a",
+          "doc_id": "tutorial/dependencies/index.md",
+          "start": 2113,
+          "end": 2449,
+          "score": 0.23381632896154383,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "e5e78e2f0d42897911e125c54cac8736e2989f2d300f666b9b5dfaa47de862ae",
+          "doc_id": "advanced/response-change-status-code.md",
+          "start": 260,
+          "end": 634,
+          "score": 0.2058389895355953,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "223a13e3c46d158bf483ef341e29cb0be6c8dddb8e1e83d45c8cb8dd994aadb8",
+          "doc_id": "advanced/response-change-status-code.md",
+          "start": 0,
+          "end": 258,
+          "score": 0.2028580811866134,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "8c9d3f0c572de4b0f2f8ea6c7e79806e66192df7fc915e148020be5058f8c772",
+          "doc_id": "tutorial/response-status-code.md",
+          "start": 2929,
+          "end": 3768,
+          "score": 0.18652411033795696,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q0d6fb160a4d7",
+      "question_type": "factual",
+      "relevance": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": [
+        {
+          "chunk_id": "ec2d0928dc39aca1359f783bab8fa56b6ca481dcaa0e386ffdb17228a9c81a55",
+          "doc_id": "tutorial/body-updates.md",
+          "start": 36,
+          "end": 527,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "5621fe4f83d83263964c10562a0454fa8c793fa99f1474027752aa6da7b8eeef",
+          "doc_id": "tutorial/stream-json-lines.md",
+          "start": 205,
+          "end": 1036,
+          "score": 0.8535933253179323,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "1e424492279985d8409060b3a31a74bbcb3ad4976f493f7276f030aad2fbc035",
+          "doc_id": "tutorial/first-steps.md",
+          "start": 9740,
+          "end": 10378,
+          "score": 0.717048235948574,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "baf2e6c733e6c7b3bf4654bf5715a932681d50b945e3f3e348b545a1090ef648",
+          "doc_id": "deployment/index.md",
+          "start": 87,
+          "end": 684,
+          "score": 0.7092057519497063,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "09c95a4f5a248b06a5ab3733af50799aa1c30002381becf7acf26c7be68bc630",
+          "doc_id": "tutorial/first-steps.md",
+          "start": 11213,
+          "end": 11656,
+          "score": 0.6786547014547744,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "6866b5b8c144d3db9c8bc95b137a6f8a0973e0eab3e56ce1d4e0d7cfc9e5dfa2",
+          "doc_id": "tutorial/server-sent-events.md",
+          "start": 405,
+          "end": 1082,
+          "score": 0.6599488949717723,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "db60d702ec9e7c8fd759f5d1936b899641b37fb8545eb0299ff4bee242a3e707",
+          "doc_id": "tutorial/cors.md",
+          "start": 0,
+          "end": 355,
+          "score": 0.5710257914295569,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "9b7f7c02433bf207aa8e762ec6bbb8289d5bee57d4c948d211b2000de62b3e32",
+          "doc_id": "tutorial/response-model.md",
+          "start": 367,
+          "end": 1329,
+          "score": 0.4303506708400882,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "57ff44d41248f2d56b0536b0dd4cc124df04faea7cbc2122882ddd106170a888",
+          "doc_id": "tutorial/response-model.md",
+          "start": 8044,
+          "end": 8586,
+          "score": 0.4063291165751093,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "7c6cef30784d55cca1c60ef98b40b54c0d5dca3f8abcd8a0f2c74b3aa79d47ef",
+          "doc_id": "advanced/custom-response.md",
+          "start": 6032,
+          "end": 6522,
+          "score": 0.3923012519136998,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q0dccbbbf5f13",
+      "question_type": "why_when",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "97df7572ac3ee147a614408f3f284f31b0bc5a3a0030f96b2edc812a39ed723b",
+          "doc_id": "advanced/security/oauth2-scopes.md",
+          "start": 11621,
+          "end": 12361,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "46d78dbc0abc14ea88521a9a861eb168615c38d8bfffb444584e7f91a2e521cb",
+          "doc_id": "advanced/security/oauth2-scopes.md",
+          "start": 4082,
+          "end": 5124,
+          "score": 0.3593736713701251,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "052815269d021f86983b5384bab68bca207f115d013db33cf4a57c6276bec15d",
+          "doc_id": "tutorial/path-params.md",
+          "start": 3819,
+          "end": 4674,
+          "score": 0.33151759053633373,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "3dcb306d878bef695eeab129a7a563dbf01e1cec8f3c7d17f893ea7b545cd5a3",
+          "doc_id": "advanced/security/oauth2-scopes.md",
+          "start": 8756,
+          "end": 9348,
+          "score": 0.26698592104586416,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "1ac10034e716670bf9cf79e8b9ea2221cd767ac6223a81125e80d50b204d3ca8",
+          "doc_id": "tutorial/security/simple-oauth2.md",
+          "start": 8856,
+          "end": 9133,
+          "score": 0.2559294269653573,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "6d90d427acfa0d3d76aaab4755905b33634ffb0a946e209bbb82a7b870d940e5",
+          "doc_id": "tutorial/security/oauth2-jwt.md",
+          "start": 1198,
+          "end": 1586,
+          "score": 0.23751107269207655,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "0022ece3d448825cd523c02d31c44ee41c7c7e7ec4fca0440239f880a758190a",
+          "doc_id": "tutorial/security/oauth2-jwt.md",
+          "start": 7843,
+          "end": 8830,
+          "score": 0.23518119881110722,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "76d2673668f35aacd8730b11d3a6a40604a3b55978cc96922a8a1134aefa2f59",
+          "doc_id": "release-notes.md",
+          "start": 465558,
+          "end": 466572,
+          "score": 0.2284850332523357,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "df55fd80a03306589fa069667581065ddcf3e80c8ebfc657137b635e42d06e88",
+          "doc_id": "tutorial/bigger-applications.md",
+          "start": 11766,
+          "end": 12705,
+          "score": 0.21940188512564684,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "baab7b2367cc6790a1fa6456552080eb365b057f8f63df9ab066e376b5a33c72",
+          "doc_id": "tutorial/security/oauth2-jwt.md",
+          "start": 8914,
+          "end": 9319,
+          "score": 0.2051468458717386,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q13fc29b2d8a1",
+      "question_type": "factual",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "2f562050f2bda008f48c30de5941a8d67e64f02831e297d51e05258fad85bfdb",
+          "doc_id": "advanced/stream-data.md",
+          "start": 2951,
+          "end": 3785,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "99e01a5c9bcfa186b1573695136874143e042a13dea59b866bd93ac03d4a1c6a",
+          "doc_id": "advanced/stream-data.md",
+          "start": 3787,
+          "end": 4005,
+          "score": 0.6878864970859307,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "a83abe408964b4fcd7655835e3f6186ab0d9b86a5f71ff473978aa72007d8a59",
+          "doc_id": "deployment/concepts.md",
+          "start": 2997,
+          "end": 3426,
+          "score": 0.6351877620196169,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "7bd549f2d1d2b19184b7e50f7cee3b5960b8efec64b64474476afd78b02d7d08",
+          "doc_id": "tutorial/bigger-applications.md",
+          "start": 8717,
+          "end": 9717,
+          "score": 0.43722712590926477,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "25c7158f8b104b14b1a6925f53f2c754dd3de119467aec1078e924f632331836",
+          "doc_id": "tutorial/bigger-applications.md",
+          "start": 7991,
+          "end": 8815,
+          "score": 0.38451395030130353,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "7dd195cdf8a0d1f3050afb7f7b455ac52742821d25cd2953c6a6d1908c04956f",
+          "doc_id": "tutorial/bigger-applications.md",
+          "start": 10696,
+          "end": 11022,
+          "score": 0.3537707431160494,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "df55fd80a03306589fa069667581065ddcf3e80c8ebfc657137b635e42d06e88",
+          "doc_id": "tutorial/bigger-applications.md",
+          "start": 11766,
+          "end": 12705,
+          "score": 0.2918292270530006,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "e3521709babbfa89924b381c4fea96b398d4496911b8ea44794a1931dd5330b1",
+          "doc_id": "tutorial/bigger-applications.md",
+          "start": 982,
+          "end": 1938,
+          "score": 0.2914249560670588,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "3f8113e1fddd052845a15ca5d838e3a4d9b732510443fc671ea9c69bd9e19cfa",
+          "doc_id": "tutorial/debugging.md",
+          "start": 627,
+          "end": 1522,
+          "score": 0.2842060972074367,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "81c7b19f830a9ef8cdce4dd81369f792a89994a4f140eab3dec720b03a8a47e9",
+          "doc_id": "tutorial/request-files.md",
+          "start": 1475,
+          "end": 2440,
+          "score": 0.2635436075155767,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q1625899626e7",
+      "question_type": "factual",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "27ac8a0002485e4300c4b60115afcaf308f5bd8cc1d786e95cef8483f99bedeb",
+          "doc_id": "reference/responses.md",
+          "start": 626,
+          "end": 1586,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "9afc40d86fc677ca8a6a6aa556924f4041e8af311aca2e8040179c9933e8ff8d",
+          "doc_id": "advanced/custom-response.md",
+          "start": 9988,
+          "end": 10574,
+          "score": 0.6636472393482448,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "b79c987b357519f5f21afa9f4f84300f71e8ebfef4e6d5dc62331827413a8635",
+          "doc_id": "release-notes.md",
+          "start": 96597,
+          "end": 97025,
+          "score": 0.638119226230354,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "ca26051c15c0a9676496dac001256be2aa32ad9e7df0d9e871c83066776c64cb",
+          "doc_id": "how-to/general.md",
+          "start": 354,
+          "end": 771,
+          "score": 0.5414901956992227,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "08041ce10a4f8f5593b45926d7165efec4086ae1abbe2ea8333fa5819267c174",
+          "doc_id": "advanced/custom-response.md",
+          "start": 1981,
+          "end": 2275,
+          "score": 0.537668589219258,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "7c6cef30784d55cca1c60ef98b40b54c0d5dca3f8abcd8a0f2c74b3aa79d47ef",
+          "doc_id": "advanced/custom-response.md",
+          "start": 6032,
+          "end": 6522,
+          "score": 0.4252550590510179,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "94d09e485e196fcd28ea220f15fa0640ade093c13ca105583df91393411ed2a4",
+          "doc_id": "release-notes.md",
+          "start": 652240,
+          "end": 652536,
+          "score": 0.3521087187231034,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "4ceff220de90891691eb7b4770e4a96334fe6f5e35be66ba2550eacbca62611a",
+          "doc_id": "advanced/response-directly.md",
+          "start": 2945,
+          "end": 3748,
+          "score": 0.34998985838626456,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "6e09add8959afee0849497b91753cbfec64f009fb7307cdece9e27fc86b15145",
+          "doc_id": "tutorial/response-model.md",
+          "start": 5694,
+          "end": 6124,
+          "score": 0.32063454607174086,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d0e2d567fca75bc2a0f2703f7b296a4264142345a585a37c7655199c4a8bb13f",
+          "doc_id": "alternatives.md",
+          "start": 12405,
+          "end": 13542,
+          "score": 0.30518365522786733,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q1e5bef8645f6",
+      "question_type": "factual",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "21d6bc6782c515f35eeef7debe9c25960d6bb805836303e051f04f81954d34eb",
+          "doc_id": "advanced/templates.md",
+          "start": 2130,
+          "end": 2802,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "bb8c0c071565a104f35beecf285438ace1a1968caf308045280f63b3f6510073",
+          "doc_id": "tutorial/security/first-steps.md",
+          "start": 7565,
+          "end": 8252,
+          "score": 0.5177111349903957,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "baf2e6c733e6c7b3bf4654bf5715a932681d50b945e3f3e348b545a1090ef648",
+          "doc_id": "deployment/index.md",
+          "start": 87,
+          "end": 684,
+          "score": 0.48736541024032853,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "57ff44d41248f2d56b0536b0dd4cc124df04faea7cbc2122882ddd106170a888",
+          "doc_id": "tutorial/response-model.md",
+          "start": 8044,
+          "end": 8586,
+          "score": 0.3990314915557039,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "31029a322d4a8f80342d0e7886a8fac6e0c110217ec4da26872a5ec3983d5eea",
+          "doc_id": "advanced/events.md",
+          "start": 3451,
+          "end": 4447,
+          "score": 0.3390673180455149,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "40b5ad7a6d7dae1203d09f33f4af061ac03e454521024afe1182e166c33f7436",
+          "doc_id": "how-to/extending-openapi.md",
+          "start": 162,
+          "end": 888,
+          "score": 0.3107732190620357,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "36d1f1cd48abb41aaef464d95fdb6368f80d5753475c5f7e2707cd1207267d9a",
+          "doc_id": "advanced/templates.md",
+          "start": 3633,
+          "end": 4208,
+          "score": 0.28214296635064573,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "f5269229f5e0ec7d9beb9e89242c4d216949a5da81524134660aeccf7fdeedb9",
+          "doc_id": "deployment/docker.md",
+          "start": 9014,
+          "end": 9658,
+          "score": 0.2571926662074955,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "e1fdcd94daa5d8e9e7cbe35e2c2614c3f5e6413e3c2e3fa13d7e87347db8a656",
+          "doc_id": "tutorial/frontend.md",
+          "start": 6058,
+          "end": 6365,
+          "score": 0.2051640720504444,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "edfed7c9bcbe280e19be9a420e632919cb8fa0b5f8b3fb520a33057334977546",
+          "doc_id": "index.md",
+          "start": 22515,
+          "end": 23280,
+          "score": 0.20216178972184323,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q2379a7821022",
+      "question_type": "factual",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "b4d106728534cc61fc825f3cff7b73e19c6b7b631202f5f0f291e9738bc100fb",
+          "doc_id": "how-to/custom-docs-ui-assets.md",
+          "start": 0,
+          "end": 585,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "c137d29d8e0bbbeeba4a96945238cb054ab67083a5e87bacf5883f2391d6182d",
+          "doc_id": "tutorial/cookie-params.md",
+          "start": 1158,
+          "end": 1495,
+          "score": 0.6114577988996369,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "267a6b6f87329010fccfcebeaf7318f92ac4f9a1981a260935869165a02bdcf6",
+          "doc_id": "how-to/custom-docs-ui-assets.md",
+          "start": 2894,
+          "end": 3273,
+          "score": 0.5700839895891906,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "67c3002945855bbbcf8cf966daffcf41fca14d12a2f27c72b64a250ea4b2e8b7",
+          "doc_id": "tutorial/first-steps.md",
+          "start": 6150,
+          "end": 6588,
+          "score": 0.532499588865594,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d30c4262039724f071ffa6e541eb2274a01601e437a61d24f7ba399ba88ada5c",
+          "doc_id": "tutorial/cookie-param-models.md",
+          "start": 876,
+          "end": 1561,
+          "score": 0.5127231475071469,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "1bbea1f74327d122d3d701123e7ce963bc80f95e4cc14fa5d6b244e4f5feee6a",
+          "doc_id": "how-to/custom-docs-ui-assets.md",
+          "start": 587,
+          "end": 892,
+          "score": 0.4886423110972808,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "7fa0217aa9b2ce3f29cdeb2bce133ba4bfc606f70489e74cb163ee9bcc04ae84",
+          "doc_id": "advanced/openapi-callbacks.md",
+          "start": 2127,
+          "end": 3217,
+          "score": 0.4610632378877835,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "4a8111a159bfb2e3a32533d9faf138f93e5038dd6bc3128b3ee76c2226d4fb99",
+          "doc_id": "how-to/configure-swagger-ui.md",
+          "start": 0,
+          "end": 550,
+          "score": 0.40851838977117294,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "b602c4d6c6f6882cf582557c2e1444c7c0301291c87adba141a9679bab01c4a5",
+          "doc_id": "how-to/configure-swagger-ui.md",
+          "start": 2250,
+          "end": 2890,
+          "score": 0.3904887427953004,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "0731f5d81ca9fb768881f2857d8613d94a6dedaf6ab9dc951c014ad716ec941e",
+          "doc_id": "index.md",
+          "start": 14014,
+          "end": 14348,
+          "score": 0.37763133405482907,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q29ee9caa94ef",
+      "question_type": "why_when",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "1563d49b6fed4403a2f44948ad188a532cc13c5572104f3bb224a57623f6fa65",
+          "doc_id": "fastapi-people.md",
+          "start": 1252,
+          "end": 1898,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "0422619e45042c3dd5d93c470e0a1ca7dd692b3fbe3d7acdb09c01df13d1150c",
+          "doc_id": "fastapi-people.md",
+          "start": 4743,
+          "end": 5963,
+          "score": 0.6375505324551342,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "05bbf9d083c712b74c6dd789a1a2ed1e122aa647ca75768dbbc756dbd1b23011",
+          "doc_id": "release-notes.md",
+          "start": 153937,
+          "end": 154120,
+          "score": 0.48272677997657415,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "cf0e9bac5f1e49b6e7e59fb522c4d777f2c971d57647355a7cf9545e365638a5",
+          "doc_id": "fastapi-people.md",
+          "start": 1,
+          "end": 94,
+          "score": 0.43117783410307764,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "2fad995721a523da6a7e23cffecd0645170b296fa74a639955d32fee3e1f6829",
+          "doc_id": "translations.md",
+          "start": 0,
+          "end": 183,
+          "score": 0.3589179482903603,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "0420c655e3851346fd5907b211bcb0b8a21cbe866701878b4bc8a93c8b4142ee",
+          "doc_id": "history-design-future.md",
+          "start": 3349,
+          "end": 3615,
+          "score": 0.3250025428638853,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "ec212b4f0763741a4cec95c0365d9e0357545a5a8d656fa3a2166203921fc0a2",
+          "doc_id": "fastapi-people.md",
+          "start": 5830,
+          "end": 6065,
+          "score": 0.26901721567674264,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "3b32f08a7d40a050360d8873edc5fdc8aa6eb220e3459dcf1967764cef2125ea",
+          "doc_id": "help-fastapi.md",
+          "start": 2239,
+          "end": 2566,
+          "score": 0.2459361221104031,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "a5f63b35d377f1108da4fcd584c2dc82c215a618d4795ae4b4ff908e692b952d",
+          "doc_id": "release-notes.md",
+          "start": 94589,
+          "end": 94906,
+          "score": 0.20146009440682297,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "c6fe75dddc2f68f63b13b66989f4092183e4382438264659ae63acdb86a407e4",
+          "doc_id": "release-notes.md",
+          "start": 194602,
+          "end": 194906,
+          "score": 0.1972341728464137,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q2dd6b5d710b2",
+      "question_type": "how_to",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "32b5bfb6e98d20a8312c48d0224bb1f21464eb592a0e54b7d15fdc268a2f1708",
+          "doc_id": "tutorial/body-nested-models.md",
+          "start": 5457,
+          "end": 6485,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "244fd9235a59d0e7641032c77c1a84a926fc7e5cb24b6c0d793e2a250504a450",
+          "doc_id": "tutorial/sql-databases.md",
+          "start": 2106,
+          "end": 2768,
+          "score": 0.6930509183204037,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "77bda39cf78fb7286167ce8f68fdebf9308115330f60b520abb353a3d30af18e",
+          "doc_id": "advanced/openapi-callbacks.md",
+          "start": 0,
+          "end": 706,
+          "score": 0.5028982355514737,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "f2391ffb05802bcf7e811a69ad0a2e5dde5c9fb686c0dca39f6155d9eecc09c0",
+          "doc_id": "tutorial/extra-models.md",
+          "start": 6133,
+          "end": 6564,
+          "score": 0.42439063633757734,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "c2acced530580c602436d35e262319f2dd978e7e0042ab109ceaa7a5a3d0374c",
+          "doc_id": "tutorial/response-model.md",
+          "start": 1331,
+          "end": 2349,
+          "score": 0.3414991692308688,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "7209cc9484bcfc6dc8ab2de4abb144b716274729bf2764d821059ce969ad5caf",
+          "doc_id": "advanced/additional-responses.md",
+          "start": 546,
+          "end": 1523,
+          "score": 0.30940836138362365,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "e2777760eae374f390725bcab46c2c6a747d24b0bf5f27aa2143734e1694a33d",
+          "doc_id": "deployment/https.md",
+          "start": 5435,
+          "end": 5909,
+          "score": 0.3060519782191314,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "b3afea0c93b73c681f0ae071b20bdb0830f9f334df4cf18e1baeaa636582895c",
+          "doc_id": "deployment/https.md",
+          "start": 7069,
+          "end": 7687,
+          "score": 0.29720663852097545,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "b7fa116c0fa2da6f2b5c9e27ee30f29c016bdb5b88cfcf047bc098669b708874",
+          "doc_id": "python-types.md",
+          "start": 5865,
+          "end": 6357,
+          "score": 0.26160373757402916,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "abf5927ce955f5220df33851665182a897c816647fa05811509dc68b18fe0174",
+          "doc_id": "release-notes.md",
+          "start": 502539,
+          "end": 503061,
+          "score": 0.24116004403840718,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q340fb02703da",
+      "question_type": "why_when",
+      "relevance": [
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 0.3333333333333333,
+        "ndcg@10": 0.5
+      },
+      "hits": [
+        {
+          "chunk_id": "ad4456603f281c79148fe435f3b4f33cfd019e51e283b23a568f86fe79e1cc44",
+          "doc_id": "tutorial/stream-json-lines.md",
+          "start": 3852,
+          "end": 4161,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "b029c67bd401eb71310be1bad7754f2ac77ef144c8451a26fe8397a16884fcd2",
+          "doc_id": "advanced/stream-data.md",
+          "start": 1371,
+          "end": 1975,
+          "score": 0.7955882860304495,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "28bee5a0a2dc2778b2b5a3277d1513bba765a5a1e6c673ffa4857ed0e7168697",
+          "doc_id": "tutorial/stream-json-lines.md",
+          "start": 2575,
+          "end": 3422,
+          "score": 0.6425893356842141,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "e5a8231d930716ee0f5cfde49cc64c9d7255eb50128abef7d9f6fc3a174753cc",
+          "doc_id": "tutorial/server-sent-events.md",
+          "start": 2291,
+          "end": 2533,
+          "score": 0.457645282538629,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "79c91571f9208e97a260afcdfda10cd181297852c6f37720008b2d7d52618255",
+          "doc_id": "release-notes.md",
+          "start": 92351,
+          "end": 92868,
+          "score": 0.40625695132165224,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "3e7dd2b1860ccbff4af5079f37c7d58d2a8cfc4b1a6f9f1295e0f08acb57f011",
+          "doc_id": "tutorial/response-model.md",
+          "start": 10086,
+          "end": 10907,
+          "score": 0.40039350941043667,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "b57d5c23f539ad42bc172f05871938afc9a00ca8d7abb5ce4319f844f32aaa42",
+          "doc_id": "advanced/custom-response.md",
+          "start": 7260,
+          "end": 8289,
+          "score": 0.34674336831329006,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "4ceff220de90891691eb7b4770e4a96334fe6f5e35be66ba2550eacbca62611a",
+          "doc_id": "advanced/response-directly.md",
+          "start": 2945,
+          "end": 3748,
+          "score": 0.3328544178959053,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "c2acced530580c602436d35e262319f2dd978e7e0042ab109ceaa7a5a3d0374c",
+          "doc_id": "tutorial/response-model.md",
+          "start": 1331,
+          "end": 2349,
+          "score": 0.3263073384611853,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "7eeecbb90f9c74c6b90089d73d37fc4af6624db164253a0f720108a850a0a3eb",
+          "doc_id": "tutorial/stream-json-lines.md",
+          "start": 0,
+          "end": 203,
+          "score": 0.32409587007759166,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q36b27f89f962",
+      "question_type": "factual",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "1b84de1652374ca15c3ad84dca71da720e9e7c13104380fd749318ab58f24a69",
+          "doc_id": "advanced/using-request-directly.md",
+          "start": 444,
+          "end": 1155,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "ee9e754ddd1b1b5e89fcee9ec947e02d83b6fa9493366f52523fe74dceb20b52",
+          "doc_id": "reference/request.md",
+          "start": 0,
+          "end": 651,
+          "score": 0.9174022087510059,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "50ea4ffe25031e6e38f1a33c21e8a20f37e11b2cfdb4e33a2e070e63d533f10b",
+          "doc_id": "advanced/using-request-directly.md",
+          "start": 1932,
+          "end": 2335,
+          "score": 0.6491917694714164,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d0ea4612b819d37e4d263d8ea6595edfadac636f224bd17e537910839a25f928",
+          "doc_id": "advanced/using-request-directly.md",
+          "start": 0,
+          "end": 442,
+          "score": 0.596443606042127,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "a789870096a2c73ef0ac6cd26802ebf8ca88281273a6c5766b35f8db845c1e4c",
+          "doc_id": "advanced/path-operation-advanced-configuration.md",
+          "start": 4756,
+          "end": 5785,
+          "score": 0.5026694805455079,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "77bda39cf78fb7286167ce8f68fdebf9308115330f60b520abb353a3d30af18e",
+          "doc_id": "advanced/openapi-callbacks.md",
+          "start": 0,
+          "end": 706,
+          "score": 0.4754609808904953,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "2fa39c5156df0ddcaa106cae9e69cff5ff6fc0df6de792269f5fe81edc591183",
+          "doc_id": "tutorial/request-files.md",
+          "start": 4359,
+          "end": 5451,
+          "score": 0.4561478484832683,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "04de025bcb0e3ff1c2b45b2fa3533c940a7a5da01796c053f3ea02aeb7a89ef4",
+          "doc_id": "advanced/settings.md",
+          "start": 7992,
+          "end": 8836,
+          "score": 0.3736098452335358,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d0e2d567fca75bc2a0f2703f7b296a4264142345a585a37c7655199c4a8bb13f",
+          "doc_id": "alternatives.md",
+          "start": 12405,
+          "end": 13542,
+          "score": 0.35924075139305367,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d7a66fa1ec707e9f1a8133a085cbb6844d8d5b97cf211814ce859e5d793be485",
+          "doc_id": "advanced/using-request-directly.md",
+          "start": 1157,
+          "end": 1930,
+          "score": 0.33212300616741364,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q37fb2e04afdb",
+      "question_type": "factual",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "a344efa44b8442ec0c725f350d47dc2836472aa41a2c137d3e010a7250f483fe",
+          "doc_id": "tutorial/middleware.md",
+          "start": 2863,
+          "end": 3637,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "c236ae1e252188491d575468eb30ebcd045467e673a982a3b64c1b09618c78ee",
+          "doc_id": "tutorial/middleware.md",
+          "start": 2222,
+          "end": 2861,
+          "score": 0.3797473707356152,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "9d9cfb9301d710cd1e7237544cb5d656d368859f0f1d03a3a8ed3bc0ff304507",
+          "doc_id": "tutorial/middleware.md",
+          "start": 980,
+          "end": 2049,
+          "score": 0.2790561646981556,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "e9667ed20c6746fb6acecfd7a087157449b387200263de7660868826e091c21b",
+          "doc_id": "tutorial/middleware.md",
+          "start": 0,
+          "end": 978,
+          "score": 0.2598982482360935,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "ee6347412c838815994bda7d98a1b775809a8634fad0a04eb473fcd555fc6e74",
+          "doc_id": "tutorial/background-tasks.md",
+          "start": 0,
+          "end": 764,
+          "score": 0.18389799148419886,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "ca50f57997b49dcab4ed592bf9d3afbe3eb7e5dd1b34e66696950b3bdebfb818",
+          "doc_id": "release-notes.md",
+          "start": 670221,
+          "end": 671398,
+          "score": 0.16877108714112848,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "5a859c200a8f9cc3cbdfd0e0a5b437afd9f438932324a60995504b11b8d5aa77",
+          "doc_id": "release-notes.md",
+          "start": 475391,
+          "end": 476344,
+          "score": 0.16527105445724644,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "7826689cd3f103f15dde98a141989cf1af793ec14c0ae78d1cfb976ea0a64398",
+          "doc_id": "advanced/middleware.md",
+          "start": 0,
+          "end": 306,
+          "score": 0.16455499539678953,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "bd1993445e1d532e9d10fa00a84ef26031c643ee9e2c74e4f8e40aea6949c4f9",
+          "doc_id": "tutorial/frontend.md",
+          "start": 5588,
+          "end": 6056,
+          "score": 0.15908648236299933,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "f6bc075fc2b918d6dfc85947e8dba449ee579b5d1041ded8bf03f78eb906f223",
+          "doc_id": "deployment/https.md",
+          "start": 8419,
+          "end": 8631,
+          "score": 0.15640186921573174,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q38af951b6873",
+      "question_type": "why_when",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "0acb04215f9795044e3c1964b17715390ead39664b044997cc5803eee050ed25",
+          "doc_id": "deployment/docker.md",
+          "start": 1849,
+          "end": 2813,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "24725a5dd7ac45c5f744109e41c52a6fe42b3c3464103215258b6f2426bd4e13",
+          "doc_id": "deployment/docker.md",
+          "start": 2705,
+          "end": 3131,
+          "score": 0.515211979147923,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "4e3d5193e05c5a330986ad6f94c7e668720b38a79d0b36c85462f7000a6c8e3c",
+          "doc_id": "deployment/docker.md",
+          "start": 3133,
+          "end": 4163,
+          "score": 0.49390420864596357,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "6613a419b2ebb7f56af5dabcf7d9830ca36bb6d702b2893d2583440aaedaf1e1",
+          "doc_id": "deployment/docker.md",
+          "start": 4491,
+          "end": 5361,
+          "score": 0.4275733368074366,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "5bea61099e41fa445b24dd996c28e730deea9f7276d03eafd4786984c9008d49",
+          "doc_id": "deployment/docker.md",
+          "start": 5363,
+          "end": 5805,
+          "score": 0.3777739837838397,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d227d90494358f8f55d8cb8e519c44d5d58c723d308a68a7b0df71d8e80b8ab9",
+          "doc_id": "deployment/docker.md",
+          "start": 28204,
+          "end": 28835,
+          "score": 0.361717932005389,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "840917aefd6f0fe0b64a30f6c211c21d9e49991131875de34e35be0e052fad5c",
+          "doc_id": "deployment/docker.md",
+          "start": 27596,
+          "end": 27963,
+          "score": 0.3607307842477364,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d3ca4de7c69f42659bb5e773f093b8b7857a07c145378550ed6455e104fead7a",
+          "doc_id": "deployment/docker.md",
+          "start": 16983,
+          "end": 17619,
+          "score": 0.3479502348268192,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "83238d7f58407ddbcb783a43d82a274e828b54521156e5344f9d870d8d74b664",
+          "doc_id": "deployment/docker.md",
+          "start": 13294,
+          "end": 13816,
+          "score": 0.34423321929318235,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "17ffd09e748c2f1c649f77257e5ae266f85e4ae974bd0d6bee5cb207cf09b4a0",
+          "doc_id": "deployment/docker.md",
+          "start": 13818,
+          "end": 14017,
+          "score": 0.30012636372629437,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q3c1e130bd15f",
+      "question_type": "factual",
+      "relevance": [
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 0.5,
+        "ndcg@10": 0.6309297535714575
+      },
+      "hits": [
+        {
+          "chunk_id": "55d10c7ffbdb38f394ae84703db65723695821e448d59db2ec61478831015e7b",
+          "doc_id": "async.md",
+          "start": 11441,
+          "end": 12255,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "c068ea8446c5339670e0c062b4b22547eabe544b14fdcfbaf33216cc4b4d0886",
+          "doc_id": "async.md",
+          "start": 2054,
+          "end": 3046,
+          "score": 0.6166452359460385,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d2d64fc9a81d3564c6f3e674693c9a6a6865d73dff03bf06854a5843a07a36a1",
+          "doc_id": "async.md",
+          "start": 3048,
+          "end": 4103,
+          "score": 0.557965260309384,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d2e8f6bf07e7b9391c7cbb452a3c457ad9e2618007dd14e90da8fd9c84a0ba53",
+          "doc_id": "async.md",
+          "start": 13373,
+          "end": 14173,
+          "score": 0.4819596289069761,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "310571c274bc64bfbe7d530aa90e65f063be052ff51de477f0ca7de146db23e3",
+          "doc_id": "async.md",
+          "start": 4105,
+          "end": 4337,
+          "score": 0.4320265137253519,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d5de5615379a2238b00192bb198debc4292bbc241e0c69f8d9b73b24b5f7ca02",
+          "doc_id": "async.md",
+          "start": 15644,
+          "end": 16646,
+          "score": 0.42913959072248375,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "6168d9e40a4e6693eff65675a9b8ebe10284b7b4f9a96b725ef89fa9a4acab61",
+          "doc_id": "async.md",
+          "start": 20605,
+          "end": 20965,
+          "score": 0.31025439488636636,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "f637d0202f9ed8535f98f49a86cc8f6a5047964646044a8d77abf168791073ba",
+          "doc_id": "tutorial/dependencies/index.md",
+          "start": 336,
+          "end": 1040,
+          "score": 0.3011277865099889,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "55b3a08b7e86d3e8f9be36b8d327f8a8e5d9d11a12ecdfd951740aaa8acbc643",
+          "doc_id": "async.md",
+          "start": 14066,
+          "end": 14857,
+          "score": 0.2769167213952305,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "b7ab04171b43c74552bb52c6f00aa9ec7f20ec0171a271f5be1373501e464b96",
+          "doc_id": "tutorial/testing.md",
+          "start": 2932,
+          "end": 3454,
+          "score": 0.22600468775169977,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q4514bb7be1b0",
+      "question_type": "factual",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "2047c123145b17d90cf48f6cc5b821ab30332c14364f495b82eb4b4a50ad361c",
+          "doc_id": "advanced/dataclasses.md",
+          "start": 1632,
+          "end": 2680,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "8a9828efd8bdd5486ecc621ebb560e73bfe12b3b54735aead0f1c5097fcf1401",
+          "doc_id": "tutorial/path-params.md",
+          "start": 2837,
+          "end": 3449,
+          "score": 0.6706676622964614,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "ef210ab9176fa037a2a60deaf40a67b3865949788a51755fb479d916455e3bcd",
+          "doc_id": "advanced/dataclasses.md",
+          "start": 1234,
+          "end": 1630,
+          "score": 0.5163805371528583,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "51d72cad366f73bc0290f6e6595c699edb09078c4908a40344f51ca3fac863f9",
+          "doc_id": "advanced/dataclasses.md",
+          "start": 0,
+          "end": 1054,
+          "score": 0.5155052323940635,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "67c3002945855bbbcf8cf966daffcf41fca14d12a2f27c72b64a250ea4b2e8b7",
+          "doc_id": "tutorial/first-steps.md",
+          "start": 6150,
+          "end": 6588,
+          "score": 0.4711858377866142,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "5c5c5b3fa7e93671db680904f23ac19702f24fc8d1609c0b82e63a2e8bfed158",
+          "doc_id": "index.md",
+          "start": 14350,
+          "end": 14663,
+          "score": 0.37526801118660147,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "a9281e2b54357dccbd5f1176e6ca18286a49e04c038060623e7052451659132f",
+          "doc_id": "tutorial/first-steps.md",
+          "start": 4079,
+          "end": 4392,
+          "score": 0.37526801118660147,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "77bda39cf78fb7286167ce8f68fdebf9308115330f60b520abb353a3d30af18e",
+          "doc_id": "advanced/openapi-callbacks.md",
+          "start": 0,
+          "end": 706,
+          "score": 0.3495495441243654,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "6154b22f370e0d668a0c7a99c16a32558830971c309c3712535f2e913c015f4d",
+          "doc_id": "advanced/openapi-callbacks.md",
+          "start": 3382,
+          "end": 4300,
+          "score": 0.33681071546566543,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "93b1c4f32536a85e1b8b75457a946fe4eaaa636c1c0e21caa0b694b42477e6b6",
+          "doc_id": "index.md",
+          "start": 16175,
+          "end": 16474,
+          "score": 0.316841846232679,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q522a2af36a80",
+      "question_type": "factual",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "f1116021dddeaf17859cb0626de0ac1ea8489a0339da325a41d84cbd1542f133",
+          "doc_id": "advanced/behind-a-proxy.md",
+          "start": 11368,
+          "end": 12159,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "03ee122f2fe7aaf32d63e36710e218611542459d13bd9a6c543a73cf78d08bb7",
+          "doc_id": "how-to/custom-docs-ui-assets.md",
+          "start": 7293,
+          "end": 7588,
+          "score": 0.5046520631990737,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "b1fa741260910e10e259de30852a9c3c3479d70a78788dd7b80947845bf2d26f",
+          "doc_id": "advanced/behind-a-proxy.md",
+          "start": 10835,
+          "end": 11366,
+          "score": 0.4231532637541857,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "da086964a0f17085637fa4e84491f7f7005e790ea39212e2ed85e45baf588272",
+          "doc_id": "advanced/behind-a-proxy.md",
+          "start": 7697,
+          "end": 8344,
+          "score": 0.3854019778732066,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "0731f5d81ca9fb768881f2857d8613d94a6dedaf6ab9dc951c014ad716ec941e",
+          "doc_id": "index.md",
+          "start": 14014,
+          "end": 14348,
+          "score": 0.3739038317362802,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "700144c0d1e0ef364893b9690b19ff983f8933ac29c3f604924fe0726ac315d5",
+          "doc_id": "tutorial/first-steps.md",
+          "start": 3743,
+          "end": 4077,
+          "score": 0.3739038317362802,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "775fc6f45d45d790575cca87f4694c47e67d253e10e654bf264df86b521b71aa",
+          "doc_id": "index.md",
+          "start": 15419,
+          "end": 16173,
+          "score": 0.37289457081847205,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d87a4ef4325feb8599156a17552456cfd0be91c5897746b28b2cc17d5fc8d8e4",
+          "doc_id": "deployment/docker.md",
+          "start": 14407,
+          "end": 14838,
+          "score": 0.2620144480942385,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "b05e2fbc41a0b07e420aee8d3ef502a2519aed356c70d0f23e29e233a3b07acb",
+          "doc_id": "tutorial/path-params.md",
+          "start": 2378,
+          "end": 2835,
+          "score": 0.25938375524227847,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "26a6f8506a97a18b9a9b8fec534eb2d7afb3f92341efd976337f85f261f71f38",
+          "doc_id": "tutorial/security/simple-oauth2.md",
+          "start": 7921,
+          "end": 8048,
+          "score": 0.2511611013780803,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q52c27f8b8878",
+      "question_type": "why_when",
+      "relevance": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": [
+        {
+          "chunk_id": "7fa0217aa9b2ce3f29cdeb2bce133ba4bfc606f70489e74cb163ee9bcc04ae84",
+          "doc_id": "advanced/openapi-callbacks.md",
+          "start": 2127,
+          "end": 3217,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "66ee2ae3b6d7c58bce7f1023cafc18c761d6523af7fa20f8a2b42eec9d5b7f84",
+          "doc_id": "tutorial/response-status-code.md",
+          "start": 1185,
+          "end": 1525,
+          "score": 0.9778622070958176,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "67c3002945855bbbcf8cf966daffcf41fca14d12a2f27c72b64a250ea4b2e8b7",
+          "doc_id": "tutorial/first-steps.md",
+          "start": 6150,
+          "end": 6588,
+          "score": 0.716836898509869,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "c684817027a9e6b3489f26177368693469ace69f25b64a75a78f95a1f4fd0794",
+          "doc_id": "tutorial/response-status-code.md",
+          "start": 2690,
+          "end": 2927,
+          "score": 0.5853037859021415,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "fb1f38756d6247e573eeb93d2a9386621a44589a0e464020396da69386c9710a",
+          "doc_id": "tutorial/security/index.md",
+          "start": 2241,
+          "end": 2771,
+          "score": 0.48746068571785267,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "df78d08b08f5a40f252f6c7a9efc3c98b0189ff712d2f4ec6cc15f49624b16ce",
+          "doc_id": "benchmarks.md",
+          "start": 1130,
+          "end": 3502,
+          "score": 0.45645410735816994,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "1b8afb67fecd276ee57a540aa21783785e34b1fddba205722ab5961659ad772d",
+          "doc_id": "advanced/additional-responses.md",
+          "start": 5460,
+          "end": 6398,
+          "score": 0.43598646516038003,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "8a9828efd8bdd5486ecc621ebb560e73bfe12b3b54735aead0f1c5097fcf1401",
+          "doc_id": "tutorial/path-params.md",
+          "start": 2837,
+          "end": 3449,
+          "score": 0.42270167280544063,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "49df0c20a0842dc3900d36ea0db4ac1888676648bcda47465b82b48faf6d727f",
+          "doc_id": "deployment/docker.md",
+          "start": 15254,
+          "end": 16109,
+          "score": 0.4038737774321043,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "79cb71468c37640e916bc79bbc1dd469295ffc196edfa7928c9ebad3453fe373",
+          "doc_id": "tutorial/bigger-applications.md",
+          "start": 395,
+          "end": 980,
+          "score": 0.32137746266959355,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q5323037b774d",
+      "question_type": "factual",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "54f21c98a1a6368518836c3079f9c34c02d1df20f0595c347e11173396371678",
+          "doc_id": "advanced/stream-data.md",
+          "start": 4007,
+          "end": 5101,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "81c7b19f830a9ef8cdce4dd81369f792a89994a4f140eab3dec720b03a8a47e9",
+          "doc_id": "tutorial/request-files.md",
+          "start": 1475,
+          "end": 2440,
+          "score": 0.6523125975533292,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "f0b6fb826a38f1370678b035f266f4bfce21584c3621b88f54b5c3cfab74625c",
+          "doc_id": "tutorial/request-files.md",
+          "start": 3039,
+          "end": 4018,
+          "score": 0.5189297556738425,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "04de025bcb0e3ff1c2b45b2fa3533c940a7a5da01796c053f3ea02aeb7a89ef4",
+          "doc_id": "advanced/settings.md",
+          "start": 7992,
+          "end": 8836,
+          "score": 0.4296522839893216,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "215f4da2b1d9a0083b0722477a8b6726aeb612a0c7498e41517ffaeac4b1d5db",
+          "doc_id": "python-types.md",
+          "start": 1997,
+          "end": 3011,
+          "score": 0.3458907906692696,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "e604157087d3ed63dc5ca7b208b6f37faef3f1fdd3b8f7df25a7c31f2e97bf3e",
+          "doc_id": "advanced/stream-data.md",
+          "start": 5103,
+          "end": 5490,
+          "score": 0.3361585815060381,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d2913cc857af3378413414631311806e40ca940c3c5fb98f2de3d6bbef96a725",
+          "doc_id": "async.md",
+          "start": 210,
+          "end": 1135,
+          "score": 0.29594118859050356,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d4c012b2b1243d407a1e7790209ebb55cab1ad66e83c4e8eedd4b02c92c36e13",
+          "doc_id": "tutorial/request-files.md",
+          "start": 2442,
+          "end": 3187,
+          "score": 0.28419469309889406,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "31029a322d4a8f80342d0e7886a8fac6e0c110217ec4da26872a5ec3983d5eea",
+          "doc_id": "advanced/events.md",
+          "start": 3451,
+          "end": 4447,
+          "score": 0.2748608498571812,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "b0bf81656d7f2ffc69fa4cea18e239d1eaef72dc6cfa9f054c086906db50faf2",
+          "doc_id": "tutorial/testing.md",
+          "start": 2256,
+          "end": 2782,
+          "score": 0.27101030044572516,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q55648562df68",
+      "question_type": "factual",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "740c0a5b6a477510aff4698bbb21ab7c352c2673f97ec653985a303ccf6aebe5",
+          "doc_id": "async.md",
+          "start": 20092,
+          "end": 20603,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d5de5615379a2238b00192bb198debc4292bbc241e0c69f8d9b73b24b5f7ca02",
+          "doc_id": "async.md",
+          "start": 15644,
+          "end": 16646,
+          "score": 0.6747560713348292,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "80d241d783442a8136b256adbe4475190c06760e87526f89d190f91d1c9faf64",
+          "doc_id": "async.md",
+          "start": 16626,
+          "end": 17528,
+          "score": 0.5928403680493051,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "3516394e089187409debf645d6f0cef60fe717c12bfb1abd9907e26c9c8b5a8b",
+          "doc_id": "tutorial/dependencies/dependencies-with-yield.md",
+          "start": 12582,
+          "end": 12843,
+          "score": 0.4565898695215879,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "6a3fdd8e442ca8a568e4cb9bb29f7269375e5c766898b0352e1891e59728e1bb",
+          "doc_id": "tutorial/dependencies/index.md",
+          "start": 5393,
+          "end": 6024,
+          "score": 0.3771176848158749,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "695efef82fce615f557e2f34dfb772ebde5cb839ed92a7184663e8766d59be8e",
+          "doc_id": "async.md",
+          "start": 17530,
+          "end": 18218,
+          "score": 0.3718550105205403,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "8ab00573187662171882e70763d987b2c2d1c8e44710f5d8fea6e3bc2cef4016",
+          "doc_id": "tutorial/dependencies/dependencies-with-yield.md",
+          "start": 10913,
+          "end": 11634,
+          "score": 0.3509343998450818,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "31029a322d4a8f80342d0e7886a8fac6e0c110217ec4da26872a5ec3983d5eea",
+          "doc_id": "advanced/events.md",
+          "start": 3451,
+          "end": 4447,
+          "score": 0.3491592953724443,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "f0b6fb826a38f1370678b035f266f4bfce21584c3621b88f54b5c3cfab74625c",
+          "doc_id": "tutorial/request-files.md",
+          "start": 3039,
+          "end": 4018,
+          "score": 0.2967904201003741,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "2789450c56a752bc48987d60677074efc43a1ff856f508fdd498562fc6882aad",
+          "doc_id": "advanced/async-tests.md",
+          "start": 869,
+          "end": 1482,
+          "score": 0.2966291786996685,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q59290f9a3de9",
+      "question_type": "factual",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "b602c4d6c6f6882cf582557c2e1444c7c0301291c87adba141a9679bab01c4a5",
+          "doc_id": "how-to/configure-swagger-ui.md",
+          "start": 2250,
+          "end": 2890,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "4a8111a159bfb2e3a32533d9faf138f93e5038dd6bc3128b3ee76c2226d4fb99",
+          "doc_id": "how-to/configure-swagger-ui.md",
+          "start": 0,
+          "end": 550,
+          "score": 0.6386393464934362,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "34a0dabeba3f93d20ce80d1a0f51a6e3995bae5cc2971a8bb6b8f58949f432f5",
+          "doc_id": "tutorial/schema-extra-example.md",
+          "start": 8055,
+          "end": 8251,
+          "score": 0.43963522820768564,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "a0d64b98e2409265cad40b4c26a6a855ecf67a6779f6a5ae6f377cb95b34c007",
+          "doc_id": "tutorial/schema-extra-example.md",
+          "start": 8253,
+          "end": 8655,
+          "score": 0.39839071414144506,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "ead2507e4cfedb42e800eed70abb35f2b0b5e5b3fedef588a1bdd3ea4ca77819",
+          "doc_id": "tutorial/metadata.md",
+          "start": 5444,
+          "end": 5973,
+          "score": 0.3462419685606996,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "9e11e73a111d6d58972dfa45cb2eb53aceab284ba23885e8da1e3a0bc436ec31",
+          "doc_id": "how-to/configure-swagger-ui.md",
+          "start": 1999,
+          "end": 2248,
+          "score": 0.34374860212372504,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "df9a2d949ee19390f78b00a806520d80cbd585bd990b45b6775526b45a96c746",
+          "doc_id": "alternatives.md",
+          "start": 5524,
+          "end": 5818,
+          "score": 0.3254541905625491,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "1b72b204ff16ea8d110f5512c0e02055e5f6f6ac7dd3da60af8a377009fb292a",
+          "doc_id": "features.md",
+          "start": 771,
+          "end": 1358,
+          "score": 0.27280879932623037,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "7af41fde53d2c9afe11cf7300f73fff9bd93845ecaca6315c491959b4d4555c8",
+          "doc_id": "tutorial/schema-extra-example.md",
+          "start": 6250,
+          "end": 7133,
+          "score": 0.23995334295037726,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "67c3002945855bbbcf8cf966daffcf41fca14d12a2f27c72b64a250ea4b2e8b7",
+          "doc_id": "tutorial/first-steps.md",
+          "start": 6150,
+          "end": 6588,
+          "score": 0.23675622275033525,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q59950affe00a",
+      "question_type": "factual",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "e698bba92e2beaf94d18ab81eecd09b5e69bb13a2854ad84c74cc112471906ed",
+          "doc_id": "advanced/advanced-dependencies.md",
+          "start": 4940,
+          "end": 6075,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d4f8446221f34d3d76f780eff21893258c1dd4745b0965b7bb995f59c1c70f65",
+          "doc_id": "release-notes.md",
+          "start": 157833,
+          "end": 158744,
+          "score": 0.9064615104900949,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "ffbb6863fcf3a37d1d3ae3f1ef5260dd1f0504e0d5a043b713ab6f1de6c45607",
+          "doc_id": "advanced/advanced-dependencies.md",
+          "start": 3833,
+          "end": 4938,
+          "score": 0.8844165165303678,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "97be298fc4cceb977b6f802c3a289c5d9810b361caf5e83adc3cfebe4c725ff0",
+          "doc_id": "tutorial/dependencies/dependencies-with-yield.md",
+          "start": 842,
+          "end": 1602,
+          "score": 0.5918599946932032,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "8c42df4d3d3ae36069f3eae4bcfd030507e21596617cf3b679e3adf3759b7bee",
+          "doc_id": "tutorial/sql-databases.md",
+          "start": 4548,
+          "end": 5159,
+          "score": 0.5260018502655658,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "686a30a551af57be175402451fd544bc681b7835c01b58f21cdbfbbbc9552ca6",
+          "doc_id": "advanced/stream-data.md",
+          "start": 705,
+          "end": 1124,
+          "score": 0.4498235921788857,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "0b177bdb99a848a9352a0ed99eae87d230b7b51f5983c92ce14584aa5f17ad10",
+          "doc_id": "release-notes.md",
+          "start": 406760,
+          "end": 407951,
+          "score": 0.417127693332463,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "206ba02438cb8ed8e1688b0385221378bf68192a7bdc02bb269ec6bc7a83e32e",
+          "doc_id": "tutorial/dependencies/dependencies-with-yield.md",
+          "start": 8316,
+          "end": 9065,
+          "score": 0.4131149818943922,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "6b9a52628b4128feea3395eb701befd7f34985a10a6e5de768cdd44490f11667",
+          "doc_id": "advanced/advanced-dependencies.md",
+          "start": 5998,
+          "end": 6989,
+          "score": 0.3945026291728783,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "39f158eaec59260ac8bdd843b6fb91c2805ad472b71276f0754661a26046f757",
+          "doc_id": "tutorial/dependencies/dependencies-with-yield.md",
+          "start": 7793,
+          "end": 8369,
+          "score": 0.3384017075162218,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q833aba667d5a",
+      "question_type": "how_to",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "517cd3fe3eaf7a6c810200c05b625c7440f16c3496cde9d299ae1d75fe215313",
+          "doc_id": "tutorial/frontend.md",
+          "start": 2642,
+          "end": 3289,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "e5c9e82ccfc7c77ba1e60b22dbdd4f3b1780f71076b51627e812201d7fb50567",
+          "doc_id": "tutorial/frontend.md",
+          "start": 3291,
+          "end": 3837,
+          "score": 0.6329130255760799,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "04d531ac7df568640e41b4fdf48fb74d78d785828fa96d4b1674e5430fe9e1de",
+          "doc_id": "tutorial/frontend.md",
+          "start": 1312,
+          "end": 2481,
+          "score": 0.4911790124741405,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "4f9226bb572635271129180d5f7c5cf911905a490e70c4fe6058288bc464cb51",
+          "doc_id": "tutorial/frontend.md",
+          "start": 3839,
+          "end": 4085,
+          "score": 0.3875677714953601,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "04fbafa5ebbde683c214f5ccb5aa73ba7c4dcbca6725cfa46406c9dce1237184",
+          "doc_id": "how-to/custom-docs-ui-assets.md",
+          "start": 5275,
+          "end": 5632,
+          "score": 0.19613507636319377,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "36d1f1cd48abb41aaef464d95fdb6368f80d5753475c5f7e2707cd1207267d9a",
+          "doc_id": "advanced/templates.md",
+          "start": 3633,
+          "end": 4208,
+          "score": 0.1856272974584628,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "98bb1a2eb74f8100152bcd1958128296cc27a325c5ed7c841cef3fb2470ff3a7",
+          "doc_id": "tutorial/server-sent-events.md",
+          "start": 4058,
+          "end": 4700,
+          "score": 0.16756374622847525,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "20b6e5fdc4ad265262fe4ce211c0af60ca51d741067b7133f4503f77db2c3546",
+          "doc_id": "how-to/custom-docs-ui-assets.md",
+          "start": 5634,
+          "end": 6660,
+          "score": 0.15817897568838607,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "77bda39cf78fb7286167ce8f68fdebf9308115330f60b520abb353a3d30af18e",
+          "doc_id": "advanced/openapi-callbacks.md",
+          "start": 0,
+          "end": 706,
+          "score": 0.14249208391731297,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "03ee122f2fe7aaf32d63e36710e218611542459d13bd9a6c543a73cf78d08bb7",
+          "doc_id": "how-to/custom-docs-ui-assets.md",
+          "start": 7293,
+          "end": 7588,
+          "score": 0.11507503235593693,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q86a8d9520113",
+      "question_type": "why_when",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "d4e03ccb921f995f5fae7a6a5ba3bf6cf590382146a6dee8f9aa5d2d49836ad7",
+          "doc_id": "tutorial/dependencies/dependencies-with-yield.md",
+          "start": 2323,
+          "end": 3327,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "b176b3eac94647dc9141399ce6a638b03d2b290c5877f4ad90503ab6a3a8453d",
+          "doc_id": "advanced/advanced-dependencies.md",
+          "start": 3168,
+          "end": 3831,
+          "score": 0.8957685841806808,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d4f8446221f34d3d76f780eff21893258c1dd4745b0965b7bb995f59c1c70f65",
+          "doc_id": "release-notes.md",
+          "start": 157833,
+          "end": 158744,
+          "score": 0.8244973378874999,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "ffbb6863fcf3a37d1d3ae3f1ef5260dd1f0504e0d5a043b713ab6f1de6c45607",
+          "doc_id": "advanced/advanced-dependencies.md",
+          "start": 3833,
+          "end": 4938,
+          "score": 0.8174572510256266,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "443198a5b12daae49b0b549da86cda10e60c08696d033bc44f3a0159a3a437e1",
+          "doc_id": "release-notes.md",
+          "start": 669020,
+          "end": 670195,
+          "score": 0.8109824102917725,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "ddccd04d785faae41719644c0841441c3a0bc4879e9549fa7eaae2fb4a09064a",
+          "doc_id": "tutorial/dependencies/dependencies-with-yield.md",
+          "start": 0,
+          "end": 840,
+          "score": 0.7545013238267043,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "e698bba92e2beaf94d18ab81eecd09b5e69bb13a2854ad84c74cc112471906ed",
+          "doc_id": "advanced/advanced-dependencies.md",
+          "start": 4940,
+          "end": 6075,
+          "score": 0.748741686395128,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "ce9724f4fded82150df135389d7498eac178d1067f839e0c62c09c26932c2ced",
+          "doc_id": "tutorial/dependencies/dependencies-with-yield.md",
+          "start": 1604,
+          "end": 2321,
+          "score": 0.6636557472205006,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "39f158eaec59260ac8bdd843b6fb91c2805ad472b71276f0754661a26046f757",
+          "doc_id": "tutorial/dependencies/dependencies-with-yield.md",
+          "start": 7793,
+          "end": 8369,
+          "score": 0.6537442636908962,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "5ffe4405ee4cb5cb96e1acd04cc583a1067dc3f7dc1731127dfbd85a185e13df",
+          "doc_id": "tutorial/dependencies/dependencies-with-yield.md",
+          "start": 9067,
+          "end": 9734,
+          "score": 0.5685952709529376,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q8b24b0981cfd",
+      "question_type": "factual",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "06b3af57946d940267f9334f377ce75c4367d0a435316605fb75ce6fd8031d2c",
+          "doc_id": "tutorial/header-params.md",
+          "start": 2152,
+          "end": 2814,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "179a8163a35c2cfff2d0d6beb633edacb0fdd5b64c407a7c4eaf4c8cd86d4221",
+          "doc_id": "tutorial/encoder.md",
+          "start": 1267,
+          "end": 1607,
+          "score": 0.6670954917227819,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "75f96dafdd376e9ec6e009c073bdd77e8561cef4d641fbf69a3a99e057142768",
+          "doc_id": "reference/parameters.md",
+          "start": 0,
+          "end": 602,
+          "score": 0.49656607936731895,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "10d845427d06bfda573a2e597ab42a6b9aa2fbcca24f81204ea3c4d075869a2b",
+          "doc_id": "release-notes.md",
+          "start": 710075,
+          "end": 710424,
+          "score": 0.43148894107156766,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "7f81bdb29c7d1ddc439390419d9ebd1d094e80e61e899f951f9e32bd8955e6eb",
+          "doc_id": "release-notes.md",
+          "start": 573778,
+          "end": 574242,
+          "score": 0.40966092801715387,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "88dc0e8eff4abb29bc21ce2adacf8e7e323491216ee0c63500ec5b1305270b9d",
+          "doc_id": "tutorial/body.md",
+          "start": 2298,
+          "end": 3139,
+          "score": 0.4056325024148163,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "34bc50063f8dddcb2dfea66e1f16064a40f71a9ae7550b1f181abb1edad32b6f",
+          "doc_id": "tutorial/path-params.md",
+          "start": 863,
+          "end": 1437,
+          "score": 0.37458925073769817,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "7034aaf8e750e05981749254af8295e3546592fa9fbdf1a2d5d883ff4b6aff13",
+          "doc_id": "tutorial/header-params.md",
+          "start": 272,
+          "end": 1029,
+          "score": 0.36540224739671523,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "8d5f8162e2c64f220fa6e116dbcbb3a0b9f78f054d38dcd13490dd00cbe0ef39",
+          "doc_id": "tutorial/body-multiple-params.md",
+          "start": 4449,
+          "end": 4927,
+          "score": 0.34185179983868846,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "24ef4af0256e862f4c06519b7c77bee5aed7ffa5e74afa17848797c67b36cca8",
+          "doc_id": "tutorial/server-sent-events.md",
+          "start": 3436,
+          "end": 3794,
+          "score": 0.2935623063763498,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q908406464f3d",
+      "question_type": "why_when",
+      "relevance": [
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 0.3333333333333333,
+        "ndcg@10": 0.5
+      },
+      "hits": [
+        {
+          "chunk_id": "05f5e86e43230ecb65af664c37b088e9ccd76a98b4de21e1e448c664dc6076ff",
+          "doc_id": "tutorial/query-params-str-validations.md",
+          "start": 5513,
+          "end": 6621,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "dbd3984397ad423a12ce5fdea6d2f8730b79129fafaee945a5fc0805f3bfa565",
+          "doc_id": "tutorial/query-params-str-validations.md",
+          "start": 3252,
+          "end": 4277,
+          "score": 0.9791391268593499,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "e3b4103bcf00966b5ecf39116f8df4aab2de07fe46bd98e13d0c7caff95822e0",
+          "doc_id": "tutorial/path-params-numeric-validations.md",
+          "start": 1292,
+          "end": 2253,
+          "score": 0.687478534912046,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d191338e961ed7ec44eccf0bddbad57e77cee3509e650b5d0a6ec7dafea901c1",
+          "doc_id": "tutorial/query-params-str-validations.md",
+          "start": 4844,
+          "end": 5511,
+          "score": 0.6216120693283061,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "6b5ea73355a7731d20c1b09832a5866f0b1f2b717327c220a886a9808fcf5248",
+          "doc_id": "tutorial/body.md",
+          "start": 5278,
+          "end": 6363,
+          "score": 0.5760520627415152,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "feea2222e51899462b1cdf80303663abf7675f14b29e7ade7ba5c0cc68e21ef6",
+          "doc_id": "tutorial/query-params-str-validations.md",
+          "start": 7864,
+          "end": 8294,
+          "score": 0.464194206844111,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "79dcda2a49014840bb21a4638bc0c837cb4cff124c446e8d5e882bbccce665f2",
+          "doc_id": "tutorial/path-params-numeric-validations.md",
+          "start": 2510,
+          "end": 3412,
+          "score": 0.4468731231060339,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "c693af2917c013bc4f7bc837d56057ae8a72b34f3cd5406a8aa8599b5473eda2",
+          "doc_id": "tutorial/query-params.md",
+          "start": 3331,
+          "end": 4279,
+          "score": 0.42346536488345476,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "6f16c685e67fc2ac731d2ca32d00581d208fd0d7ffcf847c9ed69bdecfec0a4c",
+          "doc_id": "advanced/advanced-python-types.md",
+          "start": 1092,
+          "end": 1989,
+          "score": 0.4059595134435714,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "7df830d47de5573f0bb3458b875f2fc1c044d5aad2a42e2d5185e08d0d008400",
+          "doc_id": "tutorial/query-params-str-validations.md",
+          "start": 8892,
+          "end": 9717,
+          "score": 0.3677432457356025,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q974432ac3e98",
+      "question_type": "factual",
+      "relevance": [
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 0.25,
+        "ndcg@10": 0.43067655807339306
+      },
+      "hits": [
+        {
+          "chunk_id": "782a2006763ced52ca50eeafd9fea0667e615361395c51552680b4042e1e08a5",
+          "doc_id": "deployment/docker.md",
+          "start": 19271,
+          "end": 20112,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "a8508d246c452544519939371258899d358655c5f314d0721c1aba65c7a1a596",
+          "doc_id": "deployment/concepts.md",
+          "start": 1758,
+          "end": 2786,
+          "score": 0.8577193862175071,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "72878608453dcbb9e50ab38994e6238ec10ba7659717ad88ebeee156783ac771",
+          "doc_id": "deployment/docker.md",
+          "start": 23119,
+          "end": 23927,
+          "score": 0.752137603546826,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d3ca4de7c69f42659bb5e773f093b8b7857a07c145378550ed6455e104fead7a",
+          "doc_id": "deployment/docker.md",
+          "start": 16983,
+          "end": 17619,
+          "score": 0.7416360396757837,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "840917aefd6f0fe0b64a30f6c211c21d9e49991131875de34e35be0e052fad5c",
+          "doc_id": "deployment/docker.md",
+          "start": 27596,
+          "end": 27963,
+          "score": 0.6503403488402987,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "4e3d5193e05c5a330986ad6f94c7e668720b38a79d0b36c85462f7000a6c8e3c",
+          "doc_id": "deployment/docker.md",
+          "start": 3133,
+          "end": 4163,
+          "score": 0.6381093679930835,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "0acb04215f9795044e3c1964b17715390ead39664b044997cc5803eee050ed25",
+          "doc_id": "deployment/docker.md",
+          "start": 1849,
+          "end": 2813,
+          "score": 0.5550107070329087,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "b3afea0c93b73c681f0ae071b20bdb0830f9f334df4cf18e1baeaa636582895c",
+          "doc_id": "deployment/https.md",
+          "start": 7069,
+          "end": 7687,
+          "score": 0.5134717516526377,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "120d9e5b813ba1bdf4bce19e979a51e517835295b1ae7d934d167e9beba47e22",
+          "doc_id": "deployment/https.md",
+          "start": 2384,
+          "end": 3179,
+          "score": 0.4781086445401773,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "6613a419b2ebb7f56af5dabcf7d9830ca36bb6d702b2893d2583440aaedaf1e1",
+          "doc_id": "deployment/docker.md",
+          "start": 4491,
+          "end": 5361,
+          "score": 0.46959377207994746,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q9fe8ff242abb",
+      "question_type": "why_when",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "6b5ea73355a7731d20c1b09832a5866f0b1f2b717327c220a886a9808fcf5248",
+          "doc_id": "tutorial/body.md",
+          "start": 5278,
+          "end": 6363,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "6fa362041433124a09f35527de7d185b122f8633f1391ee17aafaf28f13c2024",
+          "doc_id": "tutorial/dependencies/index.md",
+          "start": 2558,
+          "end": 3663,
+          "score": 0.5092307683323981,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d11d794dd00a29fdf48e0e099ea62d07815aa87fb135b2c26b0cd664f22f2db8",
+          "doc_id": "tutorial/query-params-str-validations.md",
+          "start": 9719,
+          "end": 10749,
+          "score": 0.4951017254880435,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d7a66fa1ec707e9f1a8133a085cbb6844d8d5b97cf211814ce859e5d793be485",
+          "doc_id": "advanced/using-request-directly.md",
+          "start": 1157,
+          "end": 1930,
+          "score": 0.4599485781322171,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "bf359a1d32eca707fae6be01a09145cc687e86e90cc1ae425f6e36a945b82dd9",
+          "doc_id": "tutorial/query-params.md",
+          "start": 1558,
+          "end": 2020,
+          "score": 0.4338598342424326,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "9bf192cc65b8dbf47cef96d0e2307493bb24acc9c8823016ddc708e4632cc454",
+          "doc_id": "_llm-test.md",
+          "start": 8112,
+          "end": 9026,
+          "score": 0.4192778865530589,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "f46f680a16ff2f3491b0458681d53628484ed861f2d7357c42f87b2aae428065",
+          "doc_id": "tutorial/query-param-models.md",
+          "start": 1956,
+          "end": 3205,
+          "score": 0.41020951228641617,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "ddeba969e947a934ac0c8640bc0eb1f760115cf0c5e20defe9daa924dc012bc2",
+          "doc_id": "tutorial/testing.md",
+          "start": 3456,
+          "end": 4432,
+          "score": 0.3662191146165754,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "20bf4fbcf30a0e331a487d338149a2d55ef568bb1240a78a9f8c94b66458530a",
+          "doc_id": "tutorial/path-params-numeric-validations.md",
+          "start": 800,
+          "end": 1290,
+          "score": 0.34514397363855553,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "5d35f4163e1bc9b9d5733beceacc32d85417ec08cac9241704b0615c408e51c0",
+          "doc_id": "tutorial/schema-extra-example.md",
+          "start": 5550,
+          "end": 6248,
+          "score": 0.30941400910130856,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "qa0029d1b6456",
+      "question_type": "how_to",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "312df93c0efc7c1c6267b51f67c35b750136a82320bb2770054e7c7f0dba0e47",
+          "doc_id": "tutorial/dependencies/dependencies-with-yield.md",
+          "start": 11636,
+          "end": 12710,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "31029a322d4a8f80342d0e7886a8fac6e0c110217ec4da26872a5ec3983d5eea",
+          "doc_id": "advanced/events.md",
+          "start": 3451,
+          "end": 4447,
+          "score": 0.90282380511284,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "8ab00573187662171882e70763d987b2c2d1c8e44710f5d8fea6e3bc2cef4016",
+          "doc_id": "tutorial/dependencies/dependencies-with-yield.md",
+          "start": 10913,
+          "end": 11634,
+          "score": 0.8201842904993744,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "4315a9ffd5ada4089e8435643b014e6e2024b1eb73713a49c94ea5443ed276f4",
+          "doc_id": "advanced/async-tests.md",
+          "start": 0,
+          "end": 598,
+          "score": 0.36781443730428715,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "63bb7f3cda9d4679646ccb50addbaec04edbca3b33064a6f3532f4b65af636e9",
+          "doc_id": "advanced/events.md",
+          "start": 4351,
+          "end": 4650,
+          "score": 0.29838458047517336,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "695efef82fce615f557e2f34dfb772ebde5cb839ed92a7184663e8766d59be8e",
+          "doc_id": "async.md",
+          "start": 17530,
+          "end": 18218,
+          "score": 0.274373166302068,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "b50029be9cfcfa9ccd8a151de26a8f62cf3208ab139c8eafa92a96b5a896044a",
+          "doc_id": "tutorial/dependencies/index.md",
+          "start": 7228,
+          "end": 7904,
+          "score": 0.2637018014265707,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "364440c3d32bce9eae658ecab936e81e41a776ebc870ac0eae2c493264cbeb4d",
+          "doc_id": "deployment/versions.md",
+          "start": 1634,
+          "end": 1803,
+          "score": 0.21972527218600474,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "e62bef69f51ffb675e34549eac6a2e040e630378f3a8c17cb42f83c732d4f89b",
+          "doc_id": "tutorial/security/oauth2-jwt.md",
+          "start": 9321,
+          "end": 10370,
+          "score": 0.2160748121486713,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "e9ac041b5b979e286dfa30a0d61bcc96a122555d7d8fc51f129875268450d12c",
+          "doc_id": "tutorial/dependencies/classes-as-dependencies.md",
+          "start": 635,
+          "end": 1233,
+          "score": 0.20619239845464887,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "qac325f227f37",
+      "question_type": "factual",
+      "relevance": [
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 0.25,
+        "ndcg@10": 0.43067655807339306
+      },
+      "hits": [
+        {
+          "chunk_id": "0962867b23b6c0910c772f6562b77a12228e16ae679c2f1c30c492a54547085b",
+          "doc_id": "tutorial/body-fields.md",
+          "start": 1578,
+          "end": 2219,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "67c3002945855bbbcf8cf966daffcf41fca14d12a2f27c72b64a250ea4b2e8b7",
+          "doc_id": "tutorial/first-steps.md",
+          "start": 6150,
+          "end": 6588,
+          "score": 0.9346529091200929,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "75a80eef7250235ae15e3b68d8e6888db6b2c41ae21617c666624168b245213e",
+          "doc_id": "tutorial/schema-extra-example.md",
+          "start": 7246,
+          "end": 8053,
+          "score": 0.873404694091375,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "f5c880cfc7d8db688bcff521914705d91532eab3a6a512340fd9d418d1e63b3b",
+          "doc_id": "tutorial/schema-extra-example.md",
+          "start": 3765,
+          "end": 4598,
+          "score": 0.8519015365947034,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "1712a956950c24c1e4e52bf8266cfaddc81b05335ac8640d845825ae711b43bf",
+          "doc_id": "release-notes.md",
+          "start": 596726,
+          "end": 597803,
+          "score": 0.8499064464669646,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "fe3935fe3a128a07a4e9a116047935d4d24d8fb4efa695e69046732dab3d25bd",
+          "doc_id": "release-notes.md",
+          "start": 597791,
+          "end": 598966,
+          "score": 0.7899533582913312,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "5f73d1c7066a0dc6f529aecb4889ff5e78dad3c5485df15bab5a0fe95bf65f93",
+          "doc_id": "release-notes.md",
+          "start": 423800,
+          "end": 424116,
+          "score": 0.7430429624211925,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "abe73cd6b653d06dddb91549eeaf2ea7ddd685e1807f828295ac28a73cad9b86",
+          "doc_id": "tutorial/extra-models.md",
+          "start": 4560,
+          "end": 5254,
+          "score": 0.5776681327369317,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "1f687b0765e7437b67288e7b1f91b191cda16bbdf80e07c2dbdce8c3a17631e0",
+          "doc_id": "tutorial/body-multiple-params.md",
+          "start": 690,
+          "end": 1600,
+          "score": 0.569314674918355,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "60b01280872226d0b0f3d0fe844b8429028f220484c18a2799d1482835e5bfa3",
+          "doc_id": "tutorial/first-steps.md",
+          "start": 4394,
+          "end": 4520,
+          "score": 0.5303848992858037,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "qb1560f731fd7",
+      "question_type": "factual",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "f25dd672d8f31295b1963825333ec77447722fca8df04448c962b88e048f5cdb",
+          "doc_id": "advanced/custom-response.md",
+          "start": 3931,
+          "end": 4643,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "827ac7a112b9ca0e30cdaec6a43d96b4726ab385f9a944208768581f9db20357",
+          "doc_id": "advanced/custom-response.md",
+          "start": 2277,
+          "end": 2806,
+          "score": 0.632653153201507,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "794deda4d0e1d993be6bf1a0b529b3ba3188c4494a9dd2b38bf6a4528f7ca153",
+          "doc_id": "advanced/templates.md",
+          "start": 442,
+          "end": 1402,
+          "score": 0.31932061580940874,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "6fa362041433124a09f35527de7d185b122f8633f1391ee17aafaf28f13c2024",
+          "doc_id": "tutorial/dependencies/index.md",
+          "start": 2558,
+          "end": 3663,
+          "score": 0.23131341529998448,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "6ef1d7fb7a0f28ce65b7dd5882035a54cf726c20d9b0e810f6d1402a6e4e13d7",
+          "doc_id": "advanced/custom-response.md",
+          "start": 10576,
+          "end": 11077,
+          "score": 0.22993406607453992,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "0eb108fa96170b90d5e75edffc6311272bea223ffe45a97c7dd58958e2bfc1e4",
+          "doc_id": "advanced/custom-response.md",
+          "start": 6524,
+          "end": 7258,
+          "score": 0.18859300397153916,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "061f92f37a9517728c00d06d651b9f9ea6764471b0d0c44f36869ed50118a06b",
+          "doc_id": "advanced/custom-response.md",
+          "start": 2808,
+          "end": 3506,
+          "score": 0.16396343007843353,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "64f65e802c016e84c5c0294b293efe039bbd7cc238b1217fc6efd82fb6aeffb7",
+          "doc_id": "tutorial/path-params.md",
+          "start": 2184,
+          "end": 2376,
+          "score": 0.1300597750774957,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "a83abe408964b4fcd7655835e3f6186ab0d9b86a5f71ff473978aa72007d8a59",
+          "doc_id": "deployment/concepts.md",
+          "start": 2997,
+          "end": 3426,
+          "score": 0.126785408315805,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "53335eccf4d66071b1cdd9586b00ce4056f2bafa8ad5ebfa290db579f56df775",
+          "doc_id": "tutorial/query-params-str-validations.md",
+          "start": 12852,
+          "end": 13381,
+          "score": 0.11532151915081319,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "qb45e9e7c06f0",
+      "question_type": "factual",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "2a37e67c91b3f62759c672a33fb78edff67be08752cdced42f24e17031503268",
+          "doc_id": "async.md",
+          "start": 10172,
+          "end": 11103,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "64181095f10971fa753a281008b797588365bc822a75dc2b52499bf328e8c684",
+          "doc_id": "async.md",
+          "start": 8433,
+          "end": 9471,
+          "score": 0.889891835155982,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "9dde4ce88ec85489466f1e903ed9efc4404b576ac7861a5541c5ed94814d614e",
+          "doc_id": "async.md",
+          "start": 9387,
+          "end": 10270,
+          "score": 0.7815207652165335,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "329c23bc57f09e69df5317dd574a71d2ecd0df617d33125037df4bb861500242",
+          "doc_id": "async.md",
+          "start": 5572,
+          "end": 6595,
+          "score": 0.7563572399233673,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "8350a1a7266298c1f950f8e6ba485a8698d5b5291ac1b8a0193fc2627a2b2767",
+          "doc_id": "async.md",
+          "start": 7400,
+          "end": 8431,
+          "score": 0.6105037353615118,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "55d10c7ffbdb38f394ae84703db65723695821e448d59db2ec61478831015e7b",
+          "doc_id": "async.md",
+          "start": 11441,
+          "end": 12255,
+          "score": 0.5670302682556022,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "5fdf76e013e5148eafe6d7181ff863cf914a0feaa896ecd6fc3ab809f56e564a",
+          "doc_id": "async.md",
+          "start": 6497,
+          "end": 7398,
+          "score": 0.5411328811119556,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "6ca81dd2e34e4ec0cd91ea81361858982d8e492e83ac2e0a34a636396a08b7ff",
+          "doc_id": "async.md",
+          "start": 4790,
+          "end": 5660,
+          "score": 0.4693307509989378,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "df23e378a2f51cf192c8b70762c2c57a7985a1597376c0a45938d9eaa035167c",
+          "doc_id": "async.md",
+          "start": 10983,
+          "end": 11439,
+          "score": 0.2970393961642448,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d5de5615379a2238b00192bb198debc4292bbc241e0c69f8d9b73b24b5f7ca02",
+          "doc_id": "async.md",
+          "start": 15644,
+          "end": 16646,
+          "score": 0.29695351649480173,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "qba3efb6e2dac",
+      "question_type": "factual",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "d21fe0ac61aa6becd5ba4dcce377efd6982ea1deacfce5382a3419fb5c0f7b37",
+          "doc_id": "tutorial/handling-errors.md",
+          "start": 2031,
+          "end": 2785,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "6c1819586d147ad7510e583ff6c1fd2e94140f99b2fda50a06cfccccb12b3254",
+          "doc_id": "release-notes.md",
+          "start": 501420,
+          "end": 501845,
+          "score": 0.6164430827431329,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "c601bdbe549c453ab8a5343d1c3bb7f5cb9c4ac1d10c83f7837cd6d928fdc83c",
+          "doc_id": "tutorial/handling-errors.md",
+          "start": 7606,
+          "end": 8627,
+          "score": 0.614422826237443,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d6d71331f375f9170fb456a20472ac005b97f3a4ddc789a6b0f886b46745e5f8",
+          "doc_id": "how-to/custom-request-and-route.md",
+          "start": 2566,
+          "end": 3147,
+          "score": 0.5202603714351984,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "179a8163a35c2cfff2d0d6beb633edacb0fdd5b64c407a7c4eaf4c8cd86d4221",
+          "doc_id": "tutorial/encoder.md",
+          "start": 1267,
+          "end": 1607,
+          "score": 0.4621113802149354,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "4a8111a159bfb2e3a32533d9faf138f93e5038dd6bc3128b3ee76c2226d4fb99",
+          "doc_id": "how-to/configure-swagger-ui.md",
+          "start": 0,
+          "end": 550,
+          "score": 0.34569670620515064,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "744a83f0bbacb6c0bf57e17ffe7f0d52990cea1a5e35db92fa27cde0c3dd6eab",
+          "doc_id": "tutorial/body-multiple-params.md",
+          "start": 3578,
+          "end": 4447,
+          "score": 0.337902464547519,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "e69ee4d7e5584015fb9f0d62927cada867d6e042c30d9620e2c6aff157b03fae",
+          "doc_id": "tutorial/header-param-models.md",
+          "start": 1821,
+          "end": 2570,
+          "score": 0.3322875143616935,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "b8c04e3f5c7fe6db7a2f592ba1b5c4e63e307c22e3b854c7b237771ce3bfa73d",
+          "doc_id": "advanced/events.md",
+          "start": 1948,
+          "end": 3014,
+          "score": 0.2952429755810755,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "0d4ba7cd1dc01298e3ed2383521bb49fceab03fa44c5f2b07e43184b329c4c13",
+          "doc_id": "how-to/general.md",
+          "start": 2014,
+          "end": 2214,
+          "score": 0.2723755634548616,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "qbc2bdab19eda",
+      "question_type": "why_when",
+      "relevance": [
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 0.3333333333333333,
+        "ndcg@10": 0.5
+      },
+      "hits": [
+        {
+          "chunk_id": "48a79526d77536100cd3a2b5176f57d535746383d9da65e5f1fa9754051975a2",
+          "doc_id": "deployment/concepts.md",
+          "start": 9630,
+          "end": 9963,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "c8f33081633bef3ed8c5c20dbe7052b481ebfc988155c10a83a1c12ed1a5f1a6",
+          "doc_id": "deployment/concepts.md",
+          "start": 9965,
+          "end": 10437,
+          "score": 0.7687530472538159,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "aef757d6e66b3bb913c7a073903f21bdfd53df0a222ddca2748d66b1934e6eed",
+          "doc_id": "deployment/concepts.md",
+          "start": 10862,
+          "end": 11385,
+          "score": 0.7156729403085401,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "5a5d8cc8fa3acbec8fc3bf52dda15c7a9a0d119267abae43433cef1c257a1464",
+          "doc_id": "deployment/concepts.md",
+          "start": 4463,
+          "end": 5022,
+          "score": 0.712752909945577,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "449511e8d735dd544384eed6c61d0c8b1eca6fce61ab3b41f3426cb6ea819387",
+          "doc_id": "deployment/server-workers.md",
+          "start": 0,
+          "end": 1084,
+          "score": 0.676580916249344,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "6613a419b2ebb7f56af5dabcf7d9830ca36bb6d702b2893d2583440aaedaf1e1",
+          "doc_id": "deployment/docker.md",
+          "start": 4491,
+          "end": 5361,
+          "score": 0.5836225598212045,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "5bf4630d38180267218945ecc6cc0eb31d4d7be8e626e4086b0f7aeb3f7eb6ce",
+          "doc_id": "deployment/concepts.md",
+          "start": 3428,
+          "end": 4461,
+          "score": 0.549583886218791,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "903444eb6630cca440486897767a7c113e1219e9d3f94ac6dd535b9d2dc2b226",
+          "doc_id": "deployment/manually.md",
+          "start": 5987,
+          "end": 6587,
+          "score": 0.5403627070823512,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "8605892a773939329c2c58c67b3593c3b4bf4c1fb3d9d28bccfee00d6cfc6d19",
+          "doc_id": "deployment/concepts.md",
+          "start": 11841,
+          "end": 12959,
+          "score": 0.5073723663678597,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "f40986cf72580592721260e7b874b7b3b2213fa3a36ce17216b7b4f7168bfe86",
+          "doc_id": "deployment/server-workers.md",
+          "start": 6756,
+          "end": 7355,
+          "score": 0.4419701055915871,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "qbcef353eaba3",
+      "question_type": "how_to",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "62d9ab598eb864152b4ad649242067555b5a9fdd232be2e0afa5833d17acc7c9",
+          "doc_id": "advanced/generate-clients.md",
+          "start": 4618,
+          "end": 5130,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "dffb115a5a6293a8fd67044b65bafeda49ac607ade917051e6db4d65c5d93be5",
+          "doc_id": "advanced/generate-clients.md",
+          "start": 6194,
+          "end": 7333,
+          "score": 0.6385108550630174,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "30176a5229bbc0db368a4c85f3a8c6e3ff4576c95c53fe451983b3ee33c2945a",
+          "doc_id": "advanced/generate-clients.md",
+          "start": 3969,
+          "end": 4616,
+          "score": 0.582783730290043,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "7f889b19fb9ac9dc59b355a927cef2fdeaa55b832ec899f0c6e65812dfd5869e",
+          "doc_id": "advanced/generate-clients.md",
+          "start": 5132,
+          "end": 5772,
+          "score": 0.47647021218864716,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "bbfb4c618bad6604c3c6b5e990584c1a8c3bc10348c3ffd8cc2a2cff5a0b7b77",
+          "doc_id": "advanced/path-operation-advanced-configuration.md",
+          "start": 84,
+          "end": 483,
+          "score": 0.38704956583067673,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "9b7f7c02433bf207aa8e762ec6bbb8289d5bee57d4c948d211b2000de62b3e32",
+          "doc_id": "tutorial/response-model.md",
+          "start": 367,
+          "end": 1329,
+          "score": 0.2873525732545094,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "836b3701b86d0bf62ebb7779340b9313d94702337dbadba151052b739efa9257",
+          "doc_id": "advanced/generate-clients.md",
+          "start": 5774,
+          "end": 6192,
+          "score": 0.27892840099252453,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "8a9828efd8bdd5486ecc621ebb560e73bfe12b3b54735aead0f1c5097fcf1401",
+          "doc_id": "tutorial/path-params.md",
+          "start": 2837,
+          "end": 3449,
+          "score": 0.24868187095579322,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "00497598208c9eca978862bb175a0e76a5408f9528ccc54c0665187d39f55a6c",
+          "doc_id": "release-notes.md",
+          "start": 680257,
+          "end": 681089,
+          "score": 0.18781645124822252,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "a90ce21b9aa1c48eb171a2f2177be99aa6d3187268edf489eb02567f2fd096a4",
+          "doc_id": "advanced/events.md",
+          "start": 4652,
+          "end": 5373,
+          "score": 0.18496482090783814,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "qc4142897af26",
+      "question_type": "why_when",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "40684f98fabe3259f92d1e67901c8504418e843d2ee9c9a97b807a0df68cd2e5",
+          "doc_id": "deployment/docker.md",
+          "start": 20114,
+          "end": 21155,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "8b87fe3aa09053d772468afefe42b31d2069365e2f9df9dc900d0f0b9458b55b",
+          "doc_id": "deployment/docker.md",
+          "start": 18278,
+          "end": 19269,
+          "score": 0.5608890180646853,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "782a2006763ced52ca50eeafd9fea0667e615361395c51552680b4042e1e08a5",
+          "doc_id": "deployment/docker.md",
+          "start": 19271,
+          "end": 20112,
+          "score": 0.5058594981775263,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "05dae1f64609193a5a6f575ebc343dd6a9beaddcd3ee4b56ba1a0b3042e2b508",
+          "doc_id": "deployment/concepts.md",
+          "start": 13465,
+          "end": 14527,
+          "score": 0.4143320981528427,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "e1e9c5037ff04a96e7aa075f1b048ab7c99b36312ebc9b3a81ba130408424657",
+          "doc_id": "deployment/docker.md",
+          "start": 21157,
+          "end": 21449,
+          "score": 0.3832573492356318,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "3e831b0862bb87eaf4b2998fd5fabae60135e2a6642f95bccb09e08bb93445a7",
+          "doc_id": "deployment/docker.md",
+          "start": 25275,
+          "end": 26116,
+          "score": 0.3730621609166313,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "5c5212eb6763370f666f8f7721ba4aa99007012aec5e5de8f71522ba19ea2e87",
+          "doc_id": "deployment/server-workers.md",
+          "start": 7357,
+          "end": 7799,
+          "score": 0.3334870163752709,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "449511e8d735dd544384eed6c61d0c8b1eca6fce61ab3b41f3426cb6ea819387",
+          "doc_id": "deployment/server-workers.md",
+          "start": 0,
+          "end": 1084,
+          "score": 0.2872332405203615,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "b63b76c2775e849ac0df5777f9a03890e291fbc2612a147d53e1cd9c8b6755a1",
+          "doc_id": "deployment/server-workers.md",
+          "start": 7801,
+          "end": 8370,
+          "score": 0.2534060885916746,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "8605892a773939329c2c58c67b3593c3b4bf4c1fb3d9d28bccfee00d6cfc6d19",
+          "doc_id": "deployment/concepts.md",
+          "start": 11841,
+          "end": 12959,
+          "score": 0.20694623385850025,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "qc4979586ae5f",
+      "question_type": "why_when",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "8d5f8162e2c64f220fa6e116dbcbb3a0b9f78f054d38dcd13490dd00cbe0ef39",
+          "doc_id": "tutorial/body-multiple-params.md",
+          "start": 4449,
+          "end": 4927,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "3448d84c2af68ea5f6f4f1c8673b08724a674f3f3beb2ff463c2159223d3266a",
+          "doc_id": "tutorial/body-multiple-params.md",
+          "start": 0,
+          "end": 171,
+          "score": 0.8219445331510226,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "744a83f0bbacb6c0bf57e17ffe7f0d52990cea1a5e35db92fa27cde0c3dd6eab",
+          "doc_id": "tutorial/body-multiple-params.md",
+          "start": 3578,
+          "end": 4447,
+          "score": 0.7762119036481642,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "9adeb5897a2c4b8fef82c4b363781a3e446b02f4a12f82eead934d6c5fc88e61",
+          "doc_id": "release-notes.md",
+          "start": 7693,
+          "end": 8354,
+          "score": 0.7150060045607675,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "1a4b25d325177482423f3412b6f163f0951e16bfd6ec28d8567fc06a00049e59",
+          "doc_id": "tutorial/body.md",
+          "start": 0,
+          "end": 1058,
+          "score": 0.6295975932281148,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d6d71331f375f9170fb456a20472ac005b97f3a4ddc789a6b0f886b46745e5f8",
+          "doc_id": "how-to/custom-request-and-route.md",
+          "start": 2566,
+          "end": 3147,
+          "score": 0.5552720380873563,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "1f687b0765e7437b67288e7b1f91b191cda16bbdf80e07c2dbdce8c3a17631e0",
+          "doc_id": "tutorial/body-multiple-params.md",
+          "start": 690,
+          "end": 1600,
+          "score": 0.509589306034696,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "40a41828e15c2c37de601e13d57f6bbfb8c83c76ecd718df0b20ede1ab4e4fbc",
+          "doc_id": "deployment/docker.md",
+          "start": 21451,
+          "end": 22136,
+          "score": 0.4857102136004426,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "dc8a73b2812423b5ea8bfefa0fc0096242100e375cbba7f58b6d3d85614ebcfd",
+          "doc_id": "deployment/concepts.md",
+          "start": 10439,
+          "end": 10860,
+          "score": 0.43090482208958714,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d8c04de771012e3b5faabcdd174b3efd9801c04087d1827a033b4f2cce1596fb",
+          "doc_id": "advanced/websockets.md",
+          "start": 4025,
+          "end": 5142,
+          "score": 0.4279123806396769,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "qc828d75b88eb",
+      "question_type": "why_when",
+      "relevance": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 1.0,
+        "mrr@10": 0.125,
+        "ndcg@10": 0.31546487678572877
+      },
+      "hits": [
+        {
+          "chunk_id": "601f27ae125340a0c939977be20275ee3d2fc464eda61edb37d611d312cd5f8e",
+          "doc_id": "features.md",
+          "start": 5015,
+          "end": 5801,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "3ec5498cedfeba4c3b34f37f1152b102edd454e6237ab7b307f5d966d3cb7b06",
+          "doc_id": "tutorial/dependencies/index.md",
+          "start": 0,
+          "end": 334,
+          "score": 0.884109003765518,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "ac4f6a4f46cfa9053210de8519f99298781228c4f060bd26f1355bf454a867fd",
+          "doc_id": "alternatives.md",
+          "start": 13544,
+          "end": 14769,
+          "score": 0.8237448448785629,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "369618a3105a13ef05a76839e5ada4acb561e595b2016870347b9f7823f1a88b",
+          "doc_id": "tutorial/dependencies/index.md",
+          "start": 1042,
+          "end": 1242,
+          "score": 0.6854086385544175,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "f637d0202f9ed8535f98f49a86cc8f6a5047964646044a8d77abf168791073ba",
+          "doc_id": "tutorial/dependencies/index.md",
+          "start": 336,
+          "end": 1040,
+          "score": 0.6698120356307816,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "360ab4d55e377dbc8f3b568901f5f81913accd36ccee727f1727e35907a77614",
+          "doc_id": "alternatives.md",
+          "start": 11573,
+          "end": 11745,
+          "score": 0.6497261999556306,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "df9771001baeb653d83e2e1dbef25865f0fc6017d23b29402953e8d29294fed9",
+          "doc_id": "tutorial/security/get-current-user.md",
+          "start": 3093,
+          "end": 3860,
+          "score": 0.6157749070342664,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "8c20211772db000a15f2974a1e483dd2282ac37f9512ee2db70ca46e656e66f3",
+          "doc_id": "tutorial/dependencies/sub-dependencies.md",
+          "start": 3318,
+          "end": 3826,
+          "score": 0.6067669572982874,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "b3bf929340b588b19d02d81f7d795d54290371fb3352272f30d29bf0377bd536",
+          "doc_id": "tutorial/background-tasks.md",
+          "start": 2209,
+          "end": 3066,
+          "score": 0.5900966037779634,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "a9838eea5cc9827f214add6fd8e462702c8dd3fb3042173ce998ea84ed7b238d",
+          "doc_id": "tutorial/dependencies/classes-as-dependencies.md",
+          "start": 0,
+          "end": 154,
+          "score": 0.523623566135459,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "qda500c6bf12a",
+      "question_type": "factual",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "abe73cd6b653d06dddb91549eeaf2ea7ddd685e1807f828295ac28a73cad9b86",
+          "doc_id": "tutorial/extra-models.md",
+          "start": 4560,
+          "end": 5254,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "3e7dd2b1860ccbff4af5079f37c7d58d2a8cfc4b1a6f9f1295e0f08acb57f011",
+          "doc_id": "tutorial/response-model.md",
+          "start": 10086,
+          "end": 10907,
+          "score": 0.6539922972282649,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "215f4da2b1d9a0083b0722477a8b6726aeb612a0c7498e41517ffaeac4b1d5db",
+          "doc_id": "python-types.md",
+          "start": 1997,
+          "end": 3011,
+          "score": 0.6454924148935559,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "47705443b83a93d9df6758de15c4f71ea8045e48d4805df5d1ca059c69f9bcda",
+          "doc_id": "tutorial/query-params-str-validations.md",
+          "start": 1448,
+          "end": 2111,
+          "score": 0.6443571361607442,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "1b8afb67fecd276ee57a540aa21783785e34b1fddba205722ab5961659ad772d",
+          "doc_id": "advanced/additional-responses.md",
+          "start": 5460,
+          "end": 6398,
+          "score": 0.4770602905471723,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "b6a3f43b71cebe21b5bc4993b7f61135d2ef9587027514cc49e024f8201a2ad5",
+          "doc_id": "advanced/additional-responses.md",
+          "start": 8339,
+          "end": 9050,
+          "score": 0.46721287755730684,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "b53b83fb3950a47b02df2d29e2e220087ecec8cc2562f0e227e87dd72cb41144",
+          "doc_id": "tutorial/cors.md",
+          "start": 3797,
+          "end": 4343,
+          "score": 0.42419054889423324,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "6a900840f943e6f058fe13e4e2d22c2428b1b3021025c3cb8de4562ae31c624f",
+          "doc_id": "advanced/custom-response.md",
+          "start": 3508,
+          "end": 3929,
+          "score": 0.4084178992823374,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "3f264f23183a6e182051cca20b8f41890d7b1ca380968939daf6a6af703133df",
+          "doc_id": "tutorial/cors.md",
+          "start": 2760,
+          "end": 3791,
+          "score": 0.40069192930898906,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "88dc0e8eff4abb29bc21ce2adacf8e7e323491216ee0c63500ec5b1305270b9d",
+          "doc_id": "tutorial/body.md",
+          "start": 2298,
+          "end": 3139,
+          "score": 0.3871338744023464,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "qdb58b903c6d6",
+      "question_type": "factual",
+      "relevance": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": [
+        {
+          "chunk_id": "a62e875bc115e9b6a39d7bf0b79d20d8ae7b86208fe22551365fcea9f4ca907f",
+          "doc_id": "deployment/cloud.md",
+          "start": 247,
+          "end": 718,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "bd74e7a4fe0daa03dd57610d142b90207c75daa992a9805d8a7ccaaa18bdb09a",
+          "doc_id": "tutorial/first-steps.md",
+          "start": 13024,
+          "end": 13509,
+          "score": 0.9763417792368714,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "bde5cd79abcf2248d362aebeaccd07f65ef0e5b45b1fc3c19e5f2756db859ee6",
+          "doc_id": "index.md",
+          "start": 21212,
+          "end": 21697,
+          "score": 0.9763417792368714,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "67c3002945855bbbcf8cf966daffcf41fca14d12a2f27c72b64a250ea4b2e8b7",
+          "doc_id": "tutorial/first-steps.md",
+          "start": 6150,
+          "end": 6588,
+          "score": 0.8938312794060588,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "60410916d38de77d47686082300aa2654b759658d45648c9a66bed431e8d5aef",
+          "doc_id": "deployment/fastapicloud.md",
+          "start": 575,
+          "end": 1214,
+          "score": 0.792714861989833,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "65d164e93c3026c601fcb289ad1cf91d05f2b740cfc84b7c013cb21684e2007b",
+          "doc_id": "features.md",
+          "start": 107,
+          "end": 769,
+          "score": 0.6213732573201283,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "0420c655e3851346fd5907b211bcb0b8a21cbe866701878b4bc8a93c8b4142ee",
+          "doc_id": "history-design-future.md",
+          "start": 3349,
+          "end": 3615,
+          "score": 0.538551742476759,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "565890ce23cbe2de5f623c8d3818c46b5f79263b2cf32879c1f29ea8070b62f8",
+          "doc_id": "index.md",
+          "start": 8483,
+          "end": 9440,
+          "score": 0.42860341216230313,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "baf2e6c733e6c7b3bf4654bf5715a932681d50b945e3f3e348b545a1090ef648",
+          "doc_id": "deployment/index.md",
+          "start": 87,
+          "end": 684,
+          "score": 0.4097012354305035,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "170e8947fbfe1419a0f7de5d677a5ab3c7302daa99234006ea21f44b0a4af95d",
+          "doc_id": "tutorial/first-steps.md",
+          "start": 13511,
+          "end": 13767,
+          "score": 0.3961640457071738,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "qdf4247303f88",
+      "question_type": "why_when",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "7f8bfe8d5b5500ffad06f5f63bcb25e40d2c57d5979afcc5db00c1051cbef34b",
+          "doc_id": "deployment/https.md",
+          "start": 9259,
+          "end": 9941,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "c88c0549fe89fbf148007bd3dd75b2308ab92716ef36689c2d26c9bfb9df0dad",
+          "doc_id": "deployment/https.md",
+          "start": 5911,
+          "end": 7067,
+          "score": 0.636734244206114,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "782a2006763ced52ca50eeafd9fea0667e615361395c51552680b4042e1e08a5",
+          "doc_id": "deployment/docker.md",
+          "start": 19271,
+          "end": 20112,
+          "score": 0.6250003628543827,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "8f0a714710bc8558adfcbc83a8d9ce362420d6f3f2f0b010d186af8740b97fc9",
+          "doc_id": "deployment/https.md",
+          "start": 10592,
+          "end": 11610,
+          "score": 0.6120470834317648,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "77e88b4178535ab451d0db42ddcc1345e0556e5debb4d819dab328c5fba6df06",
+          "doc_id": "deployment/docker.md",
+          "start": 10782,
+          "end": 11235,
+          "score": 0.5838762441240053,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "b10f4faec448ce80cd585f88c9cee95e3da999c6daf1f86c1242ab0b1ea618a0",
+          "doc_id": "deployment/https.md",
+          "start": 11612,
+          "end": 11883,
+          "score": 0.5227945123147248,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "120d9e5b813ba1bdf4bce19e979a51e517835295b1ae7d934d167e9beba47e22",
+          "doc_id": "deployment/https.md",
+          "start": 2384,
+          "end": 3179,
+          "score": 0.4209888383227308,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "5a17ba514d09b40e099045ec7d53a0e8901695844947c6966b1430d634615335",
+          "doc_id": "deployment/concepts.md",
+          "start": 1329,
+          "end": 1756,
+          "score": 0.4201524762496256,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "b3afea0c93b73c681f0ae071b20bdb0830f9f334df4cf18e1baeaa636582895c",
+          "doc_id": "deployment/https.md",
+          "start": 7069,
+          "end": 7687,
+          "score": 0.41216408150773803,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "994a7ddf5548c6e0bc832d25e3025ebb35ae7a4495060ee51a7f6e5635972c22",
+          "doc_id": "deployment/https.md",
+          "start": 7689,
+          "end": 8059,
+          "score": 0.34013886886470257,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "qe22b0cc0c284",
+      "question_type": "factual",
+      "relevance": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": [
+        {
+          "chunk_id": "4ac65f47f773a998723a15f5c1a323b0a9ec851c12c5659a8df19c7f32db2271",
+          "doc_id": "deployment/docker.md",
+          "start": 25070,
+          "end": 25273,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "178c4cd3d5600099ff1eb213de244226b9790de0af39207845336b8a1a417fbe",
+          "doc_id": "advanced/settings.md",
+          "start": 0,
+          "end": 944,
+          "score": 0.6968126760902017,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "e9667ed20c6746fb6acecfd7a087157449b387200263de7660868826e091c21b",
+          "doc_id": "tutorial/middleware.md",
+          "start": 0,
+          "end": 978,
+          "score": 0.5652402841135088,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "67c3002945855bbbcf8cf966daffcf41fca14d12a2f27c72b64a250ea4b2e8b7",
+          "doc_id": "tutorial/first-steps.md",
+          "start": 6150,
+          "end": 6588,
+          "score": 0.5402840147012503,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d3ffbdeee6f90a8f541e3ceb4f26c7d276324864b68e919f4d512088415b7156",
+          "doc_id": "release-notes.md",
+          "start": 158630,
+          "end": 159140,
+          "score": 0.47904022269910906,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "458ea559dd0b2061c8fc83c431c9753f6518190ffb8dfad910f8f0f7af7d280f",
+          "doc_id": "advanced/advanced-dependencies.md",
+          "start": 2652,
+          "end": 3166,
+          "score": 0.4407273643089239,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "0797f5bd992ddc719f5b79f2fe15feb9908638a966cd8e4ef551804c473cd4b9",
+          "doc_id": "environment-variables.md",
+          "start": 0,
+          "end": 501,
+          "score": 0.39561522703840857,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "0b177bdb99a848a9352a0ed99eae87d230b7b51f5983c92ce14584aa5f17ad10",
+          "doc_id": "release-notes.md",
+          "start": 406760,
+          "end": 407951,
+          "score": 0.3751099097085363,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "b088e1ec2be3512bb4297ecf23c210821f1d0d9ce228ed46c8a575e33b68080d",
+          "doc_id": "release-notes.md",
+          "start": 16037,
+          "end": 16453,
+          "score": 0.3651301246413697,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "f671e127d3d8e1d661af9c1b42d10e1ace45fa1f34235c15e40bba577cbf0e13",
+          "doc_id": "deployment/concepts.md",
+          "start": 14529,
+          "end": 15733,
+          "score": 0.3561825494177873,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "qe51022aa9e16",
+      "question_type": "how_to",
+      "relevance": [
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 0.5,
+        "ndcg@10": 0.6309297535714575
+      },
+      "hits": [
+        {
+          "chunk_id": "e8ba1c0eabffb742564cc9fcb409a64f64fd9f6acbeb03738216e8b77c36f852",
+          "doc_id": "advanced/path-operation-advanced-configuration.md",
+          "start": 5787,
+          "end": 6909,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "a789870096a2c73ef0ac6cd26802ebf8ca88281273a6c5766b35f8db845c1e4c",
+          "doc_id": "advanced/path-operation-advanced-configuration.md",
+          "start": 4756,
+          "end": 5785,
+          "score": 0.7117488036802393,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "77bda39cf78fb7286167ce8f68fdebf9308115330f60b520abb353a3d30af18e",
+          "doc_id": "advanced/openapi-callbacks.md",
+          "start": 0,
+          "end": 706,
+          "score": 0.4677922497674265,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "c373577d71bb0085a9e261a230389b1ac1fda9d42a1d92e03da63233952dc991",
+          "doc_id": "tutorial/body.md",
+          "start": 6365,
+          "end": 6608,
+          "score": 0.35652138211559364,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "b28dbb56a0cffe32d8c9bbb058a2ae361882932421e3a0f6c134d4475e8bd310",
+          "doc_id": "tutorial/path-operation-configuration.md",
+          "start": 308,
+          "end": 1017,
+          "score": 0.31285690022014034,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "30f02321662cba549e3f460b3bfda762b0255bfa7d40cb6052e504054ae08748",
+          "doc_id": "advanced/behind-a-proxy.md",
+          "start": 14188,
+          "end": 14536,
+          "score": 0.29468646049457,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "4debf8d334eb36289c8f0e23d1a43960a4d4823c4d0176e67d894e7d15ff84d0",
+          "doc_id": "tutorial/schema-extra-example.md",
+          "start": 159,
+          "end": 1200,
+          "score": 0.29257436264894576,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "652c5415e50b2969f4fb946f14815e423703b454d98dab033404b09c5feee684",
+          "doc_id": "tutorial/body-nested-models.md",
+          "start": 0,
+          "end": 164,
+          "score": 0.2754522924439252,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "75a80eef7250235ae15e3b68d8e6888db6b2c41ae21617c666624168b245213e",
+          "doc_id": "tutorial/schema-extra-example.md",
+          "start": 7246,
+          "end": 8053,
+          "score": 0.27442722335365416,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "35913287039cf339f8f21dbc5f2e04bf92274bb1687645b44572d7fcd93d05b2",
+          "doc_id": "advanced/openapi-webhooks.md",
+          "start": 1637,
+          "end": 2665,
+          "score": 0.26681644872523047,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "qed960e7788fa",
+      "question_type": "factual",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "87f41917f6defdb020cf63257f3b47954d5f81d7587feec8e02197462158f372",
+          "doc_id": "tutorial/body-nested-models.md",
+          "start": 1179,
+          "end": 1786,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "a83abe408964b4fcd7655835e3f6186ab0d9b86a5f71ff473978aa72007d8a59",
+          "doc_id": "deployment/concepts.md",
+          "start": 2997,
+          "end": 3426,
+          "score": 0.4077089996704123,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "72bba791a7790ed953ba1250931b38a096d1d50f309da0d39d8f95a311cd1c80",
+          "doc_id": "tutorial/extra-data-types.md",
+          "start": 509,
+          "end": 2291,
+          "score": 0.32649418061861896,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "53a756f34a178b80660ce88a6567f728e475ec5e097af2e1e3eaf80b987b78ec",
+          "doc_id": "tutorial/bigger-applications.md",
+          "start": 7385,
+          "end": 7565,
+          "score": 0.2412755250661366,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "179a8163a35c2cfff2d0d6beb633edacb0fdd5b64c407a7c4eaf4c8cd86d4221",
+          "doc_id": "tutorial/encoder.md",
+          "start": 1267,
+          "end": 1607,
+          "score": 0.23071249252153866,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "ef5364267682ff0356770dea7baf1d76e7852576e01d652fead87ef7725e01f5",
+          "doc_id": "tutorial/security/oauth2-jwt.md",
+          "start": 7478,
+          "end": 7841,
+          "score": 0.21592658338672324,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "cf96fd6249796a9d3f21930ba68c1fb6462add661442b39ba196e72ace3079a1",
+          "doc_id": "tutorial/response-model.md",
+          "start": 13513,
+          "end": 14262,
+          "score": 0.17897143749682934,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "79cb71468c37640e916bc79bbc1dd469295ffc196edfa7928c9ebad3453fe373",
+          "doc_id": "tutorial/bigger-applications.md",
+          "start": 395,
+          "end": 980,
+          "score": 0.14753658861880675,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "7f889b19fb9ac9dc59b355a927cef2fdeaa55b832ec899f0c6e65812dfd5869e",
+          "doc_id": "advanced/generate-clients.md",
+          "start": 5132,
+          "end": 5772,
+          "score": 0.09397636508758413,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "9fcf15c0b57a19b42242ffa68dca0e33b09ba5bc45d827886a74c8d841abbce7",
+          "doc_id": "tutorial/sql-databases.md",
+          "start": 10350,
+          "end": 11170,
+          "score": 0.08688141320988053,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "qed9671cb7139",
+      "question_type": "factual",
+      "relevance": [
+        false,
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 0.2,
+        "ndcg@10": 0.38685280723454163
+      },
+      "hits": [
+        {
+          "chunk_id": "67c3002945855bbbcf8cf966daffcf41fca14d12a2f27c72b64a250ea4b2e8b7",
+          "doc_id": "tutorial/first-steps.md",
+          "start": 6150,
+          "end": 6588,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "a384d61608c52fde4fb7298bcac8d1f85e17d65d7831740a45c81a91072a0e65",
+          "doc_id": "alternatives.md",
+          "start": 1457,
+          "end": 2165,
+          "score": 0.5869882905460732,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "9197b4a568629dc4fe15b969e0b4a35686426f4cc37ee4ae631ee1a0d17b5af9",
+          "doc_id": "alternatives.md",
+          "start": 2167,
+          "end": 3278,
+          "score": 0.5189605194518043,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "7d070e472e68c14e695a992e6eb932187ba168184744bf874faf04c13fc3404e",
+          "doc_id": "deployment/manually.md",
+          "start": 2557,
+          "end": 3458,
+          "score": 0.5091136291958447,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "1d7d4155ce6809083dd5261dd11bb6130014a1847a35f7029e831ea1b4089cb7",
+          "doc_id": "alternatives.md",
+          "start": 859,
+          "end": 1455,
+          "score": 0.49111279537326774,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "929731184f0d313e75452120d59540847f02b5974f9a7197c3cef3f6dfa6f716",
+          "doc_id": "tutorial/security/index.md",
+          "start": 749,
+          "end": 1103,
+          "score": 0.37803958868405746,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "f8e3cc62d05e29400545c75b8c873b53ea64f8494c52eb83946e6c038b066115",
+          "doc_id": "tutorial/security/index.md",
+          "start": 2599,
+          "end": 3804,
+          "score": 0.3591536845884802,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "b50029be9cfcfa9ccd8a151de26a8f62cf3208ab139c8eafa92a96b5a896044a",
+          "doc_id": "tutorial/dependencies/index.md",
+          "start": 7228,
+          "end": 7904,
+          "score": 0.2757217907621032,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "fb1f38756d6247e573eeb93d2a9386621a44589a0e464020396da69386c9710a",
+          "doc_id": "tutorial/security/index.md",
+          "start": 2241,
+          "end": 2771,
+          "score": 0.2522345526470966,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d476ef80a3be3e3c9a6d866bc0b8a28e5059c07efe0655cf5d8849678d294375",
+          "doc_id": "tutorial/security/oauth2-jwt.md",
+          "start": 2749,
+          "end": 3549,
+          "score": 0.2518956409966742,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "qef9e071927d7",
+      "question_type": "how_to",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "a33ec58e8af8a1b9e1d42d3419d2666206cd61bf34f8d0a0bea7918f01fa5c70",
+          "doc_id": "advanced/security/oauth2-scopes.md",
+          "start": 1331,
+          "end": 2306,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d70108330fe71c62c8289de02ae1b0118cde3250aba0571bb9f2ce888aff3e8c",
+          "doc_id": "advanced/security/oauth2-scopes.md",
+          "start": 0,
+          "end": 1205,
+          "score": 0.8437078048627944,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "8f44cf2ea4991d19e036b0a5cd2038ba66884cac3c24d303b913ff7b76bae37d",
+          "doc_id": "advanced/security/oauth2-scopes.md",
+          "start": 2729,
+          "end": 3423,
+          "score": 0.8179139771383835,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "baab7b2367cc6790a1fa6456552080eb365b057f8f63df9ab066e376b5a33c72",
+          "doc_id": "tutorial/security/oauth2-jwt.md",
+          "start": 8914,
+          "end": 9319,
+          "score": 0.6885433564906851,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "376a142eed682c3ca5c32322fdc2a8075684ebe4dde02cd8fcebb0c1e931a33b",
+          "doc_id": "how-to/conditional-openapi.md",
+          "start": 211,
+          "end": 1322,
+          "score": 0.5623162472755644,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "cc181bf6ab22939e528e4b12a5b5d49d36a4f68e11c1456f44ed4e0ba36c5e65",
+          "doc_id": "release-notes.md",
+          "start": 704775,
+          "end": 705531,
+          "score": 0.4946827708920194,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "47a0e2b91feafc22353570635229ade1937a516dfd7ab51d16ace862e7646888",
+          "doc_id": "advanced/security/oauth2-scopes.md",
+          "start": 5043,
+          "end": 5745,
+          "score": 0.4767002053070006,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "a6e2158fafb407082d9506dd18b5ce70ca5ba750a1b1a86a5fd2e11f85a4c8ed",
+          "doc_id": "tutorial/security/first-steps.md",
+          "start": 6677,
+          "end": 7563,
+          "score": 0.47521437370631553,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "03eb73ce5fb105625a50bc7a25ba57b05cd3a209f6b64a9f4d10e40f18452f09",
+          "doc_id": "release-notes.md",
+          "start": 135623,
+          "end": 135848,
+          "score": 0.4375655708044592,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "97df7572ac3ee147a614408f3f284f31b0bc5a3a0030f96b2edc812a39ed723b",
+          "doc_id": "advanced/security/oauth2-scopes.md",
+          "start": 11621,
+          "end": 12361,
+          "score": 0.4092986254056085,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "qf9391013c733",
+      "question_type": "why_when",
+      "relevance": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "54a2807c54deefd74f0976292da16b79ea3a9468e711c5bc8622aa4f74ca2d03",
+          "doc_id": "deployment/versions.md",
+          "start": 746,
+          "end": 1632,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "25c7158f8b104b14b1a6925f53f2c754dd3de119467aec1078e924f632331836",
+          "doc_id": "tutorial/bigger-applications.md",
+          "start": 7991,
+          "end": 8815,
+          "score": 0.318743755626709,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "2fadab1c46e71cbe970b348cb2da114ebd3913cb98357240b8793c9cce0426e5",
+          "doc_id": "deployment/docker.md",
+          "start": 7057,
+          "end": 7992,
+          "score": 0.23922226026087823,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d6b39e9acab12660c95ed43068a60659dbcfd5d2d142ab017da2671ae75e4bc4",
+          "doc_id": "deployment/docker.md",
+          "start": 5807,
+          "end": 6635,
+          "score": 0.23579101142847678,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "df55fd80a03306589fa069667581065ddcf3e80c8ebfc657137b635e42d06e88",
+          "doc_id": "tutorial/bigger-applications.md",
+          "start": 11766,
+          "end": 12705,
+          "score": 0.2115233636598279,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "49df0c20a0842dc3900d36ea0db4ac1888676648bcda47465b82b48faf6d727f",
+          "doc_id": "deployment/docker.md",
+          "start": 15254,
+          "end": 16109,
+          "score": 0.19919304584606176,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "7333f35a26e39ef4eca7c9cb540615b624b97b351053bff46bd972a328863f7f",
+          "doc_id": "deployment/versions.md",
+          "start": 1805,
+          "end": 2425,
+          "score": 0.1659327508216384,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "17ee970fb31ee64523672aab5049836f30fee0b2822f9c9b11efd679b776aebe",
+          "doc_id": "release-notes.md",
+          "start": 8535,
+          "end": 8886,
+          "score": 0.16350905306760558,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d0521209cc5542d398a76fc077353fe90d3de47eeda148abfd375e5159333c3a",
+          "doc_id": "tutorial/dependencies/index.md",
+          "start": 2113,
+          "end": 2449,
+          "score": 0.15599287060319275,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "12c48849fcf4db8d8a219bd72fd039de70990920afea95812526b39e5309913a",
+          "doc_id": "release-notes.md",
+          "start": 164394,
+          "end": 164591,
+          "score": 0.15072686055658013,
+          "source": "sparse"
+        }
+      ]
+    }
+  ],
+  "created_at": "2026-11-02T06:38:34.413216+00:00",
+  "generation": null
+}

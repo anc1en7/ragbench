@@ -1,0 +1,996 @@
+{
+  "schema_version": 1,
+  "config_id": "8930e444bb77",
+  "config": {
+    "corpus": "fastapi_docs",
+    "chunker": {
+      "type": "recursive_md",
+      "size_tokens": 256,
+      "overlap_tokens": 32,
+      "min_tokens": 256,
+      "max_tokens": 512,
+      "threshold": null
+    },
+    "embedder": {
+      "name": "BAAI/bge-small-en-v1.5"
+    },
+    "backend": "pgvector",
+    "retrieval": {
+      "mode": "sparse",
+      "k_dense": 50,
+      "k_sparse": 50,
+      "rrf_k": 60
+    },
+    "rerank": {
+      "type": "none",
+      "model": null,
+      "top_n": 50
+    },
+    "generation": {
+      "enabled": false,
+      "context_k": 5,
+      "temperature": 0.0
+    },
+    "final_k": 10,
+    "seed": 42
+  },
+  "seed": 42,
+  "split": "dev",
+  "corpus": {
+    "name": "fastapi_docs",
+    "repo": "https://github.com/fastapi/fastapi",
+    "tag": "0.162.0",
+    "commit_sha": "7a0a3f0b286c6c865cf4398ea0e957a87b8bffa4",
+    "sha256_of_files": "a15eae559d9754596d9faa8c3b9125268a0d8f1893adc824a7df0b11d8be1be5"
+  },
+  "goldset": {
+    "n_questions": 47,
+    "all_verified": true,
+    "provisional": false
+  },
+  "package_versions": {
+    "ragbench": "0.1.0",
+    "numpy": "2.5.4",
+    "torch": "2.15.0+cu132",
+    "sentence-transformers": "6.2.0",
+    "transformers": "5.22.1",
+    "qdrant-client": "1.20.0",
+    "pgvector": "0.5.1",
+    "psycopg": "3.3.6",
+    "fastembed": "0.9.1",
+    "bm25s": "0.3.16",
+    "tiktoken": "0.14.0",
+    "pydantic": "2.14.1"
+  },
+  "hardware_ref": "results/hardware.json",
+  "min_overlap_frac": 0.2,
+  "bootstrap_resamples": 1000,
+  "bootstrap_seed": 42,
+  "metrics": {
+    "recall@1": {
+      "mean": 0.02127659574468085,
+      "ci_lo": 0.0,
+      "ci_hi": 0.06382978723404255
+    },
+    "recall@3": {
+      "mean": 0.0425531914893617,
+      "ci_lo": 0.0,
+      "ci_hi": 0.10638297872340426
+    },
+    "recall@5": {
+      "mean": 0.0425531914893617,
+      "ci_lo": 0.0,
+      "ci_hi": 0.10638297872340426
+    },
+    "recall@10": {
+      "mean": 0.06382978723404255,
+      "ci_lo": 0.0,
+      "ci_hi": 0.12819148936170163
+    },
+    "mrr@10": {
+      "mean": 0.034954407294832825,
+      "ci_lo": 0.0,
+      "ci_hi": 0.08814589665653494
+    },
+    "ndcg@10": {
+      "mean": 0.04179283163627214,
+      "ci_lo": 0.0,
+      "ci_hi": 0.09778906943199207
+    }
+  },
+  "latency_ms": {
+    "embed_query": {
+      "p50": 0.0,
+      "p95": 0.0
+    },
+    "dense": {
+      "p50": 0.0,
+      "p95": 0.0
+    },
+    "sparse": {
+      "p50": 3.481550025753677,
+      "p95": 5.1261250860989085
+    },
+    "fusion": {
+      "p50": 0.0,
+      "p95": 0.0
+    },
+    "rerank": {
+      "p50": 0.000800006091594696,
+      "p95": 0.008335057646036148
+    },
+    "total": {
+      "p50": 3.546050051227212,
+      "p95": 5.191605037543922
+    }
+  },
+  "latency_passes": 3,
+  "index": {
+    "docs": 156,
+    "chunks": 2671,
+    "embed_seconds": 2.0248903001192957,
+    "index_seconds": 1.8403411998879164,
+    "wall_seconds": 4.226079700049013,
+    "peak_rss_bytes": 1821782016,
+    "chunks_per_sec": 1319.0838041165189,
+    "size_bytes": 13492224
+  },
+  "ann_sanity_recall": null,
+  "per_query": [
+    {
+      "qid": "q0192db33ef84",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "q01c9dacf4110",
+      "question_type": "factual",
+      "relevance": [
+        true
+      ],
+      "metrics": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 1.0,
+        "ndcg@10": 1.0
+      },
+      "hits": [
+        {
+          "chunk_id": "971522f4da965f440a0cd818f59e79aad45d94676c22660aa264479160e784b4",
+          "doc_id": "how-to/authentication-error-status-code.md",
+          "start": 0,
+          "end": 1051,
+          "score": 1.0,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q0d6fb160a4d7",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "q0dccbbbf5f13",
+      "question_type": "why_when",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "q13fc29b2d8a1",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "q1625899626e7",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "q1e5bef8645f6",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "q2379a7821022",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "q29ee9caa94ef",
+      "question_type": "why_when",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "q2dd6b5d710b2",
+      "question_type": "how_to",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "q340fb02703da",
+      "question_type": "why_when",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "q36b27f89f962",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "q37fb2e04afdb",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "q38af951b6873",
+      "question_type": "why_when",
+      "relevance": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 1.0,
+        "mrr@10": 0.14285714285714285,
+        "ndcg@10": 0.3333333333333333
+      },
+      "hits": [
+        {
+          "chunk_id": "178c4cd3d5600099ff1eb213de244226b9790de0af39207845336b8a1a417fbe",
+          "doc_id": "advanced/settings.md",
+          "start": 0,
+          "end": 944,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "0797f5bd992ddc719f5b79f2fe15feb9908638a966cd8e4ef551804c473cd4b9",
+          "doc_id": "environment-variables.md",
+          "start": 0,
+          "end": 501,
+          "score": 0.7688313683474961,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "bd96939894d1eeeed734d75609fad19faa63e29723813fe5f22ad7fd5e4aa0f2",
+          "doc_id": "environment-variables.md",
+          "start": 503,
+          "end": 770,
+          "score": 0.34213618714143895,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d46eeef140c21a77697b9e40e087fb95debf79d0b0ec4e2f575dfac67bb5b752",
+          "doc_id": "advanced/settings.md",
+          "start": 6410,
+          "end": 7325,
+          "score": 0.16432650069852914,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "01b8f99bd00afee5a88f913baca0716f1fdb814cd6644bae21c217d5518917d1",
+          "doc_id": "tutorial/frontend.md",
+          "start": 4087,
+          "end": 5234,
+          "score": 0.16313807129381142,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "a9d00fdc08e35fac9aacf94f1cb52d91fdf3bc13cc6e717f94b9dae4825847b2",
+          "doc_id": "advanced/settings.md",
+          "start": 946,
+          "end": 1407,
+          "score": 0.1549133686415849,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "0acb04215f9795044e3c1964b17715390ead39664b044997cc5803eee050ed25",
+          "doc_id": "deployment/docker.md",
+          "start": 1849,
+          "end": 2813,
+          "score": 0.15405610009309573,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "4c4a9a994ee46c0460edd880fe322ec2b75f28feead37c197855f7a2bd3610de",
+          "doc_id": "release-notes.md",
+          "start": 292789,
+          "end": 295554,
+          "score": 0.050562007215823934,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "ef40141b2c8da3189a805b5e0254d3abd3c79f848355542a8c7c9dd4ea1036fd",
+          "doc_id": "how-to/conditional-openapi.md",
+          "start": 0,
+          "end": 209,
+          "score": 0.018960754981223845,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "a4be6ed6f75da8f81e444f6e6f9e75def2f2f359c123b785caeca55a0eafe928",
+          "doc_id": "fastapi-cli.md",
+          "start": 4999,
+          "end": 5948,
+          "score": 0.00459654059467522,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "q3c1e130bd15f",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "q4514bb7be1b0",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "q522a2af36a80",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "q52c27f8b8878",
+      "question_type": "why_when",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "q5323037b774d",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "q55648562df68",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "q59290f9a3de9",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "q59950affe00a",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "q833aba667d5a",
+      "question_type": "how_to",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "q86a8d9520113",
+      "question_type": "why_when",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "q8b24b0981cfd",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "q908406464f3d",
+      "question_type": "why_when",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "q974432ac3e98",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "q9fe8ff242abb",
+      "question_type": "why_when",
+      "relevance": [
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr@10": 0.5,
+        "ndcg@10": 0.6309297535714575
+      },
+      "hits": [
+        {
+          "chunk_id": "f38877b81ac0746c4eb527e12fa5d480083b0d4d511de59e118b332f5f219cd4",
+          "doc_id": "tutorial/body.md",
+          "start": 4852,
+          "end": 5276,
+          "score": 1.0,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "6b5ea73355a7731d20c1b09832a5866f0b1f2b717327c220a886a9808fcf5248",
+          "doc_id": "tutorial/body.md",
+          "start": 5278,
+          "end": 6363,
+          "score": 0.7817894256941449,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "f00d2c57b1f148c06ca89f98791c00bd729ad104aa7580e15b80dc89ba03fb56",
+          "doc_id": "tutorial/body-multiple-params.md",
+          "start": 173,
+          "end": 688,
+          "score": 0.31687280108917204,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "65d164e93c3026c601fcb289ad1cf91d05f2b740cfc84b7c013cb21684e2007b",
+          "doc_id": "features.md",
+          "start": 107,
+          "end": 769,
+          "score": 0.2529423236360672,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "f80de4461f4bea8d274df68d1a3cffd61543975c735831b128573e713df416a7",
+          "doc_id": "python-types.md",
+          "start": 9973,
+          "end": 11003,
+          "score": 0.15704660745640994,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "d0e2d567fca75bc2a0f2703f7b296a4264142345a585a37c7655199c4a8bb13f",
+          "doc_id": "alternatives.md",
+          "start": 12405,
+          "end": 13542,
+          "score": 0.12990631182366458,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "7df830d47de5573f0bb3458b875f2fc1c044d5aad2a42e2d5185e08d0d008400",
+          "doc_id": "tutorial/query-params-str-validations.md",
+          "start": 8892,
+          "end": 9717,
+          "score": 0.12868308396861056,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "1a4b25d325177482423f3412b6f163f0951e16bfd6ec28d8567fc06a00049e59",
+          "doc_id": "tutorial/body.md",
+          "start": 0,
+          "end": 1058,
+          "score": 0.07445359616957671,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "79f4fb311a2cdb195d74fe4861e82ebecfff6b40f249fa1a8153dfa1d64a8eda",
+          "doc_id": "advanced/generate-clients.md",
+          "start": 7816,
+          "end": 8706,
+          "score": 0.061150891276752696,
+          "source": "sparse"
+        },
+        {
+          "chunk_id": "9adeb5897a2c4b8fef82c4b363781a3e446b02f4a12f82eead934d6c5fc88e61",
+          "doc_id": "release-notes.md",
+          "start": 7693,
+          "end": 8354,
+          "score": 0.059730212863475206,
+          "source": "sparse"
+        }
+      ]
+    },
+    {
+      "qid": "qa0029d1b6456",
+      "question_type": "how_to",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "qac325f227f37",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "qb1560f731fd7",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "qb45e9e7c06f0",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "qba3efb6e2dac",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "qbc2bdab19eda",
+      "question_type": "why_when",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "qbcef353eaba3",
+      "question_type": "how_to",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "qc4142897af26",
+      "question_type": "why_when",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "qc4979586ae5f",
+      "question_type": "why_when",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "qc828d75b88eb",
+      "question_type": "why_when",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "qda500c6bf12a",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "qdb58b903c6d6",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "qdf4247303f88",
+      "question_type": "why_when",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "qe22b0cc0c284",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "qe51022aa9e16",
+      "question_type": "how_to",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "qed960e7788fa",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "qed9671cb7139",
+      "question_type": "factual",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "qef9e071927d7",
+      "question_type": "how_to",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    },
+    {
+      "qid": "qf9391013c733",
+      "question_type": "why_when",
+      "relevance": [],
+      "metrics": {
+        "recall@1": 0.0,
+        "recall@3": 0.0,
+        "recall@5": 0.0,
+        "recall@10": 0.0,
+        "mrr@10": 0.0,
+        "ndcg@10": 0.0
+      },
+      "hits": []
+    }
+  ],
+  "created_at": "2026-11-02T06:38:25.094459+00:00",
+  "generation": null
+}
