@@ -289,6 +289,16 @@ def findings_lines(
                 )
 
     for run in [*dev_runs, *test_runs]:
+        if run.config.retrieval.mode == "sparse" and run.per_query:
+            covered = sum(1 for q in run.per_query if q.hits)
+            if covered < 0.5 * len(run.per_query):
+                hyps.append(
+                    f"hypothesis: {run.config.backend} sparse retrieval returned hits for only "
+                    f"{covered}/{len(run.per_query)} questions (`{run.config_id}`, {run.split}); "
+                    "its lexical query likely requires every term to match (AND semantics), so "
+                    f"{run.config.backend} hybrid degenerates to dense. Not a verdict on lexical "
+                    "retrieval: compare the control_bm25 rows."
+                )
         if run.ann_sanity_recall is not None and run.ann_sanity_recall < 0.98:
             hyps.append(
                 f"hypothesis: ANN sanity recall {run.ann_sanity_recall:.3f} < 0.98 for "

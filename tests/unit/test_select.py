@@ -191,3 +191,18 @@ def test_attach_generation_skips_runs_that_have_it(tmp_path: Path):
     attach_generation([run], tmp_path, ragas_fn=fake_ragas)
     assert seen == [run.config_id]
     assert (tmp_path / "summary.csv").exists()
+
+
+def test_findings_flag_sparse_retrieval_with_low_query_coverage():
+    from ragbench.eval.results import RetrievedChunk
+
+    sparse = _run(_cfg(retrieval={"mode": "sparse"}), [0.0] * 10)
+    hit = RetrievedChunk(chunk_id="c", doc_id="a.md", start=0, end=1, score=1.0, source="sparse")
+    per_query = [
+        q.model_copy(update={"hits": [hit] if i < 2 else []})
+        for i, q in enumerate(sparse.per_query)
+    ]
+    sparse = sparse.model_copy(update={"per_query": per_query})
+    text = "\n".join(findings_lines(GRID, [sparse], [], n_dev_runs=1))
+    assert "pgvector sparse retrieval returned hits for only 2/10 questions" in text
+    assert "control_bm25" in text
