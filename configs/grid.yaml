@@ -1,3 +1,69 @@
-# Sweep grid skeleton. Stages A-E are defined in spec section 5.8
-# (RAGBENCH_AGENT_SPEC.md) and are filled in by the sweep tasks; keep this file
-# valid YAML until then. Runner: `ragbench sweep --grid configs/grid.yaml`.
+# Staged sweep (spec section 5.8). Runner: `ragbench sweep --grid configs/grid.yaml`.
+#
+# Every config is `base` + the parent config (stages B-D) + the stage's `set` overrides +
+# one choice from each `vary` axis (cartesian product across axes). Override keys may be
+# dotted (`retrieval.mode`) to set one leaf; a non-dotted key with a mapping value
+# (`chunker: {...}`) REPLACES that whole sub-config. A stage with `from:` takes the top
+# `top_n` configs of that stage, ranked on the dev split by `selection` (tiebreaks in
+# order, then config_id). Configs already evaluated (results/runs/{config_id}__dev.json)
+# are reused, never re-run, so overlapping stages and interrupted sweeps cost nothing.
+#
+# Selection metric: nDCG@10 (tiebreak MRR@10, then Recall@5). Recall@5 is saturated on
+# the baseline (1.000 on dev, Phase 3) so it cannot rank configs; see OPEN_QUESTIONS.
+
+corpus: fastapi_docs
+split: dev              # all selection happens on dev; finalists go to test (`ragbench finalize`)
+seed: 42
+selection:
+  metric: ndcg@10
+  tiebreak: [mrr@10, recall@5]
+finalists: 5            # stage E: top-N overall on dev -> test retrieval + RAGAS
+
+base:
+  retrieval: {mode: dense, k_dense: 50, k_sparse: 50, rrf_k: 60}
+  rerank: {type: none, top_n: 50}
+  final_k: 10
+  generation: {enabled: false, context_k: 5, temperature: 0.0}
+
+stages:
+  # Stage A: chunking x embedder, dense only, pgvector (5 chunkers x 3 embedders = 15)
+  - name: A
+    top_n: 3
+    set: {backend: pgvector, retrieval.mode: dense}
+    vary:
+      - - chunker: {type: fixed, size_tokens: 256, overlap_tokens: 32}
+        - chunker: {type: fixed, size_tokens: 512, overlap_tokens: 64}
+        - chunker: {type: recursive_md, size_tokens: 256, overlap_tokens: 32}
+        - chunker: {type: recursive_md, size_tokens: 512, overlap_tokens: 64}
+        - chunker: {type: semantic, min_tokens: 256, max_tokens: 512, threshold: 0.5}
+      - - embedder: {name: BAAI/bge-small-en-v1.5}
+        - embedder: {name: sentence-transformers/all-MiniLM-L6-v2}
+        - embedder: {name: intfloat/e5-small-v2}
+
+  # Stage B: retrieval mode on the top 3 from A, plus the backend-agnostic BM25 control
+  - name: B
+    from: A
+    top_n: 3
+    vary:
+      - - {retrieval.mode: dense}
+        - {retrieval.mode: sparse}
+        - {retrieval.mode: hybrid}
+        - {backend: control_bm25, retrieval.mode: sparse}
+
+  # Stage C: reranking on the top 3 from B; cross-encoder top_n in {20, 50}
+  - name: C
+    from: B
+    top_n: 3
+    vary:
+      - - rerank: {type: none, top_n: 50}
+        - rerank: {type: cross_encoder, model: BAAI/bge-reranker-base, top_n: 20}
+        - rerank: {type: cross_encoder, model: BAAI/bge-reranker-base, top_n: 50}
+
+  # Stage D: backend on the top 3 from C (control_bm25 parents are carried unchanged)
+  - name: D
+    from: C
+    top_n: 3
+    only_backends: [pgvector, qdrant]
+    vary:
+      - - {backend: pgvector}
+        - {backend: qdrant}
