@@ -262,7 +262,29 @@ def evaluate(
     close = getattr(pipe.store, "close", None)
     if callable(close):
         close()
+    if pipeline is None:  # we built it: release models so a long sweep does not fill VRAM
+        del pipe
+        release_accelerator_memory()
     return result, path
+
+
+def release_accelerator_memory() -> None:
+    """Free unreferenced models and return PyTorch's cached CUDA memory to the device.
+
+    A sweep evaluates dozens of configs in one process, each loading its own embedder and
+    cross-encoder. Without this, PyTorch's caching allocator keeps every old model's
+    blocks reserved: on a 4 GB GPU the sweep spilled into shared system memory and the
+    cross-encoder slowed ~4x. Results are unaffected; this only frees memory.
+    """
+    import gc
+
+    gc.collect()
+    try:
+        import torch
+    except ImportError:  # pragma: no cover - torch is a hard dependency
+        return
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
 
 
 def _index_fields(stats: dict[str, Any]) -> dict[str, Any]:

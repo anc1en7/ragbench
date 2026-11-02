@@ -53,3 +53,6 @@ Thumbs.db
 
 # sweep resume state (informational; run JSONs are the source of truth)
 results/.sweep_state.json
+
+# local temp dir (keeps installs/extractions off C:)
+.tmp/

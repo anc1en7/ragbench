@@ -120,7 +120,26 @@
 
 ## Generation judging
 
-- Judge model, prompt versions, RAGAS version and metric names: (Phase 4)
+- Sweep (spec section 5.8, `configs/grid.yaml`): stage A chunker x embedder (dense,
+  pgvector, 15 configs) -> B retrieval mode incl. BM25 control -> C reranker (none,
+  cross-encoder top_n 20/50) -> D backend. Each stage expands the parent stage's top 3 by
+  **dev nDCG@10** (tiebreak MRR@10, Recall@5, config_id). The top 5 configs overall on dev
+  are the only ones evaluated on test (`ragbench finalize`); test never informs selection.
+- Device: every sweep and finalist run executes on the same GPU (RTX 3050 Laptop, 4 GB,
+  torch `2.15.0+cu132`, `results/hardware.json`): embeddings, query encoding and the
+  cross-encoder. Cold embedding throughput per embedder (cache bypassed) is measured
+  separately by `ragbench bench-embed` -> `results/embedder_throughput.json`.
+- Generation: prompt `gen-v1` (`src/ragbench/generation/prompt.py`), the config's top
+  `context_k` (5) chunks, temperature 0, generator `LLM_MODEL`.
+- Judging: `ragas==0.4.3` collections metrics (faithfulness, answer relevancy with
+  strictness 3 and local `BAAI/bge-small-en-v1.5` query embeddings, reference-based context
+  precision, context recall). Judge temperature 0, `seed=42` sent (providers may ignore
+  it), instructor JSON mode. Run on a fixed seeded subset of 100 test questions per
+  finalist. Failed or NaN judge outputs are stored as missing and excluded per metric;
+  `n_valid` is reported. Every generation block records the generator and judge models,
+  prompt version, ragas version and embedder.
+- Human audit: `docs/judge_spotcheck.md` holds 20 seeded judged items for the human to
+  check (spec section 5.7); the agent never fills in verdicts.
 
 ## Regression gate
 

@@ -229,7 +229,7 @@ def test_run_generation_eval_aggregates_with_missing_values():
     chat = FakeChat()
     questions = [_q(i) for i in range(4)]
 
-    gen = run_generation_eval(
+    gen, samples = run_generation_eval(
         _pipeline(),
         questions,
         generator=chat,
@@ -253,6 +253,8 @@ def test_run_generation_eval_aggregates_with_missing_values():
     assert q001.scores["context_recall"] is None
     assert q001.context_chunk_ids == ["c0", "c1", "c2", "c3", "c4"]
     assert gen.tokens_per_query.mean > 0
+    assert [s.qid for s in samples] == [q.qid for q in questions]
+    assert samples[0].contexts[0] == "ctx 0"
 
 
 def test_write_spotcheck_samples_twenty_unchecked_items(tmp_path: Path):

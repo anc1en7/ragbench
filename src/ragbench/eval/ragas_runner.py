@@ -213,8 +213,11 @@ def run_generation_eval(
     concurrency: int = 3,
     n_resamples: int = 1000,
     log: Callable[[str], None] = lambda _msg: None,
-) -> GenerationMetrics:
-    """Retrieve, generate and judge every question; aggregate means with bootstrap CIs."""
+) -> tuple[GenerationMetrics, list[GenSample]]:
+    """Retrieve, generate and judge every question; aggregate means with bootstrap CIs.
+
+    Returns the metrics block plus the samples (with context texts, for the spot-check).
+    """
     if not questions:
         raise ValueError("run_generation_eval needs at least one question")
     cfg = pipeline.cfg
@@ -258,7 +261,7 @@ def run_generation_eval(
             metrics[name] = MetricCI(mean=float(np.mean(floats)), ci_lo=lo, ci_hi=hi)
 
     tokens = np.asarray([s.tokens for s in samples], dtype=np.float64)
-    return GenerationMetrics(
+    block = GenerationMetrics(
         generator_model=generator_model,
         judge_model=judge_model,
         prompt_version=PROMPT_VERSION,
@@ -289,6 +292,7 @@ def run_generation_eval(
         ],
         created_at=datetime.now(UTC).isoformat(),
     )
+    return block, samples
 
 
 def write_spotcheck(

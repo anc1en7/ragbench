@@ -437,6 +437,165 @@ def sweep_cmd(
     typer.echo(f"finalists (dev, by {grid_obj.selection.metric}): {report.finalists}")
 
 
+def _print_leaderboard(rows: list[Any], title: str) -> None:
+    from rich.console import Console
+    from rich.table import Table
+
+    table = Table(title=title)
+    for col in ("#", "config", "nDCG@10", "MRR@10", "Recall@5", "p95 ms", "faith.", "ans.rel."):
+        table.add_column(col, justify="left" if col == "config" else "right")
+    for row in rows:
+
+        def ci(name: str, r: Any = row) -> str:
+            mean, lo, hi = r.metrics[name]
+            return f"{mean:.3f} [{lo:.2f},{hi:.2f}]"
+
+        gen = row.generation
+        table.add_row(
+            str(row.rank),
+            f"{row.label}\n{row.config_id}",
+            ci("ndcg@10"),
+            ci("mrr@10"),
+            ci("recall@5"),
+            f"{row.p95_total_ms:.1f}",
+            f"{gen['faithfulness']:.3f}" if "faithfulness" in gen else "-",
+            f"{gen['answer_relevancy']:.3f}" if "answer_relevancy" in gen else "-",
+        )
+    Console().print(table)
+
+
+@app.command("finalize")
+def finalize_cmd(
+    grid: Path = typer.Option(Path("configs/grid.yaml"), "--grid", help="Sweep grid YAML"),
+    results_dir: Path = typer.Option(Path("results"), "--results-dir", help="Results root"),
+    skip_ragas: bool = typer.Option(False, "--skip-ragas", help="Skip RAGAS generation metrics"),
+    concurrency: int = typer.Option(3, "--concurrency", help="Concurrent LLM requests"),
+    spotcheck: Path = typer.Option(
+        Path("docs/judge_spotcheck.md"), "--spotcheck", help="Judge spot-check file (output)"
+    ),
+) -> None:
+    """Dev-selected finalists -> test eval -> RAGAS -> leaderboard + findings draft."""
+    from ragbench.embedding.st_embedder import SentenceTransformerEmbedder
+    from ragbench.eval.ragas_runner import (
+        RAGAS_EMBEDDER,
+        build_ragas_scorer,
+        judge_model_name,
+        run_generation_eval,
+        select_subset,
+        write_spotcheck,
+    )
+    from ragbench.eval.runner import SPLITS_PATH, evaluate, load_split_questions, resolve_dataset
+    from ragbench.goldset.generate import load_documents
+    from ragbench.llm_client import OpenAICompatClient, settings_from_env
+    from ragbench.pipeline import build_pipeline, index_documents
+    from ragbench.sweep.runner import run_sweep
+    from ragbench.sweep.select import (
+        attach_generation,
+        evaluate_finalists,
+        findings_lines,
+        leaderboard,
+        write_findings,
+    )
+    from ragbench.sweep.stages import load_grid
+
+    try:
+        grid_obj = load_grid(grid)
+        sweep = run_sweep(grid_obj, results_dir, log=typer.echo)  # reuses every dev run
+    except (FileNotFoundError, ValueError, RuntimeError) as exc:
+        typer.secho(str(exc), fg="red", err=True)
+        raise typer.Exit(code=1) from exc
+
+    from ragbench.eval.results import load_run, run_path
+
+    dev_ids = list(dict.fromkeys(cid for st in sweep.stages for cid in st.config_ids))
+    dev_runs = {cid: load_run(run_path(results_dir, cid, grid_obj.split)) for cid in dev_ids}
+    typer.echo(f"finalists (dev, {grid_obj.selection.metric}): {sweep.finalists}")
+
+    def evaluate_fn(cfg: Any, split: Any) -> Any:
+        return evaluate(cfg, split, results_dir=results_dir)[0]
+
+    test_runs = evaluate_finalists(
+        grid_obj, sweep.finalists, dev_runs, results_dir, evaluate_fn=evaluate_fn, log=typer.echo
+    )
+
+    if not skip_ragas:
+        settings = settings_from_env()
+        ragas_embedder = SentenceTransformerEmbedder(RAGAS_EMBEDDER)
+        scorer = build_ragas_scorer(settings, ragas_embedder, seed=grid_obj.seed)  # type: ignore[arg-type]
+        dataset = resolve_dataset(grid_obj.corpus)
+        documents = load_documents(dataset.documents)
+        questions = load_split_questions(dataset.questions, SPLITS_PATH, "test")
+        subset = select_subset(questions, seed=grid_obj.seed)
+
+        def ragas_fn(run: Any) -> Any:
+            pipe = build_pipeline(run.config)
+            index_documents(documents, pipe)  # control_bm25 indexes live in-process only
+            with OpenAICompatClient(settings) as client:
+                gen, _samples = run_generation_eval(
+                    pipe,
+                    subset,
+                    generator=client,
+                    scorer=scorer,
+                    generator_model=settings.model,
+                    judge_model=judge_model_name(settings),
+                    subset_seed=grid_obj.seed,
+                    concurrency=concurrency,
+                    log=typer.echo,
+                )
+            return run.model_copy(update={"generation": gen})
+
+        test_runs = attach_generation(test_runs, results_dir, ragas_fn=ragas_fn, log=typer.echo)
+
+        # spot-check: rebuild context texts deterministically from chunk ids
+        qmap = {q.qid: q for q in questions}
+        items = []
+        for run in test_runs:
+            if run.generation is None:
+                continue
+            chunker = build_pipeline(run.config).chunker
+            texts = {c.chunk_id: c.text for doc in documents for c in chunker.chunk(doc)}
+            for gq in run.generation.per_query:
+                ctx = [texts.get(cid, "") for cid in gq.context_chunk_ids]
+                items.append((run.config_id, gq, qmap[gq.qid], ctx))
+        write_spotcheck(spotcheck, items, judge_model=judge_model_name(settings))
+        typer.echo(f"wrote {spotcheck} (20 items for human review)")
+
+    _print_leaderboard(
+        leaderboard(test_runs, grid_obj.selection),
+        f"test leaderboard (finalists selected on dev by {grid_obj.selection.metric})",
+    )
+    lines = findings_lines(
+        grid_obj,
+        list(dev_runs.values()),
+        test_runs,
+        n_dev_runs=len(dev_runs),
+        elapsed_minutes=None,
+    )
+    path = write_findings(results_dir / "findings_draft.md", lines)
+    typer.echo(f"wrote {path}")
+
+
+@app.command("leaderboard")
+def leaderboard_cmd(
+    grid: Path = typer.Option(Path("configs/grid.yaml"), "--grid", help="Sweep grid YAML"),
+    results_dir: Path = typer.Option(Path("results"), "--results-dir", help="Results root"),
+    split: str = typer.Option("test", "--split", help="dev | test"),
+    top: int = typer.Option(10, "--top", help="Rows to show"),
+) -> None:
+    """Print a leaderboard of stored runs for a split (ranked by the grid's selection)."""
+    from ragbench.eval.results import load_run
+    from ragbench.sweep.select import leaderboard
+    from ragbench.sweep.stages import load_grid
+
+    grid_obj = load_grid(grid)
+    runs = [load_run(p) for p in sorted((results_dir / "runs").glob(f"*__{split}.json"))]
+    runs = [r for r in runs if r.config.corpus == grid_obj.corpus]
+    if not runs:
+        typer.echo(f"no {split} runs in {results_dir / 'runs'}")
+        raise typer.Exit(code=1)
+    _print_leaderboard(leaderboard(runs, grid_obj.selection)[:top], f"{split} leaderboard")
+
+
 @app.command("bench-embed")
 def bench_embed_cmd(
     embedder: list[str] = typer.Option(

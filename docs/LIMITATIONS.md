@@ -3,8 +3,12 @@
 > Stub: filled honestly as the system is built (spec rule 9). This project
 > does not claim state-of-the-art results.
 
-1. **Judge-model bias.** Generation and judging use the same configured
-   endpoint; self-preference bias is possible. (Quantified in Phase 4.)
+1. **Judge-model bias.** Generation and judging use the same model (`LLM_MODEL=rag`, an
+   OmniRoute combo pooling Ministral 14B / Grok) unless `LLM_JUDGE_MODEL` is set, so
+   self-preference bias is possible. The combo may route requests to different
+   underlying models, which adds judge variance. RAGAS runs on 100 test questions per
+   finalist only. A 20-item human spot-check (`docs/judge_spotcheck.md`) is the only
+   audit of judge quality.
 2. **Synthetic questions with human verification.** Questions are LLM-written
    and human-verified, not sourced from real user traffic.
 3. **Single corpus.** FastAPI documentation only; results may not transfer to
@@ -16,6 +20,10 @@
    brute force.
 6. **Small embedding models on CPU-class hardware.** Model selection follows
    the free/local-first constraint; larger embedders were not evaluated.
-7. **CI-generated sweep.** The staged sweep runs on shared GitHub Actions
-   runners; absolute latencies from that environment reflect the runner, not
-   consumer hardware, and are labeled accordingly in results.
+7. **Laptop GPU latency.** The sweep ran locally on an RTX 3050 Laptop GPU (4 GB) with
+   a 12-thread i5-12450H. Absolute latencies (especially the cross-encoder) reflect that
+   machine; a CPU-only deployment would be much slower. Relative comparisons hold only
+   within this one device.
+8. **Staged, not exhaustive, search.** Later stages only expand the top 3 configs of the
+   previous stage (spec section 5.8), so factor interactions outside those paths are
+   untested.
