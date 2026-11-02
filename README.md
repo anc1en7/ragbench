@@ -2,7 +2,7 @@
 
 A config-driven platform for benchmarking Retrieval-Augmented Generation (RAG) pipelines on a fixed, pinned corpus with a **human-verified gold question set**. It compares chunking strategies, embedding models, retrieval modes (dense, BM25, hybrid-RRF), rerankers, and two vector backends (pgvector and Qdrant), and reports retrieval quality, generation quality, latency and cost with confidence intervals.
 
-> **Status: under construction (Phase 3 of 6 complete).** Corpus, gold set, all pipeline components, and the evaluation harness are built and tested: span-overlap scoring, Recall/MRR/nDCG with bootstrap CIs, per-stage latency, schema-validated run results, and the `ragbench eval` CLI. The sweep, generation-metric, API and dashboard phases have not started. Every number below is generated from files in `results/`; where a stage has not run, it says so rather than guessing.
+> **Status: under construction (Phase 4 of 6: retrieval sweep complete, RAGAS pending).** The staged sweep (33 configs on dev) and the test-split evaluation of the 5 dev-selected finalists are done. RAGAS generation metrics are implemented but not yet run. The API, tracing, CI gate and dashboard come in Phase 5. Every number below is copied from files in `results/`; where a stage has not run, it says so rather than guessing.
 
 ## Why this exists
 
@@ -60,7 +60,13 @@ ragbench query --config configs/pipeline.example.yaml "How do I declare a query 
 
 # 7. Evaluate a config on the dev split (indexes in-process, writes results/)
 ragbench eval --config configs/baseline_dense.yaml --split dev
+
+# 8. Run the staged sweep on dev (resumable), then evaluate dev-selected finalists on test
+ragbench sweep --grid configs/grid.yaml
+ragbench finalize --grid configs/grid.yaml --skip-ragas   # drop --skip-ragas for RAGAS
 ```
+
+> **GPU note.** The lockfile pins CPU torch, so CI and a fresh `make setup` stay CPU-only. To use an NVIDIA GPU locally, install a CUDA build of the same torch into `.venv` (e.g. `uv pip install --no-deps --reinstall-package torch "torch==2.15.0+cu132" --index-url https://download.pytorch.org/whl/cu132`). Then set `UV_NO_SYNC=1` for every `uv run`, `make` target **and `git commit`** (the pre-commit hooks call `uv run`), or uv silently re-syncs the CPU wheel.
 
 ### LLM endpoint
 
@@ -136,13 +142,54 @@ Full details are in [`docs/METHODOLOGY.md`](docs/METHODOLOGY.md).
 | `make up` / `make down` | Start/stop pgvector + Qdrant |
 | `make index` | Index corpus with `configs/pipeline.example.yaml` |
 | `ragbench eval --config <yaml> --split dev` | Evaluate a config; write run JSON + `summary.csv` row |
+| `ragbench sweep --grid configs/grid.yaml [--estimate-only]` | Staged sweep on dev (A chunker x embedder -> B mode -> C rerank -> D backend); resumes and reuses completed runs |
+| `ragbench finalize --grid configs/grid.yaml [--skip-ragas]` | Dev-selected finalists -> test runs -> RAGAS -> leaderboard + `results/findings_draft.md` |
+| `ragbench leaderboard --split dev\|test` | Print a leaderboard of stored runs |
+| `ragbench bench-embed` | Cold (cache-bypassing) embedding throughput per embedder |
 | `make sweep` | Run the config sweep |
 | `make report` | Generate the results report |
 | `make reproduce` | Rerun the full pipeline end-to-end |
 
 ## Results
 
-> **Phase 3 complete.** One baseline config has been evaluated on the dev split. The staged sweep and test-split headline numbers have not been run yet; they land in Phase 4. Numbers below are copied from `results/runs/` and `data/goldset/`.
+> **Phase 4: retrieval complete, RAGAS pending.** 33 configs were swept on the **dev** split (47 questions) and ranked by nDCG@10. Only the top 5 were evaluated on the **test** split (110 questions), so test never influenced selection. All runs used the same machine and GPU (RTX 3050 Laptop, `results/hardware.json`). These results await human review (Checkpoint 4). Numbers are copied from `results/runs/*.json`; the generated analysis is in [`results/findings_draft.md`](results/findings_draft.md).
+
+### Test leaderboard: dev-selected finalists (Phase 4)
+
+All five finalists are recursive_md-256 chunks + `BAAI/bge-small-en-v1.5` + the `bge-reranker-base` cross-encoder; they differ only in backend, retrieval mode and rerank depth.
+
+| # | Backend / mode / rerank depth | nDCG@10 (95% CI) | MRR@10 (95% CI) | Recall@5 (95% CI) | p95 latency |
+|---|---|---|---|---|---|
+| 1 | Qdrant / hybrid / top 20 | 0.887 [0.839, 0.931] | 0.862 [0.806, 0.911] | 0.927 [0.873, 0.973] | 1231.8 ms |
+| 2 | pgvector / dense / top 50 | 0.883 [0.833, 0.930] | 0.860 [0.803, 0.913] | 0.927 [0.873, 0.973] | 2082.1 ms |
+| 3 | pgvector / dense / top 20 | 0.879 [0.829, 0.926] | 0.854 [0.798, 0.908] | 0.918 [0.864, 0.964] | 1159.3 ms |
+| 4 | Qdrant / dense / top 20 | 0.879 [0.829, 0.926] | 0.854 [0.798, 0.908] | 0.918 [0.864, 0.964] | 902.0 ms |
+| 5 | pgvector / hybrid / top 20 | 0.879 [0.829, 0.926] | 0.854 [0.798, 0.908] | 0.918 [0.864, 0.964] | 807.3 ms |
+
+The finalists' CIs overlap almost completely, so no finalist is detectably better than another on test. ANN sanity recall@10 is 1.000 for all five. Generation metrics (RAGAS) are **not yet run**.
+
+### Sweep highlights on dev (selection only, not headline numbers)
+
+| Config (chunks / embedder / retrieval / rerank, pgvector) | dev nDCG@10 | dev Recall@1 | dev p95 |
+|---|---|---|---|
+| recursive_md-256 / bge-small / dense / cross-encoder top 20 | 0.945 | 0.894 | 864.2 ms |
+| recursive_md-256 / bge-small / dense / no rerank (best of stage A) | 0.889 | 0.745 | 20.0 ms |
+| recursive_md-512 / bge-small / dense / no rerank (Phase 3 baseline, re-measured on GPU) | 0.886 | 0.745 | 29.5 ms |
+| recursive_md-256 / BM25 control (in-process, backend-agnostic) | 0.815 | 0.723 | 1.8 ms |
+| semantic / bge-small / dense / no rerank | 0.789 | 0.596 | 22.3 ms |
+| recursive_md-512 / all-MiniLM-L6-v2 / dense / no rerank | 0.777 | 0.617 | 18.5 ms |
+| recursive_md-256 / bge-small / **pgvector FTS sparse** (see known issue) | 0.042 | 0.021 | 5.2 ms |
+
+From the generated single-factor ablations (paired bootstrap on dev nDCG@10; a difference is claimed only when its 95% CI excludes 0):
+
+- **Reranking:** the cross-encoder (top 20) improved nDCG@10 by +0.057 [+0.009, +0.108] over the same config without reranking, at +844.2 ms p95 latency.
+- **Backend:** pgvector and Qdrant showed no detectable quality difference (0 of 3 matched pairs; Δ +0.000). Latency differences were tens to hundreds of ms in either direction.
+- **Embedder:** 10 of 18 matched pairs differ. `bge-small-en-v1.5` leads, and `all-MiniLM-L6-v2` trails in every chunker.
+- **Chunker:** 7 of 33 matched pairs differ. The semantic chunker is the weakest for every embedder.
+
+### Known issue: pgvector full-text search
+
+Postgres FTS with `websearch_to_tsquery` (spec section 5.3) requires **every** query term to match. On natural-language questions it returned any hits for only 3 of 47 dev questions, so pgvector `sparse` scores near zero and **pgvector `hybrid` reduces to dense** (identical numbers). The in-process BM25 control, which ranks with OR semantics, scores 0.815, so this is about the query construction, not lexical retrieval in general. A fix (OR-ing query lexemes) is pending a decision; see [`docs/OPEN_QUESTIONS.md`](docs/OPEN_QUESTIONS.md).
 
 ### Gold set (Phase 1)
 
@@ -160,32 +207,9 @@ Filter thresholds (recorded in `data/goldset/generate_stats.json`): heading-copy
 
 Drop counts during generation: 9 generation errors, 5 answerability-judge rejections, 9 embedding duplicates. Verified-only vs all-synthetic metric separation is unnecessary — the full 157-question set is human-verified.
 
-### Baseline dense config, dev split (Phase 3)
-
-Config [`configs/baseline_dense.yaml`](configs/baseline_dense.yaml) (`config_id` `3384ade0ba3e`): recursive_md 512/64 chunks, `BAAI/bge-small-en-v1.5`, pgvector, dense retrieval, no reranker. Evaluated on 47 dev questions, all human-verified. Source: [`results/runs/3384ade0ba3e__dev.json`](results/runs/3384ade0ba3e__dev.json).
-
-| Metric | Mean | 95% CI |
-|---|---|---|
-| Recall@1 | 0.745 | [0.617, 0.872] |
-| Recall@3 | 0.957 | [0.894, 1.000] |
-| Recall@5 | 1.000 | [1.000, 1.000] |
-| Recall@10 | 1.000 | [1.000, 1.000] |
-| MRR@10 | 0.848 | [0.769, 0.922] |
-| nDCG@10 | 0.886 | [0.828, 0.942] |
-
-| Stage | p50 ms | p95 ms |
-|---|---|---|
-| embed_query | 38.3 | 63.2 |
-| dense | 5.3 | 9.1 |
-| total | 44.3 | 69.8 |
-
-Index: 156 docs, 2,354 chunks, 11.8 MiB in pgvector. ANN sanity recall@10: 1.000.
-
-Recall@5 and Recall@10 sit at the ceiling on this config, so Recall@1, MRR@10 and nDCG@10 are the metrics that separate configs (see [`docs/OPEN_QUESTIONS.md`](docs/OPEN_QUESTIONS.md)). These are dev-split numbers, used for selection only. Headline numbers will come from the test split.
-
 ## Hardware & environment
 
-Recorded in [`results/hardware.json`](results/hardware.json) on every run: platform, CPU, RAM, GPU (if any), Python version, pinned package versions, and the resolved LLM model. Unit tests are CPU-only; no GPU is required for the embedding or reranking models used here.
+Recorded in [`results/hardware.json`](results/hardware.json) and referenced by every run: platform, CPU, RAM, GPU, Python version, pinned package versions, and the resolved LLM model. The Phase 4 sweep ran on an Intel i5-12450H with an RTX 3050 Laptop GPU (4 GB) and CUDA torch `2.15.0+cu132` (every run JSON records its torch build). Unit tests and CI are CPU-only; the GPU only speeds up embedding and reranking. Cross-encoder latency on this GPU is about 0.65 s per 20 pairs, so reranked configs are much slower than no-rerank ones.
 
 ## Limitations
 
@@ -201,7 +225,7 @@ See [`docs/LIMITATIONS.md`](docs/LIMITATIONS.md) for the full discussion.
 ```
 ragbench/
 ├── corpus.lock              # pinned corpus: repo, tag, SHA, license, hash
-├── configs/                 # pipeline + sweep definitions
+├── configs/                 # pipeline configs + staged sweep grid (grid.yaml)
 ├── src/ragbench/
 │   ├── corpus/              # fetch, clean, section parsing
 │   ├── goldset/             # generate, filters, review, split
@@ -212,14 +236,16 @@ ragbench/
 │   ├── rerank/              # none, cross_encoder rerankers
 │   ├── pipeline.py          # index_documents + retrieve assembly
 │   ├── cli.py               # ragbench CLI (query, index, …)
-│   └── eval/                # spans, metrics, bootstrap stats, latency, results, runner
+│   ├── eval/                # spans, metrics, bootstrap stats, latency, results, runner, RAGAS
+│   ├── generation/          # versioned grounded-answer prompt
+│   └── sweep/               # staged grid, sweep runner, selection, findings, throughput
 ├── data/
 │   ├── fixtures/mini/       # 30-doc / 40-question CI fixture
 │   └── goldset/             # verified.jsonl, splits.json (committed)
 ├── tests/
-│   ├── unit/                # 307 tests, no docker required
+│   ├── unit/                # 337 tests, no docker required
 │   └── integration/         # 19 tests against pgvector + qdrant service containers
-├── results/                 # hardware.json, summary.csv, runs/*.json
+├── results/                 # hardware.json, summary.csv, runs/*.json, findings_draft.md
 └── docs/                    # spec, methodology, limitations, open questions
 ```
 
