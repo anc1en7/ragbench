@@ -1,0 +1,15 @@
+# Baseline dense config: the spec section 5.1 example with retrieval.mode=dense,
+# no reranker, generation off (retrieval-only evaluation; generation lands in Phase 4).
+corpus: fastapi_docs
+chunker: {type: recursive_md, size_tokens: 512, overlap_tokens: 64}
+embedder: {name: BAAI/bge-small-en-v1.5}
+backend: pgvector
+retrieval:
+  mode: dense
+  k_dense: 50
+  k_sparse: 50
+  rrf_k: 60
+rerank: {type: none, top_n: 50}
+final_k: 10
+generation: {enabled: false, context_k: 5, temperature: 0.0}
+seed: 42

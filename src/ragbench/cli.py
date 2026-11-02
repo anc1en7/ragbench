@@ -302,6 +302,90 @@ def index_cmd(
     )
 
 
+@app.command("eval")
+def eval_cmd(
+    config: Path = typer.Option(..., "--config", "-c", help="Pipeline YAML config"),
+    split: str = typer.Option("dev", "--split", help="Gold-set split: dev | test"),
+    passes: int = typer.Option(3, "--passes", help="Latency passes (pass 0 is warm-up, >= 3)"),
+    min_overlap_frac: float = typer.Option(
+        0.2, "--min-overlap-frac", help="Span-overlap hit threshold (fraction of chunk or gold)"
+    ),
+    resamples: int = typer.Option(1000, "--resamples", help="Bootstrap resamples"),
+    ann_sample: int = typer.Option(50, "--ann-sample", help="Questions for the ANN check"),
+    results_dir: Path = typer.Option(Path("results"), "--results-dir", help="Results root"),
+    update_baseline: bool = typer.Option(
+        False, "--update-baseline", help="Also write this run's Recall@5/MRR@10 as CI baseline"
+    ),
+    baseline: Path = typer.Option(
+        Path("eval/baseline.json"), "--baseline", help="Baseline file for --update-baseline"
+    ),
+) -> None:
+    """Index, evaluate and record one config on a gold-set split."""
+    from rich.console import Console
+    from rich.table import Table
+
+    from ragbench.config import load_pipeline_config
+    from ragbench.eval.retrieval_metrics import METRIC_NAMES
+    from ragbench.eval.runner import evaluate, write_baseline
+    from ragbench.pipeline import TIMING_KEYS
+
+    if split not in ("dev", "test"):
+        typer.secho(f"--split must be 'dev' or 'test', got {split!r}", fg="red", err=True)
+        raise typer.Exit(code=1)
+    try:
+        cfg = load_pipeline_config(config)
+        result, path = evaluate(
+            cfg,
+            "dev" if split == "dev" else "test",
+            results_dir=results_dir,
+            passes=passes,
+            min_overlap_frac=min_overlap_frac,
+            n_resamples=resamples,
+            ann_sample=ann_sample,
+        )
+    except (FileNotFoundError, ValueError, RuntimeError) as exc:
+        typer.secho(str(exc), fg="red", err=True)
+        raise typer.Exit(code=1) from exc
+
+    console = Console()
+    flag = " [PROVISIONAL: unverified gold set]" if result.goldset.provisional else ""
+    console.print(
+        f"config_id={result.config_id} corpus={cfg.corpus} backend={cfg.backend} "
+        f"mode={cfg.retrieval.mode} split={result.split} "
+        f"questions={result.goldset.n_questions}{flag}"
+    )
+    metrics_table = Table(title=f"retrieval metrics (95% bootstrap CI, n={resamples})")
+    metrics_table.add_column("metric")
+    metrics_table.add_column("mean", justify="right")
+    metrics_table.add_column("95% CI", justify="right")
+    for name in METRIC_NAMES:
+        m = result.metrics[name]
+        metrics_table.add_row(name, f"{m.mean:.3f}", f"[{m.ci_lo:.3f}, {m.ci_hi:.3f}]")
+    console.print(metrics_table)
+
+    latency_table = Table(title=f"latency ms ({passes - 1} measured passes, warm-up dropped)")
+    latency_table.add_column("stage")
+    latency_table.add_column("p50", justify="right")
+    latency_table.add_column("p95", justify="right")
+    for stage in TIMING_KEYS:
+        lat = result.latency_ms[stage]
+        latency_table.add_row(stage, f"{lat.p50:.2f}", f"{lat.p95:.2f}")
+    console.print(latency_table)
+
+    idx = result.index
+    throughput = f"{idx.chunks_per_sec:.1f}" if idx.chunks_per_sec is not None else "n/a"
+    ann = f"{result.ann_sanity_recall:.4f}" if result.ann_sanity_recall is not None else "n/a"
+    console.print(
+        f"index: docs={idx.docs} chunks={idx.chunks} wall={idx.wall_seconds:.2f}s "
+        f"embed={idx.embed_seconds:.2f}s ({throughput} chunks/s) "
+        f"size={idx.size_bytes / 2**20:.2f} MiB peak_rss={idx.peak_rss_bytes / 2**20:.0f} MiB"
+    )
+    console.print(f"ann_sanity_recall@{cfg.final_k}={ann}")
+    console.print(f"wrote {path} and {results_dir / 'summary.csv'}")
+    if update_baseline:
+        console.print(f"baseline updated: {write_baseline(result, baseline)}")
+
+
 def main() -> None:
     app()
 
