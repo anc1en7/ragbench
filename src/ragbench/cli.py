@@ -640,6 +640,33 @@ def bench_embed_cmd(
     typer.echo(f"wrote {out}")
 
 
+@app.command("reproduce")
+def reproduce_cmd(
+    finalists: bool = typer.Option(
+        False, "--finalists", help="Also re-evaluate the 5 test finalists and compare"
+    ),
+    full: bool = typer.Option(False, "--full", help="Also re-run the whole sweep (slow)"),
+    ragas: bool = typer.Option(False, "--ragas", help="With --full: include RAGAS (needs LLM)"),
+    scratch: Path = typer.Option(Path(".tmp/reproduce"), "--scratch", help="Scratch dir"),
+    tolerance: float = typer.Option(
+        0.01, "--tolerance", help="Max absolute metric difference vs committed runs"
+    ),
+) -> None:
+    """Reproduce the committed results from a clean clone (see ragbench/reproduce.py)."""
+    from ragbench.reproduce import run
+
+    ok = run(
+        finalists=finalists,
+        full=full,
+        ragas=ragas,
+        scratch=scratch,
+        tolerance=tolerance,
+        echo=typer.echo,
+    )
+    if not ok:
+        raise typer.Exit(code=1)
+
+
 @app.command("report")
 def report_cmd(
     readme: Path = typer.Option(Path("README.md"), "--readme"),
