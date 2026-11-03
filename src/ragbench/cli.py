@@ -640,6 +640,30 @@ def bench_embed_cmd(
     typer.echo(f"wrote {out}")
 
 
+@app.command("report")
+def report_cmd(
+    readme: Path = typer.Option(Path("README.md"), "--readme"),
+    results_dir: Path = typer.Option(Path("results"), "--results-dir"),
+    figure: Path = typer.Option(Path("docs/figures/pareto.svg"), "--figure"),
+) -> None:
+    """Regenerate README results/findings blocks and the Pareto figure from results/."""
+    from ragbench.report.figures import write_pareto
+    from ragbench.report.readme import load_runs, render
+
+    try:
+        dev_runs = load_runs(results_dir, "dev")
+        test_runs = load_runs(results_dir, "test")
+        text = render(readme.read_text(encoding="utf-8"), dev_runs, test_runs)
+    except (FileNotFoundError, ValueError) as exc:
+        typer.secho(str(exc), fg="red", err=True)
+        raise typer.Exit(code=1) from exc
+    readme.write_text(text, encoding="utf-8")
+    write_pareto(dev_runs, figure)
+    typer.echo(
+        f"updated {readme} from {len(dev_runs)} dev and {len(test_runs)} test runs; wrote {figure}"
+    )
+
+
 @app.command("regression-check")
 def regression_check_cmd(
     config: Path = typer.Option(

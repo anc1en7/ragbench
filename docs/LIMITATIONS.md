@@ -32,7 +32,7 @@
    contexts differ by 0.06 in faithfulness, so RAGAS differences between finalists are not
    evidence that one pipeline is better. A re-run with one pinned model was not done
    (Checkpoint 4 decision, 2026-11-03).
-10. **High refusal rate from the generator.** 33-56% of answers say the context does not
+10. **High refusal rate from the generator.** 32-55% of answers reply exactly that the context does not
     contain the answer, even though context recall is about 0.95. This lowers faithfulness
     and answer relevancy. The `gen-v1` prompt was not revised.
 11. **pgvector lexical search uses AND semantics.** `websearch_to_tsquery` requires every
