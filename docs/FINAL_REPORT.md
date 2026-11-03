@@ -122,6 +122,6 @@ All are logged with reasons in `docs/OPEN_QUESTIONS.md`. The main ones:
 - [ ] Record the demo (`docs/DEMO_STORYBOARD.md`) and save one Phoenix trace screenshot as
       `docs/phoenix_trace.png`.
 - [ ] Optional: review the 20 RAGAS items in `docs/judge_spotcheck.md`.
-- [ ] Optional: create a GitHub release with the larger result files (`gh release create`).
+- [x] GitHub release [v0.1.0](https://github.com/anc1en7/ragbench/releases/tag/v0.1.0) with all run JSONs, summary.csv, gold set and Pareto figure.
 - [ ] Optional: approve storing the OmniRoute key as an Actions secret (only needed to run
       RAGAS in CI).
