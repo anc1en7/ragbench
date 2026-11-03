@@ -38,6 +38,11 @@ chunk text. This is expected.
 
 ## Option B: Hugging Face Spaces (Docker)
 
+> **Needs Hugging Face PRO.** As of 2026-11-03, Hugging Face only hosts Docker Spaces for PRO
+> accounts (creating one returns HTTP 402 otherwise). With PRO, `python scripts/deploy_hf_space.py
+> --space <user>/ragbench` stages the needed files and uploads them in one step; it was tested
+> locally. The manual steps below do the same thing.
+
 1. Create a Space at <https://huggingface.co/new-space>: SDK **Docker**, template
    **Blank**, hardware **CPU basic (free)**.
 2. Push this repo to the Space, using the Space as a second git remote:
