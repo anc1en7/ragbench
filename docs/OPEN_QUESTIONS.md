@@ -44,11 +44,12 @@ Format: status, decision, reason, date.
 - [x] Gold-set review to >= 150 verified questions (Checkpoint 1) — **done 2026-10-29: 157 verified**, 1 rejected, 18 flagged; split run (dev 47 / test 110).
 - [x] Run the deferred RAGAS stage (P4-8) — done 2026-11-03
 - [x] Checkpoint 4 accepted as-is (2026-11-03). The human chose to finish the project over improving accuracy. No pgvector FTS fix, no single-model RAGAS re-run, and no `gen-v1` prompt revision; these are recorded as known issues in `docs/LIMITATIONS.md`
-- [ ] (Optional) Review `docs/judge_spotcheck.md` (20 items)
+- [x] (Optional) Review `docs/judge_spotcheck.md` (20 items) — skipped (optional, 2026-11-03)
 - [ ] Approve storing the OmniRoute key as a GitHub Actions secret (needed for the RAGAS generation stage in CI)
 - [x] Push `main` and confirm CI passes on GitHub — done 2026-11-03 (run 41605820826, all 3 jobs green)
 - [x] Dashboard deployment — done 2026-11-03: <https://ragbench.streamlit.app/> (Streamlit Community Cloud; HF Docker Spaces now require PRO)
-- [ ] Record demo video and capture one Phoenix trace screenshot
+- [x] Record demo video and capture one Phoenix trace screenshot — **skipped by human decision (2026-11-03)**; storyboard kept in `docs/DEMO_STORYBOARD.md`
+- [x] Fresh-clone reproduction test (separate directory, fresh `make setup`) — **skipped by human decision (2026-11-03)**; in-tree `make reproduce` + `ragbench reproduce --finalists` stand
 
 ## Phase 5-6 deviations (2026-11-03)
 

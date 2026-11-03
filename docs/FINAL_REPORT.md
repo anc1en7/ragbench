@@ -119,9 +119,14 @@ All are logged with reasons in `docs/OPEN_QUESTIONS.md`. The main ones:
 
 - [x] Dashboard deployed on Streamlit Community Cloud: <https://ragbench.streamlit.app/> (2026-11-03).
 - [x] Pushed to GitHub; CI passed on `1b305e5` (lint-test, regression-eval, docker-build).
-- [ ] Record the demo (`docs/DEMO_STORYBOARD.md`) and save one Phoenix trace screenshot as
-      `docs/phoenix_trace.png`.
-- [ ] Optional: review the 20 RAGAS items in `docs/judge_spotcheck.md`.
+- [x] Record the demo / Phoenix trace screenshot — **skipped by human decision
+      (2026-11-03):** the demo storyboard remains in `docs/DEMO_STORYBOARD.md` for later;
+      no `docs/phoenix_trace.png` was captured.
+- [x] Fresh-clone test in a separate directory with a fresh `make setup` — **skipped by
+      human decision (2026-11-03):** the in-working-tree `make reproduce` and
+      `ragbench reproduce --finalists` results above stand as the reproduction check.
+- [x] Optional: review the 20 RAGAS items in `docs/judge_spotcheck.md` — skipped (optional,
+      2026-11-03).
 - [x] GitHub release [v0.1.0](https://github.com/anc1en7/ragbench/releases/tag/v0.1.0) with all run JSONs, summary.csv, gold set and Pareto figure.
 - [ ] Optional: approve storing the OmniRoute key as an Actions secret (only needed to run
       RAGAS in CI).
