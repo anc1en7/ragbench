@@ -1,17 +1,34 @@
 # Methodology
 
-> Stub: sections are filled as phases land. Content is written only from
-> observed results and verified documentation — never guessed.
+> Content is written only from observed results and verified documentation, never
+> guessed. Numbers quoted here come from files in `results/`, `data/goldset/` and
+> `eval/`.
 
 ## Corpus
 
 - Pinned source, tag/SHA, license, fetch date: see `corpus.lock`.
-- Cleaning rules and section parsing: (Phase 1)
+- Corpus: FastAPI documentation (`docs/en/docs`, 156 markdown files), tag `0.162.0`, MIT.
+- Cleaning (`ragbench/corpus/clean.py`): strip YAML front matter, normalize line endings,
+  collapse runs of blank lines. Fenced code blocks are kept verbatim (they are tracked by a
+  fence mask so headings inside code are not parsed as sections).
+- Sections (`ragbench/corpus/sections.py`): split at markdown headings outside code fences;
+  each section has a slugged id (`doc_id#slug`), its heading path and character offsets
+  into the cleaned document text. 2,199 sections in total.
 
 ## Gold set
 
-- Candidate generation prompt + filters, lexical-overlap threshold used: (Phase 1)
-- Human verification protocol, verified count, dev/test split: (Phase 1)
+- Sampling: 506 sections (stratified by document and length; at least 80 tokens; changelog
+  and code-dominated sections excluded).
+- Generation: one question plus a reference answer per section from the `rag` model.
+- Filters (thresholds in `data/goldset/generate_stats.json`): heading-copy ratio <= 0.6,
+  lexical overlap with the section <= 0.6 (so BM25 is not unfairly favored), embedding dedup
+  at cosine 0.92, code-fence ratio <= 0.6, and an answerability judge. 483 candidates
+  survived.
+- Human verification: every candidate was reviewed in `ragbench goldset review`
+  (accept / edit / reject / flag). 157 were accepted, 1 rejected and 18 flagged. Only
+  verified questions are used.
+- Split: seeded (42), stratified by question type, dev 47 (30%) / test 110 (70%). Dev is used
+  only for selection, test only for the final numbers.
 
 ## Chunking
 
@@ -82,7 +99,10 @@
 
 - HNSW parameters, equalized across pgvector and Qdrant: `m=16`, `ef_construction=64`,
   query-time `hnsw.ef_search=100` (pgvector, Task 2.5; Qdrant parity Task 2.6)
-- control_bm25 rationale: separates backend effect from lexical-scorer effect (Phase 2)
+- control_bm25 rationale: an in-process BM25 (`bm25s`, OR semantics) that is the same for
+  every backend. It separates the effect of the backend from the effect of its lexical
+  scorer. This is how the pgvector FTS issue was found: pgvector sparse scored nDCG@10
+  about 0.04 while control_bm25 scored 0.815 on the same chunks.
 - Exact-search sanity check (`ann_sanity_recall` in every dense/hybrid run JSON): for up
   to 50 seeded split questions, the store's HNSW top-`final_k` is compared with
   brute-force cosine over every chunk vector. An ANN result counts as correct when its
@@ -173,7 +193,23 @@
 
 ## Resolved versions
 
-- Python and package pins: `pyproject.toml`, `uv.lock` (recorded here at release)
+- Python 3.13; every package is pinned in `pyproject.toml` and `uv.lock`. Every run JSON
+  records its key package versions; the finalists ran with numpy 2.5.4, torch
+  2.15.0+cu132, sentence-transformers 6.2.0, transformers 5.22.1, qdrant-client 1.20.0,
+  pgvector 0.5.1, psycopg 3.3.6, fastembed 0.9.1, bm25s 0.3.16, tiktoken 0.14.0,
+  pydantic 2.14.1 and ragas 0.4.3.
+- Qdrant server `v1.20.0`.
 - pgvector extension: `0.8.7` in image `pgvector/pgvector:0.8.7-pg16-trixie`
   (verified via `SELECT extversion FROM pg_extension WHERE extname='vector'`, Task 2.5)
-- Model revisions: (Phase 2)
+- Model revisions (Hugging Face commit of the cached snapshot):
+
+  | Model | Revision |
+  |---|---|
+  | `BAAI/bge-small-en-v1.5` | `5c38ec7c405ec4b44b94cc5a9bb96e735b38267a` |
+  | `intfloat/e5-small-v2` | `ffb93f3bd4047442299a41ebb6fa998a38507c52` |
+  | `sentence-transformers/all-MiniLM-L6-v2` | `1110a243fdf4706b3f48f1d95db1a4f5529b4d41` |
+  | `BAAI/bge-reranker-base` | `2cfc18c9415c912f9d8155881c133215df768a70` |
+  | `Qdrant/bm25` (fastembed sparse) | `22b8d2af71a76161e18dd432d2cee0eefa66e412` |
+
+- LLM: OmniRoute combo `rag` (a router pool, not one model), prompt `gen-v1`, temperature
+  0; see `docs/LIMITATIONS.md`.

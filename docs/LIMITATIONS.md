@@ -1,7 +1,7 @@
 # Limitations
 
-> Stub: filled honestly as the system is built (spec rule 9). This project
-> does not claim state-of-the-art results.
+> This project does not claim state-of-the-art results. It measures a set of pipelines
+> on one corpus and one machine, and reports what it saw with confidence intervals.
 
 1. **Judge-model bias.** Generation and judging use the same model (`LLM_MODEL=rag`, an
    OmniRoute combo pooling Ministral 14B / Grok) unless `LLM_JUDGE_MODEL` is set, so
