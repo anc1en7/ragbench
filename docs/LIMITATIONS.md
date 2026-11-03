@@ -27,3 +27,15 @@
 8. **Staged, not exhaustive, search.** Later stages only expand the top 3 configs of the
    previous stage (spec section 5.8), so factor interactions outside those paths are
    untested.
+9. **Generator and judge model not pinned.** `rag` is a router pool, so faithfulness and
+   answer relevancy vary by about +/-0.1 between runs. Finalists that received identical
+   contexts differ by 0.06 in faithfulness, so RAGAS differences between finalists are not
+   evidence that one pipeline is better. A re-run with one pinned model was not done
+   (Checkpoint 4 decision, 2026-11-03).
+10. **High refusal rate from the generator.** 33-56% of answers say the context does not
+    contain the answer, even though context recall is about 0.95. This lowers faithfulness
+    and answer relevancy. The `gen-v1` prompt was not revised.
+11. **pgvector lexical search uses AND semantics.** `websearch_to_tsquery` requires every
+    term to match, so pgvector sparse returns hits for only 3/47 dev questions and pgvector
+    `hybrid` equals pgvector `dense`. Qdrant's BM25 path and the in-process `control_bm25`
+    are unaffected. The fix (OR the lexemes) was not applied.

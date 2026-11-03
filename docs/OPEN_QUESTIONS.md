@@ -43,8 +43,8 @@ Format: status, decision, reason, date.
 - [x] **Restore one working chat provider on OmniRoute, then confirm the pinned `LLM_MODEL`** — resolved 2026-10-28: user connected the `rag` combo (Mistral Ministral 14B / Grok pool); `ragbench llm-probe` green, pinned in `results/hardware.json` and `.env`.
 - [x] Gold-set review to >= 150 verified questions (Checkpoint 1) — **done 2026-10-29: 157 verified**, 1 rejected, 18 flagged; split run (dev 47 / test 110).
 - [x] Run the deferred RAGAS stage (P4-8) — done 2026-11-03
-- [ ] Review `docs/judge_spotcheck.md` (20 items)
-- [ ] Review Checkpoint 4 results and decide on the pgvector FTS query fix (see open question below)
+- [x] Checkpoint 4 accepted as-is (2026-11-03). The human chose to finish the project over improving accuracy. No pgvector FTS fix, no single-model RAGAS re-run, and no `gen-v1` prompt revision; these are recorded as known issues in `docs/LIMITATIONS.md`
+- [ ] (Optional) Review `docs/judge_spotcheck.md` (20 items)
 - [ ] Approve storing the OmniRoute key as a GitHub Actions secret (needed for the RAGAS generation stage in CI)
 - [ ] Dashboard deployment (Hugging Face Spaces or Streamlit Community Cloud) per `docs/DEPLOY.md`
 - [ ] Record demo video and capture one Phoenix trace screenshot
