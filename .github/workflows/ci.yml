@@ -60,3 +60,5 @@ jobs:
       - uses: actions/checkout@v7
       - name: Build API image
         run: docker build -f Dockerfile.api -t ragbench-api .
+      - name: Build dashboard image
+        run: docker build -f Dockerfile.dashboard -t ragbench-dashboard .

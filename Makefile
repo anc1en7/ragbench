@@ -8,8 +8,8 @@ setup:
 	uv run pre-commit install
 
 lint:
-	uv run ruff check src tests
-	uv run ruff format --check src tests
+	uv run ruff check src tests dashboard
+	uv run ruff format --check src tests dashboard
 	uv run mypy src
 
 test:

@@ -1,0 +1,16 @@
+# RAGBench replay dashboard (Task 5.4). No torch: reads results/ only.
+FROM python:3.13-slim
+
+WORKDIR /app
+COPY dashboard/requirements.txt dashboard/requirements.txt
+RUN pip install --no-cache-dir -r dashboard/requirements.txt
+
+COPY src ./src
+COPY dashboard ./dashboard
+COPY docs ./docs
+COPY data/goldset/verified.jsonl ./data/goldset/verified.jsonl
+COPY results ./results
+COPY .streamlit ./.streamlit
+
+EXPOSE 8501
+CMD ["streamlit", "run", "dashboard/app.py", "--server.address=0.0.0.0", "--server.port=8501", "--server.headless=true"]
