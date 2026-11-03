@@ -1,11 +1,15 @@
-"""Methodology and limitations, rendered from docs/ (Task 5.4)."""
+"""Methodology and limitations, rendered from docs/."""
 
 from __future__ import annotations
 
 import streamlit as st
+import ui
 from data import ROOT
 
-st.set_page_config(page_title="Methodology · RAGBench", layout="wide")
+ui.setup(
+    "Methodology",
+    "How the numbers were produced, and what they cannot tell you.",
+)
 methodology, limitations = st.tabs(["Methodology", "Limitations"])
 with methodology:
     st.markdown((ROOT / "docs" / "METHODOLOGY.md").read_text(encoding="utf-8"))

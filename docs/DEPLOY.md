@@ -9,7 +9,7 @@ are yours to do (spec section 5.12).
 
 | Path | Why |
 |---|---|
-| `dashboard/app.py` + `dashboard/pages/` | the Streamlit app |
+| `dashboard/app.py` + `dashboard/views/` + `dashboard/ui.py` | the Streamlit app (top navigation, one file per page) |
 | `dashboard/requirements.txt` | light pinned deps (streamlit, plotly, pandas, pydantic, pyyaml, numpy), **no torch** |
 | `src/ragbench/` | the dashboard imports the result schemas and bootstrap stats from here (added to `sys.path` automatically, no install) |
 | `results/summary.csv`, `results/runs/*.json` | every number shown |

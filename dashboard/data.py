@@ -1,9 +1,9 @@
-"""Shared data loading for the replay dashboard (Task 5.4).
+"""Shared data loading and labels for the replay dashboard.
 
-Replay mode: everything comes from committed files (``results/summary.csv``,
-``results/runs/*.json``, ``data/goldset/verified.jsonl``). No vector database, model or
-LLM is touched. Only light ragbench modules (pydantic schemas and bootstrap stats) are
-imported, so the dashboard does not need torch.
+Replay mode: everything comes from committed files (``results/runs/*.json``,
+``data/goldset/verified.jsonl``, ``docs/``). No vector database, model or LLM is touched.
+Only light ragbench modules (pydantic schemas and bootstrap stats) are imported, so the
+dashboard does not need torch.
 """
 
 from __future__ import annotations
@@ -21,78 +21,134 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT / "src") not in sys.path:  # run without installing the package (deploys)
     sys.path.insert(0, str(ROOT / "src"))
 
+from ragbench.config import PipelineConfig  # noqa: E402
 from ragbench.eval.results import RunResult, load_run  # noqa: E402
-from ragbench.sweep.select import ablations, describe  # noqa: E402
+from ragbench.sweep.select import ablations  # noqa: E402
 
 RESULTS = Path(os.environ.get("RAGBENCH_RESULTS_DIR", ROOT / "results"))
 METRICS = ["ndcg@10", "mrr@10", "recall@1", "recall@3", "recall@5", "recall@10"]
 GEN_METRICS = ["faithfulness", "answer_relevancy", "context_precision", "context_recall"]
+REFUSAL = "does not contain the answer"
 
-# Reference categorical palette (dataviz skill), first three slots: validated all-pairs
-# for scatter. Fixed by mode so color follows the entity, never its rank.
-MODE_COLORS = {"dense": "#2a78d6", "hybrid": "#eb6834", "sparse": "#1baf7a"}
-INK = "#0b0b0b"
-INK_2 = "#52514e"
-GRID = "#e4e3df"
-SURFACE = "#fcfcfb"
-
-
-@st.cache_data
-def summary() -> pd.DataFrame:
-    df = pd.read_csv(RESULTS / "summary.csv")
-    df = df[df["corpus"] == "fastapi_docs"].copy()
-    df["mode_label"] = df["mode"].where(df["backend"] != "control_bm25", "sparse")
-    df["rerank_label"] = df.apply(
-        lambda r: "none" if r["rerank"] == "none" else f"cross-encoder@{r['rerank_top_n']}",
-        axis=1,
-    )
-    df["chunker_label"] = df.apply(
-        lambda r: (
-            r["chunker"] if r["chunker"] == "semantic" else f"{r['chunker']}-{int(r['chunk_size'])}"
-        ),
-        axis=1,
-    )
-    df["embedder_short"] = df["embedder"].str.split("/").str[-1]
-    return df
+EMBEDDERS = {
+    "BAAI/bge-small-en-v1.5": "bge-small",
+    "intfloat/e5-small-v2": "e5-small",
+    "sentence-transformers/all-MiniLM-L6-v2": "MiniLM",
+}
+BACKENDS = {"pgvector": "pgvector", "qdrant": "Qdrant", "control_bm25": "BM25 control"}
 
 
-@st.cache_data
-def run_paths() -> dict[tuple[str, str], str]:
-    out: dict[tuple[str, str], str] = {}
-    for path in sorted((RESULTS / "runs").glob("*__*.json")):
-        config_id, split = path.stem.split("__", 1)
-        out[(config_id, split)] = str(path)
-    return out
+# --- labels ---------------------------------------------------------------------------
 
 
-@st.cache_resource
-def run(config_id: str, split: str) -> RunResult:
-    return load_run(Path(run_paths()[(config_id, split)]))
+def mode(cfg: PipelineConfig) -> str:
+    return "sparse" if cfg.backend == "control_bm25" else cfg.retrieval.mode
+
+
+def chunker_label(cfg: PipelineConfig) -> str:
+    ch = cfg.chunker
+    name = ch.type.replace("_", "-")
+    return name if ch.type == "semantic" else f"{name} {ch.size_tokens}"
+
+
+def embedder_label(cfg: PipelineConfig) -> str:
+    return EMBEDDERS.get(cfg.embedder.name, cfg.embedder.name.split("/")[-1])
+
+
+def rerank_label(cfg: PipelineConfig) -> str:
+    return "no rerank" if cfg.rerank.type == "none" else f"rerank@{cfg.rerank.top_n}"
+
+
+def backend_label(cfg: PipelineConfig) -> str:
+    return BACKENDS.get(cfg.backend, cfg.backend)
+
+
+def retrieval_label(cfg: PipelineConfig) -> str:
+    """Backend · mode · rerank (the part that differs between finalists)."""
+    if cfg.backend == "control_bm25":
+        return f"BM25 control · {rerank_label(cfg)}"
+    return f"{backend_label(cfg)} · {cfg.retrieval.mode} · {rerank_label(cfg)}"
+
+
+def full_label(cfg: PipelineConfig) -> str:
+    return f"{chunker_label(cfg)} · {embedder_label(cfg)} · {retrieval_label(cfg)}"
+
+
+FACTOR_VALUE = {
+    "chunker": chunker_label,
+    "embedder": embedder_label,
+    "rerank": rerank_label,
+    "backend": backend_label,
+    "retrieval": lambda c: "BM25 control" if c.backend == "control_bm25" else c.retrieval.mode,
+}
+
+
+def context_label(cfg: PipelineConfig, factor: str) -> str:
+    """Everything except ``factor``, for the 'held fixed' part of an ablation row."""
+    parts = {
+        "chunker": chunker_label(cfg),
+        "embedder": embedder_label(cfg),
+        "retrieval": FACTOR_VALUE["retrieval"](cfg),
+        "rerank": rerank_label(cfg),
+        "backend": backend_label(cfg) if cfg.backend != "control_bm25" else "",
+    }
+    return " · ".join(v for k, v in parts.items() if k != factor and v)
+
+
+# --- data -----------------------------------------------------------------------------
 
 
 @st.cache_resource
 def runs(split: str) -> list[RunResult]:
-    return [run(cid, s) for (cid, s) in run_paths() if s == split and _is_main(cid, s)]
+    out = []
+    for path in sorted((RESULTS / "runs").glob(f"*__{split}.json")):
+        result = load_run(path)
+        if result.config.corpus == "fastapi_docs":
+            out.append(result)
+    return out
 
 
-def _is_main(config_id: str, split: str) -> bool:
-    raw = json.loads(Path(run_paths()[(config_id, split)]).read_text(encoding="utf-8"))
-    return bool(raw["config"]["corpus"] == "fastapi_docs")
+def ranked(split: str) -> list[RunResult]:
+    return sorted(
+        runs(split),
+        key=lambda r: (-r.metrics["ndcg@10"].mean, -r.metrics["mrr@10"].mean, r.config_id),
+    )
 
 
-def label(result: RunResult) -> str:
-    return describe(result.config)
+@st.cache_data
+def table(split: str) -> pd.DataFrame:
+    rows: list[dict[str, Any]] = []
+    for rank, r in enumerate(ranked(split), start=1):
+        cfg = r.config
+        row: dict[str, Any] = {
+            "rank": rank,
+            "pipeline": retrieval_label(cfg),
+            "chunker": chunker_label(cfg),
+            "embedder": embedder_label(cfg),
+            "mode": mode(cfg),
+            "rerank": rerank_label(cfg),
+            "backend": backend_label(cfg),
+            "p95_ms": r.latency_ms["total"].p95,
+            "config_id": r.config_id,
+        }
+        for m in METRICS:
+            row[m] = r.metrics[m].mean
+            row[f"{m}_lo"] = r.metrics[m].ci_lo
+            row[f"{m}_hi"] = r.metrics[m].ci_hi
+        rows.append(row)
+    return pd.DataFrame(rows)
 
 
 @st.cache_data
 def ablation_table(split: str, metric: str) -> pd.DataFrame:
     rows: list[dict[str, Any]] = []
     for ab in ablations(runs(split), metric, seed=42):
+        value = FACTOR_VALUE[ab.factor]
         rows.append(
             {
                 "factor": ab.factor,
-                "better": label(ab.a),
-                "worse": label(ab.b),
+                "change": f"{value(ab.a.config)} vs {value(ab.b.config)}",
+                "held fixed": context_label(ab.a.config, ab.factor),
                 "delta": ab.delta,
                 "lo": ab.lo,
                 "hi": ab.hi,
@@ -101,6 +157,13 @@ def ablation_table(split: str, metric: str) -> pd.DataFrame:
             }
         )
     return pd.DataFrame(rows)
+
+
+def refusal_rate(result: RunResult) -> float | None:
+    gen = result.generation
+    if gen is None or not gen.per_query:
+        return None
+    return sum(REFUSAL in q.answer.lower() for q in gen.per_query) / len(gen.per_query)
 
 
 @st.cache_data
@@ -126,23 +189,3 @@ def documents() -> dict[str, str] | None:
             doc = json.loads(line)
             out[doc["doc_id"]] = doc["text"]
     return out
-
-
-def ci_text(mean: float, lo: float, hi: float) -> str:
-    return f"{mean:.3f} [{lo:.3f}, {hi:.3f}]"
-
-
-def style_figure(fig: Any, height: int = 480) -> Any:
-    """Recessive axes and grid, text in ink tokens, consistent surface."""
-    fig.update_layout(
-        height=height,
-        paper_bgcolor=SURFACE,
-        plot_bgcolor=SURFACE,
-        font={"color": INK, "size": 13},
-        margin={"l": 60, "r": 20, "t": 30, "b": 50},
-        hoverlabel={"bgcolor": "white", "font": {"color": INK}},
-        legend={"orientation": "h", "y": 1.08, "x": 0, "font": {"color": INK_2}},
-    )
-    fig.update_xaxes(gridcolor=GRID, zeroline=False, linecolor=GRID, tickfont={"color": INK_2})
-    fig.update_yaxes(gridcolor=GRID, zeroline=False, linecolor=GRID, tickfont={"color": INK_2})
-    return fig
