@@ -640,6 +640,61 @@ def bench_embed_cmd(
     typer.echo(f"wrote {out}")
 
 
+@app.command("regression-check")
+def regression_check_cmd(
+    config: Path = typer.Option(
+        Path("configs/regression_mini.yaml"), "--config", "-c", help="Pipeline YAML config"
+    ),
+    split: str = typer.Option("test", "--split", help="Gold-set split: dev | test"),
+    baseline: Path = typer.Option(Path("eval/baseline.json"), "--baseline"),
+    thresholds: Path = typer.Option(Path("configs/regression_thresholds.json"), "--thresholds"),
+    results_dir: Path = typer.Option(
+        Path(".tmp/regression"), "--results-dir", help="Scratch results root (not results/)"
+    ),
+) -> None:
+    """Evaluate a config and fail (exit 1) if a metric dropped more than its threshold."""
+    from ragbench.config import load_pipeline_config
+    from ragbench.eval.regression import compare, load_thresholds
+    from ragbench.eval.runner import evaluate
+
+    if split not in ("dev", "test"):
+        typer.secho(f"--split must be 'dev' or 'test', got {split!r}", fg="red", err=True)
+        raise typer.Exit(code=2)
+    try:
+        cfg = load_pipeline_config(config)
+        base = json.loads(baseline.read_text(encoding="utf-8"))
+        limits = load_thresholds(thresholds)
+        result, _ = evaluate(
+            cfg,
+            "dev" if split == "dev" else "test",
+            results_dir=results_dir,
+            n_resamples=200,
+            ann_sample=10,
+        )
+        checks = compare(base, {k: v.mean for k, v in result.metrics.items()}, limits)
+    except (FileNotFoundError, ValueError, RuntimeError) as exc:
+        typer.secho(str(exc), fg="red", err=True)
+        raise typer.Exit(code=2) from exc
+
+    if base.get("config_id") != cfg.config_id:
+        typer.secho(
+            f"warning: baseline was made with config {base.get('config_id')}, "
+            f"this run is {cfg.config_id}",
+            fg="yellow",
+        )
+    failed = [check for check in checks if not check.passed]
+    for check in checks:
+        status = "PASS" if check.passed else "FAIL"
+        typer.echo(
+            f"{status} {check.metric}: baseline={check.baseline:.4f} "
+            f"current={check.current:.4f} drop={check.drop:+.4f} (max {check.max_drop:.4f})"
+        )
+    if failed:
+        typer.secho(f"regression: {len(failed)} metric(s) dropped past threshold", fg="red")
+        raise typer.Exit(code=1)
+    typer.secho("no regression", fg="green")
+
+
 def main() -> None:
     app()
 

@@ -1,0 +1,15 @@
+# Deliberately degraded copy of regression_mini.yaml (final_k 3: results truncated) used to
+# prove the regression gate fails (Task 5.3 negative evidence). Never used for results.
+corpus: mini
+chunker: {type: recursive_md, size_tokens: 256, overlap_tokens: 32}
+embedder: {name: sentence-transformers/all-MiniLM-L6-v2}
+backend: pgvector
+retrieval:
+  mode: dense
+  k_dense: 50
+  k_sparse: 50
+  rrf_k: 60
+rerank: {type: none, top_n: 50}
+final_k: 3
+generation: {enabled: false, context_k: 5, temperature: 0.0}
+seed: 42

@@ -145,7 +145,31 @@
 
 ## Regression gate
 
-- Baseline provenance, threshold, degraded-config failure evidence: (Phase 5)
+- **What runs:** the CI job `regression-eval` runs `ragbench regression-check` with
+  `configs/regression_mini.yaml` on the mini fixture's test split (31 questions). That config
+  is recursive_md-256 chunks, `all-MiniLM-L6-v2`, pgvector dense and no reranker, so it is
+  CPU-friendly. Results go to `.tmp/regression/`, never to `results/`.
+- **Baseline:** `eval/baseline.json`, written by `make update-baseline` (config
+  `482487b7aba3`, 2026-11-03): Recall@5 0.871, MRR@10 0.686. It was generated on the local
+  GPU; CI runs on CPU. Embeddings agree to float tolerance, so ranks match except for
+  near-ties.
+- **Thresholds:** `configs/regression_thresholds.json`. The gate fails (exit 1) if Recall@5
+  drops more than **0.03** absolute or MRR@10 more than **0.05**.
+- **Negative evidence:** `configs/regression_degraded.yaml` is the same config with
+  `final_k: 3`. The gate fails as intended:
+
+  ```text
+  FAIL recall@5: baseline=0.8710 current=0.7742 drop=+0.0968 (max 0.0300)
+  PASS mrr@10: baseline=0.6863 current=0.6559 drop=+0.0304 (max 0.0500)
+  regression: 1 metric(s) dropped past threshold
+  ```
+
+- **Why not 16-token chunks:** the plan suggested chunk size 16 as the degraded config, but
+  it does **not** regress (Recall@5 0.871, unchanged; MRR@10 0.674). Under the span-overlap
+  rule, a tiny chunk lying inside a gold section covers 100% of itself, so it counts as a hit.
+  Recall at the gold-span level is therefore robust to very small chunks. Retrieval with 16-token
+  chunks still finds the right sections. A useful answer would need more context than that, but
+  retrieval metrics do not measure it.
 
 ## Resolved versions
 

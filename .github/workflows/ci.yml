@@ -19,3 +19,44 @@ jobs:
         run: make lint
       - name: Unit tests
         run: make test
+
+  regression-eval:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      pgvector:
+        image: pgvector/pgvector:0.8.7-pg16-trixie
+        env:
+          POSTGRES_USER: ragbench
+          POSTGRES_PASSWORD: ragbench
+          POSTGRES_DB: ragbench
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U ragbench" --health-interval 5s
+          --health-timeout 3s --health-retries 20
+      qdrant:
+        image: qdrant/qdrant:v1.20.0
+        ports: ["6333:6333"]
+    env:
+      PG_DSN: postgresql://ragbench:ragbench@localhost:5432/ragbench
+      QDRANT_URL: http://localhost:6333
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.3.2
+      - name: Cache Hugging Face models
+        uses: actions/cache@v6
+        with:
+          path: .hf_cache
+          key: hf-${{ hashFiles('configs/regression_mini.yaml') }}
+      - name: Install dependencies
+        run: uv sync --locked
+      - name: Regression gate (fails if Recall@5 drops > 0.03)
+        run: uv run ragbench regression-check
+
+  docker-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build API image
+        run: docker build -f Dockerfile.api -t ragbench-api .

@@ -1,7 +1,7 @@
 # Keep uv downloads on the project drive (C: is space-constrained).
 export UV_CACHE_DIR := $(CURDIR)/.uv_cache
 
-.PHONY: setup lint test test-integration up down ingest index goldset goldset-review sweep report reproduce dashboard update-baseline
+.PHONY: setup lint test test-integration up down ingest index goldset goldset-review sweep report reproduce dashboard update-baseline regression-check api
 
 setup:
 	uv sync --all-extras
@@ -49,4 +49,10 @@ dashboard:
 	uv run streamlit run dashboard/app.py
 
 update-baseline:
-	uv run ragbench eval --update-baseline
+	uv run ragbench eval --config configs/regression_mini.yaml --split test --results-dir .tmp/regression --update-baseline
+
+regression-check:
+	uv run ragbench regression-check
+
+api:
+	uv run uvicorn ragbench.api.app:app --port 8000
