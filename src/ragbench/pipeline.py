@@ -38,6 +38,7 @@ from ragbench.rerank import CrossEncoderReranker, RerankNone
 from ragbench.rerank.cross_encoder import DEFAULT_RERANK_MODEL
 from ragbench.retrieval import fuse
 from ragbench.stores import ControlBM25Store, PgvectorStore, QdrantStore
+from ragbench.tracing import stage_span
 from ragbench.types import Chunker, Document, Embedder, Hit, Reranker, Store
 
 TIMING_KEYS: tuple[str, ...] = (
@@ -91,32 +92,39 @@ class Pipeline:
         dense_hits: list[Hit] = []
         sparse_hits: list[Hit] = []
         if mode in ("dense", "hybrid"):
-            start = time.perf_counter()
-            query_vector = self.embedder.embed_query(question)
-            timings["embed_query"] = (time.perf_counter() - start) * 1000.0
-            start = time.perf_counter()
-            dense_hits = self.store.dense_search(
-                namespace, query_vector, self.cfg.retrieval.k_dense
-            )
-            timings["dense"] = (time.perf_counter() - start) * 1000.0
+            with stage_span("embed_query"):
+                start = time.perf_counter()
+                query_vector = self.embedder.embed_query(question)
+                timings["embed_query"] = (time.perf_counter() - start) * 1000.0
+            with stage_span("dense", k=self.cfg.retrieval.k_dense):
+                start = time.perf_counter()
+                dense_hits = self.store.dense_search(
+                    namespace, query_vector, self.cfg.retrieval.k_dense
+                )
+                timings["dense"] = (time.perf_counter() - start) * 1000.0
         if mode in ("sparse", "hybrid"):
-            start = time.perf_counter()
-            sparse_hits = self.store.sparse_search(namespace, question, self.cfg.retrieval.k_sparse)
-            timings["sparse"] = (time.perf_counter() - start) * 1000.0
+            with stage_span("sparse", k=self.cfg.retrieval.k_sparse):
+                start = time.perf_counter()
+                sparse_hits = self.store.sparse_search(
+                    namespace, question, self.cfg.retrieval.k_sparse
+                )
+                timings["sparse"] = (time.perf_counter() - start) * 1000.0
 
         if mode == "hybrid":
-            start = time.perf_counter()
-            candidates = fuse([dense_hits, sparse_hits], self.cfg.retrieval.rrf_k)
-            timings["fusion"] = (time.perf_counter() - start) * 1000.0
+            with stage_span("fusion", rrf_k=self.cfg.retrieval.rrf_k):
+                start = time.perf_counter()
+                candidates = fuse([dense_hits, sparse_hits], self.cfg.retrieval.rrf_k)
+                timings["fusion"] = (time.perf_counter() - start) * 1000.0
         elif mode == "dense":
             candidates = dense_hits
         else:
             candidates = sparse_hits
 
         truncated = candidates[: min(self.cfg.rerank.top_n, len(candidates))]
-        start = time.perf_counter()
-        hits = self.reranker.rerank(question, truncated, self.cfg.final_k)
-        timings["rerank"] = (time.perf_counter() - start) * 1000.0
+        with stage_span("rerank", type=self.cfg.rerank.type, candidates=len(truncated)):
+            start = time.perf_counter()
+            hits = self.reranker.rerank(question, truncated, self.cfg.final_k)
+            timings["rerank"] = (time.perf_counter() - start) * 1000.0
         timings["total"] = (time.perf_counter() - total_start) * 1000.0
         return hits, timings
 
@@ -134,9 +142,10 @@ class Pipeline:
 
             self.llm = OpenAICompatClient(settings_from_env())
         texts = [hit.chunk.text for hit in contexts[: self.cfg.generation.context_k]]
-        return generate_answer(
-            self.llm, question, texts, temperature=self.cfg.generation.temperature
-        )
+        with stage_span("generate", contexts=len(texts)):
+            return generate_answer(
+                self.llm, question, texts, temperature=self.cfg.generation.temperature
+            )
 
 
 def build_pipeline(
