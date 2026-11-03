@@ -117,8 +117,8 @@ All are logged with reasons in `docs/OPEN_QUESTIONS.md`. The main ones:
 
 ## Remaining human actions
 
-- [ ] Push `main` to GitHub and confirm the CI run passes (including `regression-eval`).
-- [ ] Deploy the dashboard (`docs/DEPLOY.md`) and add its URL to the README status line.
+- [x] Dashboard deployed on Streamlit Community Cloud: <https://ragbench.streamlit.app/> (2026-11-03).
+- [x] Pushed to GitHub; CI passed on `1b305e5` (lint-test, regression-eval, docker-build).
 - [ ] Record the demo (`docs/DEMO_STORYBOARD.md`) and save one Phoenix trace screenshot as
       `docs/phoenix_trace.png`.
 - [ ] Optional: review the 20 RAGAS items in `docs/judge_spotcheck.md`.

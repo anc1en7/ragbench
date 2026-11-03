@@ -46,8 +46,8 @@ Format: status, decision, reason, date.
 - [x] Checkpoint 4 accepted as-is (2026-11-03). The human chose to finish the project over improving accuracy. No pgvector FTS fix, no single-model RAGAS re-run, and no `gen-v1` prompt revision; these are recorded as known issues in `docs/LIMITATIONS.md`
 - [ ] (Optional) Review `docs/judge_spotcheck.md` (20 items)
 - [ ] Approve storing the OmniRoute key as a GitHub Actions secret (needed for the RAGAS generation stage in CI)
-- [ ] Push `main` and confirm CI (lint/test, regression-eval, docker-build) passes on GitHub
-- [ ] Dashboard deployment (Hugging Face Spaces or Streamlit Community Cloud) per `docs/DEPLOY.md`
+- [x] Push `main` and confirm CI passes on GitHub — done 2026-11-03 (run 41605820826, all 3 jobs green)
+- [x] Dashboard deployment — done 2026-11-03: <https://ragbench.streamlit.app/> (Streamlit Community Cloud; HF Docker Spaces now require PRO)
 - [ ] Record demo video and capture one Phoenix trace screenshot
 
 ## Phase 5-6 deviations (2026-11-03)

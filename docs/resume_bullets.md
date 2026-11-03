@@ -30,4 +30,4 @@ effect that was actually measured.
 3. **Surprising finding:** retrieval was not the bottleneck. RAGAS context recall was about
    0.95, but the generator answered "the context does not contain the answer" in 32-55% of
    replies. And pgvector vs Qdrant made no measurable quality difference.
-4. **Links:** repo and dashboard (add the URL after deploying, see `docs/DEPLOY.md`).
+4. **Links:** <https://github.com/anc1en7/ragbench> and <https://ragbench.streamlit.app/>.
