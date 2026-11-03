@@ -46,8 +46,21 @@ Format: status, decision, reason, date.
 - [x] Checkpoint 4 accepted as-is (2026-11-03). The human chose to finish the project over improving accuracy. No pgvector FTS fix, no single-model RAGAS re-run, and no `gen-v1` prompt revision; these are recorded as known issues in `docs/LIMITATIONS.md`
 - [ ] (Optional) Review `docs/judge_spotcheck.md` (20 items)
 - [ ] Approve storing the OmniRoute key as a GitHub Actions secret (needed for the RAGAS generation stage in CI)
+- [ ] Push `main` and confirm CI (lint/test, regression-eval, docker-build) passes on GitHub
 - [ ] Dashboard deployment (Hugging Face Spaces or Streamlit Community Cloud) per `docs/DEPLOY.md`
 - [ ] Record demo video and capture one Phoenix trace screenshot
+
+## Phase 5-6 deviations (2026-11-03)
+
+| # | Item | Decision | Reason |
+|---|---|---|---|
+| P5-1 | Regression negative evidence | `configs/regression_degraded.yaml` uses `final_k: 3`, not 16-token chunks | 16-token chunks do not regress under span-overlap scoring (Recall@5 unchanged at 0.871); a tiny chunk inside a gold section is a hit. Evidence in METHODOLOGY |
+| P5-2 | Regression thresholds | Recall@5 max drop 0.03 (spec), plus MRR@10 max drop 0.05 | Closes the Phase 3 question of whether the gate should also watch MRR@10 |
+| P5-3 | Baseline device | `eval/baseline.json` generated on the local GPU; CI checks on CPU | Embeddings agree to float tolerance; a near-tie flip would show as a small drop well inside 0.03 |
+| P5-4 | API indexing | The API indexes a config on first query when its namespace is empty | Needed for the in-process BM25 control and for configs never indexed in the running backends |
+| P5-5 | Compose profiles | `api` and `dashboard` services are in the `app` profile | `make up` stays a fast backends-only start; the API image is large |
+| P6-1 | Pareto figure | Dependency-free SVG (`docs/figures/pareto.svg`) instead of PNG | No image-export dependency (kaleido/matplotlib) needed; renders on GitHub |
+| P6-2 | `make reproduce` depths | fast (default) / `--finalists` / `--full` | The full sweep is about 80 min on GPU; the fast path checks the corpus lock, the gate and the README |
 
 ## Open technical questions
 
