@@ -1,0 +1,14 @@
+.git
+.venv
+.uv_cache
+.hf_cache
+.tiktoken_cache
+.tmp
+.superpowers
+.claude
+.env
+**/__pycache__
+.pytest_cache
+.mypy_cache
+.ruff_cache
+data/raw

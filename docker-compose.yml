@@ -41,6 +41,36 @@ services:
     ports:
       - "6006:6006"
 
+  # Query API (enable with --profile app). Indexes a config on first query if needed.
+  api:
+    build: {context: ., dockerfile: Dockerfile.api}
+    profiles: ["app"]
+    env_file: [{path: .env, required: false}]
+    environment:
+      PG_DSN: postgresql://ragbench:ragbench@pgvector:5432/ragbench
+      QDRANT_URL: http://qdrant:6333
+      PHOENIX_COLLECTOR_ENDPOINT: http://phoenix:6006/v1/traces
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data:ro
+      - ./results:/app/results:ro
+      - ./configs:/app/configs:ro
+      - hf_cache:/cache/hf
+    depends_on:
+      pgvector: {condition: service_healthy}
+      qdrant: {condition: service_healthy}
+
+  # Replay dashboard over results/ (enable with --profile app)
+  dashboard:
+    build: {context: ., dockerfile: Dockerfile.dashboard}
+    profiles: ["app"]
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./results:/app/results:ro
+
 volumes:
+  hf_cache: {}
   pgdata: {}
   qdrant_data: {}
