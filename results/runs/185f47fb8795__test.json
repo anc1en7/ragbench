@@ -11799,5 +11799,1853 @@
     }
   ],
   "created_at": "2026-11-02T09:06:00.569124+00:00",
-  "generation": null
+  "generation": {
+    "generator_model": "rag",
+    "judge_model": "rag",
+    "prompt_version": "gen-v1",
+    "ragas_version": "0.4.3",
+    "ragas_embedder": "BAAI/bge-small-en-v1.5",
+    "answer_relevancy_strictness": 3,
+    "temperature": 0.0,
+    "judge_temperature": 0.0,
+    "context_k": 5,
+    "subset_seed": 42,
+    "n_questions": 100,
+    "metrics": {
+      "faithfulness": {
+        "mean": 0.5998809523809523,
+        "ci_lo": 0.5101410714285716,
+        "ci_hi": 0.6927047619047618
+      },
+      "answer_relevancy": {
+        "mean": 0.3846026595965873,
+        "ci_lo": 0.3061590973141861,
+        "ci_hi": 0.4659729716004338
+      },
+      "context_precision": {
+        "mean": 0.8642916666123885,
+        "ci_lo": 0.8138972221688259,
+        "ci_hi": 0.9077114582804983
+      },
+      "context_recall": {
+        "mean": 0.9466666666666665,
+        "ci_lo": 0.8933333333333333,
+        "ci_hi": 0.9833333333333334
+      }
+    },
+    "n_valid": {
+      "faithfulness": 100,
+      "answer_relevancy": 100,
+      "context_precision": 100,
+      "context_recall": 100
+    },
+    "tokens_per_query": {
+      "mean": 923.27,
+      "p50": 933.0,
+      "p95": 1129.0
+    },
+    "per_query": [
+      {
+        "qid": "q08627c54afb4",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "971522f4da965f440a0cd818f59e79aad45d94676c22660aa264479160e784b4",
+          "6b4b4e96922b1946f4d3ae1bed2d6f93a9489e7c729c1472c661f8867b0c78cb",
+          "4d525f4a5fe62cbc60e3e78964d2f9bce6a328c3963b13153bfe4c505f4819f0",
+          "47b98bb43f7638aa6d9f0aa01f86c36b529b42dd75430822d1ab45b4e9c5f283",
+          "bb8c0c071565a104f35beecf285438ace1a1968caf308045280f63b3f6510073"
+        ],
+        "tokens": 814,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.249999999975,
+          "context_recall": 0.0
+        }
+      },
+      {
+        "qid": "q0ff7a7d370ca",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "f77dbfed6c6fcee92b5f71284e6c555593f47de2ee5c665ccf41c12647e0db50",
+          "a90ce21b9aa1c48eb171a2f2177be99aa6d3187268edf489eb02567f2fd096a4",
+          "53d74bc88544c7823b81bafd90da11db231ce6c235218329cdf9f802e4bfbb5e",
+          "b8c04e3f5c7fe6db7a2f592ba1b5c4e63e307c22e3b854c7b237771ce3bfa73d",
+          "c56b132ab3f8ac14d2d37b8ffc2c45e364fbab3a8f2c212c5f0ab525ab44fea8"
+        ],
+        "tokens": 1129,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q10b7fc563c09",
+        "answer": "SQLModel is built on SQLAlchemy and Pydantic. It was made by the same author of FastAPI.",
+        "context_chunk_ids": [
+          "a9831239b0ed62cd557db5f3a2d94abf6d3b317ce071d750091c055ba59c5957",
+          "e9905da1637fbf5b4a92731cb70d606a43128c9470ab042acea97b3f97c5f9be",
+          "3256c7861066b210c926f5de065140998af067e8cec5cb8e50443804c1568242",
+          "d7f697f3c9f1fdca2a479e31918d86d6117831e7d3fd211be97c2eb85afe940e",
+          "161e57d396b918d5915973bd2f37e22962b6b86621f957c2e942cf5b4a550d7a"
+        ],
+        "tokens": 1057,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.9402733096589279,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q132bccc8a760",
+        "answer": "If you declare a *path operation function* parameter as `bytes`, FastAPI will read the file for you and you will receive the contents as `bytes`. The whole contents will be stored in memory, which works well for small files. (Context [1])",
+        "context_chunk_ids": [
+          "e281df6eed099b85138799766142de847f47afdfefd5c66af20716dff6460fc3",
+          "54f21c98a1a6368518836c3079f9c34c02d1df20f0595c347e11173396371678",
+          "32fee12b88118540290f92bbd26aec8d447bbb12395006ca2e887a06b6731c04",
+          "c56b132ab3f8ac14d2d37b8ffc2c45e364fbab3a8f2c212c5f0ab525ab44fea8",
+          "22332a576474396a2b05ea3a4b03816a90704eb7ecb055f50726c9609a5acc6b"
+        ],
+        "tokens": 1129,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.934042821876009,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q134bfa6d8a25",
+        "answer": "1. **Lightweight packaging** of applications and dependencies while keeping them **isolated** from other containers.\n2. **Simplifying deployment, security, and development** by providing isolated processes, file systems, and networks.\n3. **Minimizing resource consumption** (comparable to running processes directly, unlike full virtual machines).\n4. **Enabling easier handling of deployment concepts** (HTTPS, restarts, replication, memory, etc.) through container systems like Docker or Kubernetes.",
+        "context_chunk_ids": [
+          "3b164161c55a453976e3d2ab1b81df27665fb30e7fc86662174b854a01cb014e",
+          "7b6aad49f45ef58afcc669bb0355a003e6b24de1b13c38143793ff1affdc2cf8",
+          "449511e8d735dd544384eed6c61d0c8b1eca6fce61ab3b41f3426cb6ea819387",
+          "d227d90494358f8f55d8cb8e519c44d5d58c723d308a68a7b0df71d8e80b8ab9",
+          "c374cdf682684b4bede1e93991d8c4dfd194f61fa45ba87ad01c379bbd683fc3"
+        ],
+        "tokens": 882,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.813578393042599,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q135bbb229d58",
+        "answer": "The router dependencies are executed first, then the [`dependencies` in the decorator](dependencies/dependencies-in-path-operation-decorators.md), and then the normal parameter dependencies. (Context [1])",
+        "context_chunk_ids": [
+          "d94cb87c765e4912856bfb4b4ff4766442a98dc38981f256093285c682ca3329",
+          "552ee9389025fd04334f345f822eb43dd4118438f3d89cffd0b843ef220ae8fa",
+          "1e8223d59fb0df6aa475d0506bbbc2e885e66cbfc559c701bc25c5f71f334f40",
+          "479f8a6ea4dd42135780fdb212b24b0dbc24cc6ede021bdb1d618895322c78a4",
+          "f850cb8586347225cd5cbab4b0a5cb073a303872422442c9b32e20fa03d1208d"
+        ],
+        "tokens": 1125,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.8869902876447145,
+          "context_precision": 0.8666666666377778,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q16d9a6fd3fed",
+        "answer": "`POST` or `PUT` (and other methods besides `GET` or `HEAD`).",
+        "context_chunk_ids": [
+          "04d531ac7df568640e41b4fdf48fb74d78d785828fa96d4b1674e5430fe9e1de",
+          "90c902a28e85ced2ac98cf2238c34b4032b4667ea527db8b1d6dd27e3bbfeef8",
+          "47b98bb43f7638aa6d9f0aa01f86c36b529b42dd75430822d1ab45b4e9c5f283",
+          "517cd3fe3eaf7a6c810200c05b625c7440f16c3496cde9d299ae1d75fe215313",
+          "d21fe0ac61aa6becd5ba4dcce377efd6982ea1deacfce5382a3419fb5c0f7b37"
+        ],
+        "tokens": 935,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.6774595404474741,
+          "context_precision": 0.99999999995,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q1a8b1bc1cca6",
+        "answer": "FastAPI will show a clear error when the query parameter exceeds the 50-character limit.",
+        "context_chunk_ids": [
+          "5a087579cd255beb940c1826a4ed3a829ae4a6608357b5580b48f46fb20ac952",
+          "dbd3984397ad423a12ce5fdea6d2f8730b79129fafaee945a5fc0805f3bfa565",
+          "d191338e961ed7ec44eccf0bddbad57e77cee3509e650b5d0a6ec7dafea901c1",
+          "0c64f812289aec3cf1525305ae591104f729e792dd316b5a6b9803617b7955bf",
+          "6b04431ebf176b6b7792f41fdadba444dea522c6b6d1e9eeaa219d4d2fab76e1"
+        ],
+        "tokens": 931,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.8633118102793859,
+          "context_precision": 0.699999999965,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q2268de82310b",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "1b844ac560bd5dee50e1ee1317118540551751cd49879844d8d3540e57f73446",
+          "b088e1ec2be3512bb4297ecf23c210821f1d0d9ce228ed46c8a575e33b68080d",
+          "bc408af6db2cef03241f96d97ff00cc30ecc6e3e203660feac6ff64c18264d98",
+          "d429ec445e82641cd746d9e8653a7c2cdeddc5294ea332db51b50e24487e8165",
+          "a0559fea9df3835f4b7863a669f7ab4f3f7e17a6c67b3dede7842e7e4a560253"
+        ],
+        "tokens": 808,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.8041666666465626,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q24ffcfcf8bd7",
+        "answer": "`application/x-www-form-urlencoded`",
+        "context_chunk_ids": [
+          "dc8b58fc9c382f258f2bc9e4f5bb673f284d9c73dd6ac2a0124040b5f39f5e8a",
+          "2fa39c5156df0ddcaa106cae9e69cff5ff6fc0df6de792269f5fe81edc591183",
+          "7b2139226ea8d53e670aace75714bc4b200b2b967b91a3de96e5185cafc490a9",
+          "e5a8231d930716ee0f5cfde49cc64c9d7255eb50128abef7d9f6fc3a174753cc",
+          "80845ee202fe4ec17beb9b7ff6f0222b7b02b79b51d85a10c17243ffb0aa71c3"
+        ],
+        "tokens": 750,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.7548272072778586,
+          "context_precision": 0.99999999995,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q262734f2c7f2",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "57efd2c8d0ee67c1729fe22fc8b1c4e810e77f539f4a21580842269333aa630a",
+          "50400285fc5f22ea062205ec27bb9668c4b54515e88b239b75f31ff2c8f92bcf",
+          "8190df6798ffb6aefee6a658ff87b870b05b4eb1106ef4f18c31cda358248817",
+          "178c4cd3d5600099ff1eb213de244226b9790de0af39207845336b8a1a417fbe",
+          "0797f5bd992ddc719f5b79f2fe15feb9908638a966cd8e4ef551804c473cd4b9"
+        ],
+        "tokens": 923,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q2e5fe84dd4fe",
+        "answer": "6 GB.",
+        "context_chunk_ids": [
+          "75bf016d080b18c72069672a5ccb5ffd37b04e0d66ce5d18eb29a209249acf9d",
+          "f320f90ae252c22f372da6f5e9f02627b924443def59d03d4a2f0d93f54a9660",
+          "48a79526d77536100cd3a2b5176f57d535746383d9da65e5f1fa9754051975a2",
+          "8605892a773939329c2c58c67b3593c3b4bf4c1fb3d9d28bccfee00d6cfc6d19",
+          "890033c2fe1fa5cbd9aca2e53aec3ab705ff4480d17f6fad4337ce20d9fd2d67"
+        ],
+        "tokens": 941,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.0,
+          "context_recall": 0.0
+        }
+      },
+      {
+        "qid": "q2f2a9821241b",
+        "answer": "from fastapi import status",
+        "context_chunk_ids": [
+          "a34ac33439b6d490d712ce88f09162aae68512dd8f61051210c35456cba5b9eb",
+          "a4b111285a4ce9d90b987c5f501bd3f828ec85accc4b08e5c7d887a2249fb303",
+          "40d4b90e9b0bed9943d90d0176ff2e826f2a8edc8970c587870fd3b3c7f217db",
+          "15ef140c436cc8f6bd9160eb0dac23e3248606b476ecfc0393f15b7fe59327e5",
+          "f3e912269c0cc00d65f61e0848fdac729d85740daef257ff82830021e77eb427"
+        ],
+        "tokens": 915,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.8037584454081049,
+          "context_precision": 0.0,
+          "context_recall": 0.0
+        }
+      },
+      {
+        "qid": "q31b4df5f7e9d",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "05f5e86e43230ecb65af664c37b088e9ccd76a98b4de21e1e448c664dc6076ff",
+          "dbd3984397ad423a12ce5fdea6d2f8730b79129fafaee945a5fc0805f3bfa565",
+          "6b5ea73355a7731d20c1b09832a5866f0b1f2b717327c220a886a9808fcf5248",
+          "e3b4103bcf00966b5ecf39116f8df4aab2de07fe46bd98e13d0c7caff95822e0",
+          "0f4ef62ed89b989484aab524fa442ff1be6680742592b8a4c91841746a7b76a1"
+        ],
+        "tokens": 1201,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.99999999995,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q32e359ce04c4",
+        "answer": "{* ../../docs_src/additional_responses/tutorial002_py310.py hl[17:22,26] *}",
+        "context_chunk_ids": [
+          "1b8afb67fecd276ee57a540aa21783785e34b1fddba205722ab5961659ad772d",
+          "95be186e458f3119f115e5d710f23c10720b99b930a31116ae4e8f8bf4a913c1",
+          "5f9c61d4b67669c61e0c1f78d16b461dc4d34c20261cad1f7cf259a0ed85489e",
+          "e61c389096e322d6a0ce1f568123a75103d00f446dc7a167f631512ddd94de2f",
+          "b6a3f43b71cebe21b5bc4993b7f61135d2ef9587027514cc49e024f8201a2ad5"
+        ],
+        "tokens": 971,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.8333333332916666,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q3e19c9e1e763",
+        "answer": "Breaking changes and new features.",
+        "context_chunk_ids": [
+          "7333f35a26e39ef4eca7c9cb540615b624b97b351053bff46bd972a328863f7f",
+          "ce86d66fed9187971182ef2b091611e8d162077d37582c5f31997182bae6a9bb",
+          "25fd41dc06e8415c32f230b8f7de23112915dd07ad17e7a45b8ffcd37272e11d",
+          "b8386f40478710a04b8059f262f915078b0354cc144f4132ea8ce500d287dd6a",
+          "54a2807c54deefd74f0976292da16b79ea3a9468e711c5bc8622aa4f74ca2d03"
+        ],
+        "tokens": 855,
+        "scores": {
+          "faithfulness": 0.5,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.99999999995,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q400c9c6ba0de",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "e8ba1c0eabffb742564cc9fcb409a64f64fd9f6acbeb03738216e8b77c36f852",
+          "721c8fd5c4b9d956cd3a32310b1ea2f39225b9d994a5938d7f2fb74e36e9b12b",
+          "7209cc9484bcfc6dc8ab2de4abb144b716274729bf2764d821059ce969ad5caf",
+          "4debf8d334eb36289c8f0e23d1a43960a4d4823c4d0176e67d894e7d15ff84d0",
+          "9afc40d86fc677ca8a6a6aa556924f4041e8af311aca2e8040179c9933e8ff8d"
+        ],
+        "tokens": 1087,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q41d9afa364cd",
+        "answer": "FastAPI raises an error when the app is created.",
+        "context_chunk_ids": [
+          "01b8f99bd00afee5a88f913baca0716f1fdb814cd6644bae21c217d5518917d1",
+          "a4be6ed6f75da8f81e444f6e6f9e75def2f2f359c123b785caeca55a0eafe928",
+          "6b614d616d8f8574c61c791abdbe0b5d63ad661ab51a0ac7f47e61366460977c",
+          "e1fdcd94daa5d8e9e7cbe35e2c2614c3f5e6413e3c2e3fa13d7e87347db8a656",
+          "0797f5bd992ddc719f5b79f2fe15feb9908638a966cd8e4ef551804c473cd4b9"
+        ],
+        "tokens": 917,
+        "scores": {
+          "faithfulness": 0.5,
+          "answer_relevancy": 0.7712139469547884,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q45a0e0d52b86",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "a314783a2b8b5eaf4b8307c55385008f0b398fc59d6796960d3b170b8c1b0154",
+          "9c1bd3c265790cd2cb494f608ff784435b6c60fe890f5312103543b0025d9307",
+          "e9905da1637fbf5b4a92731cb70d606a43128c9470ab042acea97b3f97c5f9be",
+          "ed5ab578773b491fa9512d495c1e4c47a5e593feb062f807f98134e5c023dab5",
+          "e117ba6c519b03e212ff9136a5eaec50db16318cea6a99af9378e4369053ed2e"
+        ],
+        "tokens": 789,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q4c47b7d5eeec",
+        "answer": "Docker and Kubernetes.",
+        "context_chunk_ids": [
+          "d227d90494358f8f55d8cb8e519c44d5d58c723d308a68a7b0df71d8e80b8ab9",
+          "5c5212eb6763370f666f8f7721ba4aa99007012aec5e5de8f71522ba19ea2e87",
+          "3b164161c55a453976e3d2ab1b81df27665fb30e7fc86662174b854a01cb014e",
+          "b63b76c2775e849ac0df5777f9a03890e291fbc2612a147d53e1cd9c8b6755a1",
+          "449511e8d735dd544384eed6c61d0c8b1eca6fce61ab3b41f3426cb6ea819387"
+        ],
+        "tokens": 801,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.9166666666361111,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q4f5f0df8adaa",
+        "answer": "1. **Metrics** – Measurements over time (e.g., response times, request counts).\n2. **Traces** – Records of individual requests (e.g., HTTP spans for a request path).\n3. **Logs** – Timestamped events (e.g., validation failures or unhandled exceptions).\n\n*Example:*\n- **Metrics**: Counting how many `/health` requests occur.\n- **Traces**: Recording a span for a WebSocket connection.\n- **Logs**: Logging a failed request due to invalid input.",
+        "context_chunk_ids": [
+          "483f53035983310f5b82da3b21885cbf064c45d2dba93f7e6551dacae3e2e3c7",
+          "1b844ac560bd5dee50e1ee1317118540551751cd49879844d8d3540e57f73446",
+          "395b7f6d31fd591590842ef97eb700a60647e5c75c86ba3368b61f7abc249d72",
+          "e712240d19060490517fe07e87f3afd2f9cb9c8de2ce4e4230b58174476da508",
+          "8bf04208199faf39b3428a810fc7e5fe298480fe8a830a117e9654a6aee425a1"
+        ],
+        "tokens": 880,
+        "scores": {
+          "faithfulness": 0.9,
+          "answer_relevancy": 0.7608983799161747,
+          "context_precision": 0.7499999999625,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q53cd460a3f2e",
+        "answer": "1. FastAPI combines the JSON Schema from the `response_model` with additional information (like `description`, `example`, etc.) provided in the `responses` parameter for the same status code (e.g., `200`).\n2. The additional details in `responses` override or supplement the schema from `response_model` in the OpenAPI output.",
+        "context_chunk_ids": [
+          "1951343da746863ba2ed1aebc5bdafa16d3da772a6753f264ccdb195d051e599",
+          "7209cc9484bcfc6dc8ab2de4abb144b716274729bf2764d821059ce969ad5caf",
+          "b8110b05fff1f3f5fb9d8378bf36be18320e23ae0eca450b083e550c5cd9fac1",
+          "22332a576474396a2b05ea3a4b03816a90704eb7ecb055f50726c9609a5acc6b",
+          "1b8afb67fecd276ee57a540aa21783785e34b1fddba205722ab5961659ad772d"
+        ],
+        "tokens": 1036,
+        "scores": {
+          "faithfulness": 0.8,
+          "answer_relevancy": 0.9526934737785306,
+          "context_precision": 0.94999999997625,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q562335dc9ecf",
+        "answer": "The last one to be set will win.",
+        "context_chunk_ids": [
+          "835cd7e17d7051c11ce04bec5c583368f4c9731a637ede58d703ef5ffb33eb0f",
+          "2b87fde3083d3453857da0c5bf42323a705e5b0bd03b2184eb903b1c1d97c8a5",
+          "1212d1006cb4bc682c15d74fa8c38b628502281e924078d0998c26285af46f73",
+          "49a0b6d3e2cc9f96b1a06efdc0520213297447d802fbb38e670f0d455bc6d78b",
+          "5713dab54f07d2b9be7612df5deb1ea05c68843bf4b5c4c5e630d705e6cf54ea"
+        ],
+        "tokens": 1013,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.5296970548857315,
+          "context_precision": 0.9999999999666667,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q5a9252a14ab4",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "a95d6d75118f93c483e29a0dd61b27da7a3202ed2d6c344893cc42437b817ae1",
+          "3cd7b2b8024fb00061ada55f020d59098ce1f36096629f256c0c4ef83e44d876",
+          "971522f4da965f440a0cd818f59e79aad45d94676c22660aa264479160e784b4",
+          "bb8c0c071565a104f35beecf285438ace1a1968caf308045280f63b3f6510073",
+          "3398cfcc628ecce16eacd3fc3c91afca812f78fa21cc967b7261859001ae1c3c"
+        ],
+        "tokens": 1067,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.999999999975,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q5a927a901cae",
+        "answer": "`SessionDep` dependency.",
+        "context_chunk_ids": [
+          "b2278a81266b6d16828da46cc6fafea995b7d06ca4f57034ad15fbe964440f15",
+          "8c42df4d3d3ae36069f3eae4bcfd030507e21596617cf3b679e3adf3759b7bee",
+          "97be298fc4cceb977b6f802c3a289c5d9810b361caf5e83adc3cfebe4c725ff0",
+          "1771eac023251abe5216b0406af39c51072943d125b8cf31e5d7ea23a8751d4c",
+          "9bf192cc65b8dbf47cef96d0e2307493bb24acc9c8823016ddc708e4632cc454"
+        ],
+        "tokens": 1039,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.99999999995,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q5aa757c3b3ba",
+        "answer": "Using `Depends` (at the dependency injection level).",
+        "context_chunk_ids": [
+          "601f27ae125340a0c939977be20275ee3d2fc464eda61edb37d611d312cd5f8e",
+          "f637d0202f9ed8535f98f49a86cc8f6a5047964646044a8d77abf168791073ba",
+          "e6833717bab4640a684d1cd0ada9fc4a6edaeea597b7ca79d8440cb831d87d8b",
+          "231e829bf2d6b5f643544fb0de380a6cdb323b1f01e5dd51dd81928fbdd81b3a",
+          "b3bf929340b588b19d02d81f7d795d54290371fb3352272f30d29bf0377bd536"
+        ],
+        "tokens": 984,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.6736407900134626,
+          "context_precision": 0.8055555555287036,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q5b3912790848",
+        "answer": "`root_path`",
+        "context_chunk_ids": [
+          "c3b4ad5216303a1e71bb254fb19fa3da727f49ee164c86ff83d3e18f6be461c9",
+          "2b1d21cb76cd17a94483c2c4e466ed3d42e20e80971c833618eb61edafbbeec1",
+          "b109a54fbdcde611df48ca5074d3b1ec94c2bf5b8c085f574adfe6e93a1b303a",
+          "460bfb4271f916b4c6e8f37d7f3b6885fd41dea39558a450be852a52f73b64d1",
+          "af8326f29ca534bd895e854d3b8661b11c76beae2fc904532485f961fd3e99f5"
+        ],
+        "tokens": 613,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.9999999999666667,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q5b59a9349756",
+        "answer": "The path for `/users/{user_id}` would match `/users/me`, interpreting `\"me\"` as the `user_id` parameter value.",
+        "context_chunk_ids": [
+          "052815269d021f86983b5384bab68bca207f115d013db33cf4a57c6276bec15d",
+          "97df7572ac3ee147a614408f3f284f31b0bc5a3a0030f96b2edc812a39ed723b",
+          "2c448502204dba9ac7357aa9f25f2e5e9421f60465dd6d05e7f901f628a70b7c",
+          "46d78dbc0abc14ea88521a9a861eb168615c38d8bfffb444584e7f91a2e521cb",
+          "1ac10034e716670bf9cf79e8b9ea2221cd767ac6223a81125e80d50b204d3ca8"
+        ],
+        "tokens": 996,
+        "scores": {
+          "faithfulness": 0.75,
+          "answer_relevancy": 0.8743986918425035,
+          "context_precision": 0.8333333332916666,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q5bc1ee65c64a",
+        "answer": "The first type parameter is for the **keys** of the `dict`, and the second type parameter is for the **values** of the `dict`.",
+        "context_chunk_ids": [
+          "b7fa116c0fa2da6f2b5c9e27ee30f29c016bdb5b88cfcf047bc098669b708874",
+          "c4367281e83bca5372c6f848439aec149e01ab991a1ee6293b3aa9df9d8d3bf9",
+          "bda2b48ebd5fcc080bdf14482d95396b3a16929258ed7333df89bd787c55f138",
+          "e3b4103bcf00966b5ecf39116f8df4aab2de07fe46bd98e13d0c7caff95822e0",
+          "91d340491ca60ae4b73bcfa9727299b78dcad84f673937f321b773f5bd3c63a8"
+        ],
+        "tokens": 815,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.8012596033476905,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q5cd63c6b3e31",
+        "answer": "FastAPI (Starlette) will automatically include a **Content-Type** header based on the provided `media_type`. It will also include a **Content-Length** header. For text types, it appends a charset to the `media_type`.",
+        "context_chunk_ids": [
+          "1b8afb67fecd276ee57a540aa21783785e34b1fddba205722ab5961659ad772d",
+          "2b87fde3083d3453857da0c5bf42323a705e5b0bd03b2184eb903b1c1d97c8a5",
+          "01796e3f2a78d94891b8cc6b717a5be118513aafa2650f29dfb49ef04fd345a3",
+          "1212d1006cb4bc682c15d74fa8c38b628502281e924078d0998c26285af46f73",
+          "95be186e458f3119f115e5d710f23c10720b99b930a31116ae4e8f8bf4a913c1"
+        ],
+        "tokens": 1019,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.8532340018162134,
+          "context_precision": 0.19999999998,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q60046211aed7",
+        "answer": "Pydantic will still read the environment variable `APP_NAME` for the attribute `app_name` in a case-insensitive way.",
+        "context_chunk_ids": [
+          "41a678999ca14195a8c558e88e6c4d10eec3ee32e5c611ab42d8a40065e6b0cd",
+          "da546bacd88035924a14f25d4169b5a210cbc558015d8a7067dee59393a42a3e",
+          "0797f5bd992ddc719f5b79f2fe15feb9908638a966cd8e4ef551804c473cd4b9",
+          "01b8f99bd00afee5a88f913baca0716f1fdb814cd6644bae21c217d5518917d1",
+          "0c05919a31a874c939e19fa873e5fb96150ac6fd47da8d0f174f229146f1aeb5"
+        ],
+        "tokens": 943,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.8432912458727436,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q61b9c5a9980a",
+        "answer": "It is not allowed and would be inconsistent. The provided context does not contain the answer. (See context [1]: *\"you cannot use the `default` parameter for `Query`\"* and *\"it's not clear if the default value should be `\"rick\"` or `\"morty\"`\"*)",
+        "context_chunk_ids": [
+          "d191338e961ed7ec44eccf0bddbad57e77cee3509e650b5d0a6ec7dafea901c1",
+          "0c64f812289aec3cf1525305ae591104f729e792dd316b5a6b9803617b7955bf",
+          "05f5e86e43230ecb65af664c37b088e9ccd76a98b4de21e1e448c664dc6076ff",
+          "dbd3984397ad423a12ce5fdea6d2f8730b79129fafaee945a5fc0805f3bfa565",
+          "e3b4103bcf00966b5ecf39116f8df4aab2de07fe46bd98e13d0c7caff95822e0"
+        ],
+        "tokens": 1053,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.7896019080364137,
+          "context_precision": 0.99999999995,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q62a039629bbf",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "10f6211168af5d1812dd15fd4e41a7b17add7e59551ed673c5f85c6e4962b51e",
+          "c0acc4bd3c09d5c1895bae07528c57722e7e7ad10b4b0fe243947df2935d4631",
+          "e46a999d9d6862f1e580ba9cd01de3e827b56a98dba44a361c65be7eec90157f",
+          "6b5ea73355a7731d20c1b09832a5866f0b1f2b717327c220a886a9808fcf5248",
+          "7034aaf8e750e05981749254af8295e3546592fa9fbdf1a2d5d883ff4b6aff13"
+        ],
+        "tokens": 964,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.8333333332916666,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q63e57328ad3b",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "f8da0087e1e7c2ca9d46220ab90ee55842868a492a30036cbd72a5aefa156301",
+          "558d3b9535d9fa3a180db161be3d1d1f27fa2d72f7ff641e2c100a0de0116cc3",
+          "a5501cea2b2d67fc81c3907ec03a090d88fa1c9fa22a8821c48926ed86148195",
+          "fe3935fe3a128a07a4e9a116047935d4d24d8fb4efa695e69046732dab3d25bd",
+          "6eba6ea5529776c899370d36b2b71219a266969d8b1a5ee127c450a92f1268b9"
+        ],
+        "tokens": 864,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q6602d15aaf3f",
+        "answer": "Facebook, Google, GitHub, Microsoft, X (Twitter).",
+        "context_chunk_ids": [
+          "3dc39844d58899fc44819fb73b760a96c169fe6d18768ba476b5c40b2497335e",
+          "d70108330fe71c62c8289de02ae1b0118cde3250aba0571bb9f2ce888aff3e8c",
+          "a33ec58e8af8a1b9e1d42d3419d2666206cd61bf34f8d0a0bea7918f01fa5c70",
+          "baab7b2367cc6790a1fa6456552080eb365b057f8f63df9ab066e376b5a33c72",
+          "e0f766898c6a31e6c1d4ee1433a5082db3a9d686d210e6e6c040e0f3a046159e"
+        ],
+        "tokens": 892,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.4581203585150024,
+          "context_precision": 0.99999999995,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q68e0a29a6ef1",
+        "answer": "`fastapi run` listens on the IP address **`0.0.0.0`** by default, which means it is accessible from all available IP addresses on the machine/server, making it publicly accessible to anyone who can communicate with the machine.",
+        "context_chunk_ids": [
+          "a4be6ed6f75da8f81e444f6e6f9e75def2f2f359c123b785caeca55a0eafe928",
+          "f360522faea0835a604ff0f61e1bfb752eccfb773c8396491aee2b7e6e125272",
+          "3357f28e4a447869f7e0829c4863e63ef2c19901bbd157f71b794dc1eaf1f162",
+          "75a1c1e36c2c769a7b6781dc29affdc9a1b600d25fd7bc644cb07921771d7997",
+          "7d070e472e68c14e695a992e6eb932187ba168184744bf874faf04c13fc3404e"
+        ],
+        "tokens": 948,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.9999999999999996,
+          "context_precision": 0.5833333333041666,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q6947d40c3444",
+        "answer": "A **list of tuples**, where each tuple contains a key-value pair (e.g., `(\"imdb-tt0371724\", \"The Hitchhiker's Guide to the Galaxy\")`).",
+        "context_chunk_ids": [
+          "2c43e1d16c123cea16d473f26a5b133a73f461002aff98c746002d6234fbe3c1",
+          "e0fe61175654d77816933014aad1256bebe9c7e34066e42b283413e99e06d6d3",
+          "2047c123145b17d90cf48f6cc5b821ab30332c14364f495b82eb4b4a50ad361c",
+          "aa23b3ffa343597724f46925b2bedf0e90f1cffe140465698e3a184346cf2e93",
+          "fc00d11723ab9199b9235fac514400b0a5881813e0f5d367584f43c30c56c2fc"
+        ],
+        "tokens": 1265,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.5814936329139467,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q6c93f41310be",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "bd7122e8bc72534f30288e43271875a6ebee9dc056bf172ec7d49fa79fb7858b",
+          "aa91b147f10ac42ea6ebc7c2b094a1dd3a83c0c16b13a73ebb46a809fd7bde96",
+          "3e0a386482dd34f56f906cc241243b3150fa11366a826819a1800f659fa16b57",
+          "3b31674840d80067c79377a30f28cad9d263be4b2f8b71577241d380c358f0a4",
+          "8e9593d241212669097a6adea781fd0f84658b2f71f4c49a775ff0a360dba328"
+        ],
+        "tokens": 876,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.3333333333,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q6cee617e8e22",
+        "answer": "1. FastAPI's **Dependency Injection** system allows shared database connections to be declared and injected into path operations, minimizing code repetition.\n2. A **single SQLModel `engine`** holds all database connections, ensuring consistency across the codebase.\n3. Dependencies with `yield` enable proper cleanup (e.g., closing connections) after use, even in multi-threaded requests.",
+        "context_chunk_ids": [
+          "f637d0202f9ed8535f98f49a86cc8f6a5047964646044a8d77abf168791073ba",
+          "601f27ae125340a0c939977be20275ee3d2fc464eda61edb37d611d312cd5f8e",
+          "85dc93cca839fdabd0d7ed436f851b2518046b14002b7d0cf70e6b878a5c5c0e",
+          "443198a5b12daae49b0b549da86cda10e60c08696d033bc44f3a0159a3a437e1",
+          "01f03af04e00d485b6cd176df166cb412e9b7ecc25444b378c26658684e850e4"
+        ],
+        "tokens": 950,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.7723091709539006,
+          "context_precision": 0.8666666666377778,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q6efe58df85a8",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "57ff44d41248f2d56b0536b0dd4cc124df04faea7cbc2122882ddd106170a888",
+          "4c53822d3fc64cd756acd6ed6276834d3ae3f13e26610aeedf680b8d9d036fdb",
+          "6d7268a5bea98ade543e70c3208dcbd648d6594aceffdbd62bf5086e448068fc",
+          "928a9b770206ef3489f045d56471ecad45a44681a7aed69a055f372a7c72323c",
+          "b029c67bd401eb71310be1bad7754f2ac77ef144c8451a26fe8397a16884fcd2"
+        ],
+        "tokens": 952,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.8055555555287036,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q71611b2094c8",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "76ff2727c2ce97bbd8565ef4dcae3c26bf5b27ac901607408d29cbcd2204490c",
+          "1e4747baf926339ee70ac5d1d0ee744a498dacc4d72aab1a1c86fa991100c38f",
+          "e4f8c9fba530e0ba00edae29181c486a8a086569a6786c1cd9df3294f83743fd",
+          "b3bf929340b588b19d02d81f7d795d54290371fb3352272f30d29bf0377bd536",
+          "6ee9b5bf26b12f9cdbe4249524547599b86c8240837ee947a8b800ab59dad8c5"
+        ],
+        "tokens": 589,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q718f4a433b03",
+        "answer": "The `.openapi()` method returns the contents of the property `.openapi_schema` if it has contents. If not, it generates the OpenAPI schema using `fastapi.openapi.utils.get_openapi`.",
+        "context_chunk_ids": [
+          "40b5ad7a6d7dae1203d09f33f4af061ac03e454521024afe1182e166c33f7436",
+          "540791d6a8bcaa7a78e5d2f2f5583037f100df7de3b79a6563a611dd1ada0fac",
+          "e8ba1c0eabffb742564cc9fcb409a64f64fd9f6acbeb03738216e8b77c36f852",
+          "a789870096a2c73ef0ac6cd26802ebf8ca88281273a6c5766b35f8db845c1e4c",
+          "4e8305348974a11fb3a158e83bb4f280eaf2567a6b73c4e29fafb81337d3d93b"
+        ],
+        "tokens": 913,
+        "scores": {
+          "faithfulness": 0.6666666666666666,
+          "answer_relevancy": 0.9165502333316059,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q7246a87d9add",
+        "answer": "The `response_model` will still be used by FastAPI for data documentation, validation, filtering, and conversion, even if the function's return type is declared as `Any`. This allows strict type checks in editors or tools like mypy to be bypassed while maintaining FastAPI's functionality. (Context [1])",
+        "context_chunk_ids": [
+          "73df7ea825f68c2501d9559eefe29a1b9c91363483f61172b7facc91922ea51a",
+          "4c53822d3fc64cd756acd6ed6276834d3ae3f13e26610aeedf680b8d9d036fdb",
+          "4ceff220de90891691eb7b4770e4a96334fe6f5e35be66ba2550eacbca62611a",
+          "2b87fde3083d3453857da0c5bf42323a705e5b0bd03b2184eb903b1c1d97c8a5",
+          "1212d1006cb4bc682c15d74fa8c38b628502281e924078d0998c26285af46f73"
+        ],
+        "tokens": 1002,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.9039276076276755,
+          "context_precision": 0.99999999995,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q7385f5a5c883",
+        "answer": "Extra keys in `json_schema_extra` appear in the generated OpenAPI schema. Because they may not be part of the OpenAPI specification, some OpenAPI tools (for example the OpenAPI validator) may not work with the schema.",
+        "context_chunk_ids": [
+          "0962867b23b6c0910c772f6562b77a12228e16ae679c2f1c30c492a54547085b",
+          "4debf8d334eb36289c8f0e23d1a43960a4d4823c4d0176e67d894e7d15ff84d0",
+          "75a80eef7250235ae15e3b68d8e6888db6b2c41ae21617c666624168b245213e",
+          "a789870096a2c73ef0ac6cd26802ebf8ca88281273a6c5766b35f8db845c1e4c",
+          "22332a576474396a2b05ea3a4b03816a90704eb7ecb055f50726c9609a5acc6b"
+        ],
+        "tokens": 1103,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.9172765165039731,
+          "context_precision": 0.99999999995,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q75ae18ca9d92",
+        "answer": "307.",
+        "context_chunk_ids": [
+          "0eb108fa96170b90d5e75edffc6311272bea223ffe45a97c7dd58958e2bfc1e4",
+          "6c1819586d147ad7510e583ff6c1fd2e94140f99b2fda50a06cfccccb12b3254",
+          "e5e78e2f0d42897911e125c54cac8736e2989f2d300f666b9b5dfaa47de862ae",
+          "6b4b4e96922b1946f4d3ae1bed2d6f93a9489e7c729c1472c661f8867b0c78cb",
+          "e48cd00ee6f7a34997af1e19f39fd4e823501210c07c0b3d2f5dbce4416c5dd9"
+        ],
+        "tokens": 790,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q75da68695d00",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "890033c2fe1fa5cbd9aca2e53aec3ab705ff4480d17f6fad4337ce20d9fd2d67",
+          "8ab59c9d931b742a1b1ab9b851ab7369bfc427b57cc7c4010ab9b24a06ac7268",
+          "6613a419b2ebb7f56af5dabcf7d9830ca36bb6d702b2893d2583440aaedaf1e1",
+          "40a41828e15c2c37de601e13d57f6bbfb8c83c76ecd718df0b20ede1ab4e4fbc",
+          "3e831b0862bb87eaf4b2998fd5fabae60135e2a6642f95bccb09e08bb93445a7"
+        ],
+        "tokens": 838,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q78dde312af6d",
+        "answer": "```bash\nuvx library-skills\n```",
+        "context_chunk_ids": [
+          "5759cf35c34a567207fe6e258fb1120adf1326a0f2df9bc473e71c97357c8aa2",
+          "a0ddb69035e90d948e0540ba1fb3c4e0011d713646bede21a950ea612f9b4bac",
+          "eb95b74663abaf64f06b43695b41b5b59358f514a3c78462e1854889f09cab91",
+          "15db37ee6aa636884775a82580dbbe3aa7b12bae78ffbe3c4affc4a7a6a4666f",
+          "4943aac9751d5a5bd6538394708a8a86e303bc4450d72011592c07589b5e1a7a"
+        ],
+        "tokens": 1128,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.7527321179633736,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q7aedcc4df4ab",
+        "answer": "1. Security - HTTPS\n2. Running on startup\n3. Restarts\n4. Replication (the number of processes running)\n5. Memory\n6. Previous steps before starting",
+        "context_chunk_ids": [
+          "6198342242f3318054b9a5c1de9dc7e9ec1ec81c7530084fc8319059088ac26f",
+          "0fb0ec5a897a44763969cc63a802f58040ace1d1dc481eb3cc9091f1b88ca82b",
+          "9c4a73c4bb9210d8baf1530682a04d9b766032c2686da1d6b83465b148de5907",
+          "baf2e6c733e6c7b3bf4654bf5715a932681d50b945e3f3e348b545a1090ef648",
+          "16f4688bc63628f13157ac66e19a83de9518fe71e07331e561d70e1102e84ab4"
+        ],
+        "tokens": 940,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.7001645132248792,
+          "context_precision": 0.699999999965,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q82160d6d60cb",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "32fee12b88118540290f92bbd26aec8d447bbb12395006ca2e887a06b6731c04",
+          "6d1793d8678b3868a916989b21d275d23a88e7c138c4b006d12767489d3870af",
+          "2fa39c5156df0ddcaa106cae9e69cff5ff6fc0df6de792269f5fe81edc591183",
+          "e281df6eed099b85138799766142de847f47afdfefd5c66af20716dff6460fc3",
+          "1f687b0765e7437b67288e7b1f91b191cda16bbdf80e07c2dbdce8c3a17631e0"
+        ],
+        "tokens": 1041,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.8055555555287036,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q83ae814c20a2",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "8509a43309916ef29350ed5ba5e21c6337be1dc51612a452407f5e9573df2ea2",
+          "bf359a1d32eca707fae6be01a09145cc687e86e90cc1ae425f6e36a945b82dd9",
+          "c2a35e76c46fd38390e4638628a3af8b8a664d454ac8f2f4d63bad2845db80f1",
+          "3c054771c02d3f6c221c83a82a42323e9c3c35f503637af9ec5574b23ea5f9cf",
+          "0a14eaaab5f0a9e8a05cc3a45086b49f26112259828044cd7d8b221b6c2a77d5"
+        ],
+        "tokens": 790,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.3333333333,
+          "context_recall": 0.0
+        }
+      },
+      {
+        "qid": "q8561aa5b9a79",
+        "answer": "`PlainTextResponse` (from `starlette.responses` or `fastapi.responses`).",
+        "context_chunk_ids": [
+          "32bc2d010e95cbf35cfc11488b7194f8643b3f2af64d48448c94395b53525b68",
+          "7c6cef30784d55cca1c60ef98b40b54c0d5dca3f8abcd8a0f2c74b3aa79d47ef",
+          "578eb460d1ef017fd6224c573316b89c3cf4d0aa77455d4ea633f84eec4da6e0",
+          "bfeab3e51f64212caacad7fee2a16bda5d94f4a1bfbe33ae528b3c8d3fe17288",
+          "d21fe0ac61aa6becd5ba4dcce377efd6982ea1deacfce5382a3419fb5c0f7b37"
+        ],
+        "tokens": 835,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.679667254045578,
+          "context_precision": 0.7499999999625,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q88e18036d15e",
+        "answer": "The HTTP method used to update a hero in this context is **`PATCH`** (Context [1], [2]).\n\nIt is preferred for **partial updates** because it allows sending only the data that needs to be updated, leaving the rest intact (Context [2], [3]). However, the context notes that many teams use `PUT` even for partial updates, and FastAPI does not impose restrictions (Context [2]).",
+        "context_chunk_ids": [
+          "20e1cb6267c1ae9e629ff04b959633845bf311182aa55f22ff17f80e4500e8e4",
+          "8b905a3a70dde9bb42ff8081aa04aaa892661c71c875efd0614a413ee248d8a4",
+          "c3c1f6285df7bbf9760ccb0c19e8fde2fd0874ec5360650bcfaa3cdeedff96b2",
+          "8b53fa90322539ad90eaa1b9834a2b06f89fc4f6b62d00200515f16daaf65e0f",
+          "6f793124a4baa897547c4ee413f889a9a6be40e25fb350e74f4252a0babb00ab"
+        ],
+        "tokens": 987,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.9183152524883891,
+          "context_precision": 0.999999999975,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q8a716345f84b",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "2b87fde3083d3453857da0c5bf42323a705e5b0bd03b2184eb903b1c1d97c8a5",
+          "1212d1006cb4bc682c15d74fa8c38b628502281e924078d0998c26285af46f73",
+          "835cd7e17d7051c11ce04bec5c583368f4c9731a637ede58d703ef5ffb33eb0f",
+          "5a6c211df1ce791de5a46a197b55092ed941ee5df5dd57bca54af3b61ba3b42f",
+          "c2acced530580c602436d35e262319f2dd978e7e0042ab109ceaa7a5a3d0374c"
+        ],
+        "tokens": 1050,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.94999999997625,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q8beae209169b",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "ce273dd85aed7df8deedd5f4e6e5e897a00074f0d58d490b6b1a5ffd57af47a3",
+          "8d5f8162e2c64f220fa6e116dbcbb3a0b9f78f054d38dcd13490dd00cbe0ef39",
+          "c3b4ad5216303a1e71bb254fb19fa3da727f49ee164c86ff83d3e18f6be461c9",
+          "22332a576474396a2b05ea3a4b03816a90704eb7ecb055f50726c9609a5acc6b",
+          "601f27ae125340a0c939977be20275ee3d2fc464eda61edb37d611d312cd5f8e"
+        ],
+        "tokens": 859,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.699999999965,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q91a43e36fc5e",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "6613a419b2ebb7f56af5dabcf7d9830ca36bb6d702b2893d2583440aaedaf1e1",
+          "24725a5dd7ac45c5f744109e41c52a6fe42b3c3464103215258b6f2426bd4e13",
+          "8ab59c9d931b742a1b1ab9b851ab7369bfc427b57cc7c4010ab9b24a06ac7268",
+          "890033c2fe1fa5cbd9aca2e53aec3ab705ff4480d17f6fad4337ce20d9fd2d67",
+          "3e831b0862bb87eaf4b2998fd5fabae60135e2a6642f95bccb09e08bb93445a7"
+        ],
+        "tokens": 796,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.99999999995,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q964125400bca",
+        "answer": "401 \"Unauthorized\".",
+        "context_chunk_ids": [
+          "3398cfcc628ecce16eacd3fc3c91afca812f78fa21cc967b7261859001ae1c3c",
+          "47b98bb43f7638aa6d9f0aa01f86c36b529b42dd75430822d1ab45b4e9c5f283",
+          "6b4b4e96922b1946f4d3ae1bed2d6f93a9489e7c729c1472c661f8867b0c78cb",
+          "3cd7b2b8024fb00061ada55f020d59098ce1f36096629f256c0c4ef83e44d876",
+          "971522f4da965f440a0cd818f59e79aad45d94676c22660aa264479160e784b4"
+        ],
+        "tokens": 928,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.7573088639155167,
+          "context_precision": 0.8041666666465626,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q991092ed0ffc",
+        "answer": "Each validates that field's value. Use compatible types and constraints for shared fields so the OpenAPI schema can describe them consistently.",
+        "context_chunk_ids": [
+          "74b7ac32c0420679daa2d93aa4accb6ebfe627b343b3b9925bf84024d733bad3",
+          "29d28dd9313e4c90cd97778f73fab958b010c73327b92273f03176e7674f974f",
+          "f2d86a7836bb4d8c59de24f45b479a680e61df5a89beaad240230f14acf50c93",
+          "f46f680a16ff2f3491b0458681d53628484ed861f2d7357c42f87b2aae428065",
+          "50e6e338e6801fc2fc667a6afec9c8d2d659137f555dc0a8e70505e4fd528129"
+        ],
+        "tokens": 801,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.5881182581259394,
+          "context_precision": 0.7499999999625,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q99a1feb89b1a",
+        "answer": "1. **pwdlib** (for secure password hashing, including Argon2)\n2. **PyJWT** (for JWT token generation)",
+        "context_chunk_ids": [
+          "d476ef80a3be3e3c9a6d866bc0b8a28e5059c07efe0655cf5d8849678d294375",
+          "e62bef69f51ffb675e34549eac6a2e040e630378f3a8c17cb42f83c732d4f89b",
+          "e9905da1637fbf5b4a92731cb70d606a43128c9470ab042acea97b3f97c5f9be",
+          "c5ec31188f3b98309e9da3889f7e4b82025062c324a7dad8b64b109de82c5fca",
+          "b50029be9cfcfa9ccd8a151de26a8f62cf3208ab139c8eafa92a96b5a896044a"
+        ],
+        "tokens": 1066,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.8434682947470162,
+          "context_precision": 0.49999999995,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q9c693217ec15",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "e9905da1637fbf5b4a92731cb70d606a43128c9470ab042acea97b3f97c5f9be",
+          "c9c26ad827ee3069315d8934bdcb39d8ff6b9135e207b8835eb0de9edd0cd066",
+          "33c0fd8338d01e198cde12c86373e68ce17d795149835040d1fa1a19f7f3d932",
+          "5bbe4d34997b237387da69a54eb51768b76a9c499522e7dbe4a1dcfe84e0f376",
+          "208f8c7eab7b0de0fc5fd5849ab0cf37eebf7d23e755b3c50068da6ed016ec1e"
+        ],
+        "tokens": 994,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q9cd077a17576",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "01796e3f2a78d94891b8cc6b717a5be118513aafa2650f29dfb49ef04fd345a3",
+          "061f92f37a9517728c00d06d651b9f9ea6764471b0d0c44f36869ed50118a06b",
+          "6a900840f943e6f058fe13e4e2d22c2428b1b3021025c3cb8de4562ae31c624f",
+          "ab98f1c3b1aa5d2fbf8dae7ad5d368ea82c2ab9c2bfd1ff8c4d0789d0be827e5",
+          "f25dd672d8f31295b1963825333ec77447722fca8df04448c962b88e048f5cdb"
+        ],
+        "tokens": 789,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.99999999998,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "q9e8003be67c2",
+        "answer": "Pass those parameters (`prefix`, `dependencies`, and `responses`) directly to `app.include_router()` when including the `APIRouter`. (Context [2])",
+        "context_chunk_ids": [
+          "891f79b641b71d7fbcaeb20904cf217e89c427fbeecc916bd2b30773fa4af99f",
+          "16a10c13d85d161a4c649742f2565f084d0bc262137c7f0224b79762e8dbd3b5",
+          "fc881f70d02ebf4616335fea8696d9d4e4c0162134f7b8bdc573d4cdadb0b781",
+          "1712a956950c24c1e4e52bf8266cfaddc81b05335ac8640d845825ae711b43bf",
+          "bd1993445e1d532e9d10fa00a84ef26031c643ee9e2c74e4f8e40aea6949c4f9"
+        ],
+        "tokens": 1009,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.7514018155506094,
+          "context_precision": 0.999999999975,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qa3c353a49bea",
+        "answer": "1. **Security**:\n   - Use HTTPS.\n   - Well-defined Pydantic models for request/response validation.\n   - Secure authentication (e.g., password hashes, JWT, OAuth2 scopes).\n   - Avoid security through obscurity (e.g., hiding docs).\n\n2. **Reliability**:\n   - Avoid resource overuse (CPU/RAM) to prevent crashes or disk-based memory.\n   - Monitor and balance resource utilization (e.g., 50–90% target).\n   - Plan for traffic spikes (e.g., viral growth, bot usage).\n   - Use replication (multiple processes/servers) for stability.\n   - Ensure proper restarts and startup behavior.\n\n3. **Efficiency**:\n   - Optimize compute resources (e.g., remote servers, VMs).\n   - Avoid disruptions during deployment.\n\n*(From contexts [1], [2], and [4].)*",
+        "context_chunk_ids": [
+          "376a142eed682c3ca5c32322fdc2a8075684ebe4dde02cd8fcebb0c1e931a33b",
+          "16f4688bc63628f13157ac66e19a83de9518fe71e07331e561d70e1102e84ab4",
+          "73386c3a3dc5a34fd4fb1f126211fd5c51324a8265bd4509569bdcf6e464d07d",
+          "f320f90ae252c22f372da6f5e9f02627b924443def59d03d4a2f0d93f54a9660",
+          "baf2e6c733e6c7b3bf4654bf5715a932681d50b945e3f3e348b545a1090ef648"
+        ],
+        "tokens": 1113,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.7773572981267166,
+          "context_precision": 0.49999999995,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qa4809393ac65",
+        "answer": "**machine**, **VM** (virtual machine), **node**.",
+        "context_chunk_ids": [
+          "88733946446a39019960b0861e68f14998585d31ffdec6d2dd6f89afac344c12",
+          "73386c3a3dc5a34fd4fb1f126211fd5c51324a8265bd4509569bdcf6e464d07d",
+          "9bf192cc65b8dbf47cef96d0e2307493bb24acc9c8823016ddc708e4632cc454",
+          "7d070e472e68c14e695a992e6eb932187ba168184744bf874faf04c13fc3404e",
+          "d2d64fc9a81d3564c6f3e674693c9a6a6865d73dff03bf06854a5843a07a36a1"
+        ],
+        "tokens": 1115,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.6113946959011665,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qa5df2c343ec7",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "88dc0e8eff4abb29bc21ce2adacf8e7e323491216ee0c63500ec5b1305270b9d",
+          "e09c11fa811d3e025293677c1fc612db8e17937ec8a99cd4c37e5e8b2c24491d",
+          "d0e2d567fca75bc2a0f2703f7b296a4264142345a585a37c7655199c4a8bb13f",
+          "f38877b81ac0746c4eb527e12fa5d480083b0d4d511de59e118b332f5f219cd4",
+          "6b5ea73355a7731d20c1b09832a5866f0b1f2b717327c220a886a9808fcf5248"
+        ],
+        "tokens": 1076,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.99999999995,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qad8a0ac648fd",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "ed65223ab75411c1d5c9750b0ac5db760047bb249b6cbdd1c86e1d7c190426a3",
+          "aac6076ad3ea8443d1d6ed6764f3c954a815be86025c1e9f586933f431ecc154",
+          "231e829bf2d6b5f643544fb0de380a6cdb323b1f01e5dd51dd81928fbdd81b3a",
+          "52bcf59628d50e087b69274419b9dffbfa6ee4ffffcdbf69a2ed7c467d06263d",
+          "ce273dd85aed7df8deedd5f4e6e5e897a00074f0d58d490b6b1a5ffd57af47a3"
+        ],
+        "tokens": 834,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.249999999975,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qad96d83693fd",
+        "answer": "202.",
+        "context_chunk_ids": [
+          "ee6347412c838815994bda7d98a1b775809a8634fad0a04eb473fcd555fc6e74",
+          "d21fe0ac61aa6becd5ba4dcce377efd6982ea1deacfce5382a3419fb5c0f7b37",
+          "e5e78e2f0d42897911e125c54cac8736e2989f2d300f666b9b5dfaa47de862ae",
+          "47b98bb43f7638aa6d9f0aa01f86c36b529b42dd75430822d1ab45b4e9c5f283",
+          "0eb108fa96170b90d5e75edffc6311272bea223ffe45a97c7dd58958e2bfc1e4"
+        ],
+        "tokens": 885,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qb06c97cc91eb",
+        "answer": "`@pytest.mark.anyio`",
+        "context_chunk_ids": [
+          "e4c57739f1b5d3a4931f78d5f372745d5d2aa9b642b75207576b9477399c8fd5",
+          "85f6c83ec81caa32b5b1bc776d2aedd351d38daba2aa31a3fca2a42d5f8a0825",
+          "2789450c56a752bc48987d60677074efc43a1ff856f508fdd498562fc6882aad",
+          "9c012145130330d3db9896fb6aa3a515af046199eee309f5f16ec3c1af0e0308",
+          "9abc213e65122f2b1e651a37fb88f523fe0c7dd6275e6320b2892ee9c0306f86"
+        ],
+        "tokens": 739,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.99999999995,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qb493369d2c3b",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "e69ee4d7e5584015fb9f0d62927cada867d6e042c30d9620e2c6aff157b03fae",
+          "6366d4589b6c003b1377000f34d36a03393ca8ed87bf786498f49e0e49738623",
+          "4d525f4a5fe62cbc60e3e78964d2f9bce6a328c3963b13153bfe4c505f4819f0",
+          "0b189951f0ae6acc12a11d53ff12549c9581ca72882d741141b5386f26001bbe",
+          "567434caf882548e7b66c5027a69486709469c6ce546b4c9fb5a083bf8e1114d"
+        ],
+        "tokens": 717,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.999999999975,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qb965f18f79a3",
+        "answer": "A Python `list`. The values of a query parameter declared to accept multiple entries will be contained in a **list**. (Context: [1])",
+        "context_chunk_ids": [
+          "d11d794dd00a29fdf48e0e099ea62d07815aa87fb135b2c26b0cd664f22f2db8",
+          "fc1b4e996b4fffe44104b7272ebbe86c25852ba0dc89af4328c278f10e49c904",
+          "a87b4920abddcf7c73bd30b27e0a4b8dca58cd3f2633b198029d201603238569",
+          "6b04431ebf176b6b7792f41fdadba444dea522c6b6d1e9eeaa219d4d2fab76e1",
+          "7034aaf8e750e05981749254af8295e3546592fa9fbdf1a2d5d883ff4b6aff13"
+        ],
+        "tokens": 982,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.9629021572733674,
+          "context_precision": 0.8333333332916666,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qc0cf42908700",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "7df830d47de5573f0bb3458b875f2fc1c044d5aad2a42e2d5185e08d0d008400",
+          "6b04431ebf176b6b7792f41fdadba444dea522c6b6d1e9eeaa219d4d2fab76e1",
+          "0f4ef62ed89b989484aab524fa442ff1be6680742592b8a4c91841746a7b76a1",
+          "fc1b4e996b4fffe44104b7272ebbe86c25852ba0dc89af4328c278f10e49c904",
+          "6b5ea73355a7731d20c1b09832a5866f0b1f2b717327c220a886a9808fcf5248"
+        ],
+        "tokens": 961,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.8041666666465626,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qc493412ceafd",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "35913287039cf339f8f21dbc5f2e04bf92274bb1687645b44572d7fcd93d05b2",
+          "facb61dd1d0e786232326380733c18b5bed477f0188ab701705720eab3bfd1af",
+          "c7af651b8d6ca668b7770ba4d953a0e61c7e2baf4d8d250da3fcb52278986778",
+          "ea6f8368065e6b8fd7e8fe9e50ef1b1139cf958021fbc60b5f0ee47594d3c9ac",
+          "9766961d4df13f632c031b8df8475897431889afb6d80d2108ac3a2981e1e48c"
+        ],
+        "tokens": 786,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.3333333333,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qc55dca7b033b",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "c10fb630c6e952afd6c050fca34d0ac4cdfa748aef5fdbd3ecf75a44fe1a4d2d",
+          "6af9890b69d5180baaddc080ab8f524ef4cecd8754eb59de451c735fb74ef676",
+          "1195770c5b6066fd90f2fa9bc1c710a8c9b6af80dbb28c69f68024b91c0758dd",
+          "cdebad06d3cb74fe2d3f0e9c149575d83a10f69a5d75a8a5820ce9ea0587ce5a",
+          "25fd41dc06e8415c32f230b8f7de23112915dd07ad17e7a45b8ffcd37272e11d"
+        ],
+        "tokens": 491,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qc5f86e329422",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "08987255363153a12a50ac22f026d028d2c01e95a0012bd89047fbb2c5cd6b37",
+          "cd8ade6460a61030250b2583f4f4b1a751d1b9dd9438da77c42678b4c615e3ab",
+          "85316511adbad846496f6cc3bb7939ac2b23e07941e2bff4df3a20382617a747",
+          "51d72cad366f73bc0290f6e6595c699edb09078c4908a40344f51ca3fac863f9",
+          "1f50d08794d395ba49a2d5d91f6c090becdaaad048e9efb97300be7d1047479d"
+        ],
+        "tokens": 808,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.999999999975,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qc60017799d59",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "ddeba969e947a934ac0c8640bc0eb1f760115cf0c5e20defe9daa924dc012bc2",
+          "42180d0cab749660b19ab21a0ba75c952da428d3c45791cb720a8449bf0e1d4f",
+          "46d613a75399c5cab61a284745e4740917e8117702836a5a7b2dc15c471a5234",
+          "ab0d8632949627105c6bca662eb05331a9409450266751bc5f93acd372f81931",
+          "edfed7c9bcbe280e19be9a420e632919cb8fa0b5f8b3fb520a33057334977546"
+        ],
+        "tokens": 941,
+        "scores": {
+          "faithfulness": 0.5,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.7555555555303703,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qc69a86f866fa",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "6b38f4609848059632f40695631e4e96285fe6c87af57f7f0a1c91a89dba275c",
+          "53bd95b03436011046b61892539873be95d754f9f86b34d169c0dd0420ba18b5",
+          "76e37f69acef01bae70815325e0a3da245733271e5783e1ff655e7b6802f39a0",
+          "4943aac9751d5a5bd6538394708a8a86e303bc4450d72011592c07589b5e1a7a",
+          "d3cc459a70faee18d4654eabc2ceebc83686b3b21ea50be058a6f6b6e0d07c5c"
+        ],
+        "tokens": 1028,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.94999999997625,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qcd3ccbc91462",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "1fc3fcba9b01fd2acf3b9de665386906518d7bbfe6d37e268d5c89c88dead478",
+          "8552a0e93e15d93aaff64f5a14c58f6a4a1c33b3df13aa4c4ff6458f1d7c218f",
+          "f80de4461f4bea8d274df68d1a3cffd61543975c735831b128573e713df416a7",
+          "88dc0e8eff4abb29bc21ce2adacf8e7e323491216ee0c63500ec5b1305270b9d",
+          "ea6f8368065e6b8fd7e8fe9e50ef1b1139cf958021fbc60b5f0ee47594d3c9ac"
+        ],
+        "tokens": 742,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.9999999999,
+          "context_recall": 0.0
+        }
+      },
+      {
+        "qid": "qcdaa59b4a474",
+        "answer": "FastAPI determines which security scheme to include in the OpenAPI schema because `OAuth2PasswordBearer` inherits from `fastapi.security.oauth2.OAuth2`, which in turn inherits from `fastapi.security.base.SecurityBase`. All security utilities that inherit from `SecurityBase` are recognized by FastAPI for OpenAPI integration.",
+        "context_chunk_ids": [
+          "a6e2158fafb407082d9506dd18b5ce70ca5ba750a1b1a86a5fd2e11f85a4c8ed",
+          "dd3c0a875155db3ce84141e683bc9ebdd54a5c17bdf4459f809cafe176bb5124",
+          "62a8b622b4055aec77dd3404ab734ed98302d014716c4b5bf2a7ab0f0e328b3c",
+          "3e034592668f564f79d96fb5ab3e520a3eb1acb9ed99bf118c04e6caa0adf911",
+          "ad9f6d367a86bc6e619e661f8fa8c86ecfc2a70bd155aef1698043dd2ce20a00"
+        ],
+        "tokens": 1022,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.9089876843564747,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qcf155620b3bf",
+        "answer": "If you set `convert_underscores` to `False` in the `Header` class, the parameter names with underscores (e.g., `user_agent`) will **not** be automatically converted to hyphens (e.g., `user-agent`) in the HTTP header.\n\n**Caution:** Some HTTP proxies and servers disallow the usage of headers with underscores, so this choice may cause compatibility issues. (Context: [1], [2])",
+        "context_chunk_ids": [
+          "6366d4589b6c003b1377000f34d36a03393ca8ed87bf786498f49e0e49738623",
+          "e69ee4d7e5584015fb9f0d62927cada867d6e042c30d9620e2c6aff157b03fae",
+          "4d525f4a5fe62cbc60e3e78964d2f9bce6a328c3963b13153bfe4c505f4819f0",
+          "0b189951f0ae6acc12a11d53ff12549c9581ca72882d741141b5386f26001bbe",
+          "f5e692b0b845579317df9e77e25bc224d9c7310872f18798fa8c9a5cbaaa93b3"
+        ],
+        "tokens": 853,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.8853004853776812,
+          "context_precision": 0.999999999975,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qd0a05956648d",
+        "answer": "If neither `name` nor `age` is sent, `profile` is `None`. If **either is sent**, FastAPI validates the model and requires both fields. **An empty submitted value also counts as supplying a field.**\n\n*(Source: [1])*",
+        "context_chunk_ids": [
+          "c2a35e76c46fd38390e4638628a3af8b8a664d454ac8f2f4d63bad2845db80f1",
+          "5a5ed1f6c27aaaad42a8a864ec26057853179ba947e2f0582c1ef9846b145b96",
+          "9cc21d5b0bf36b8564c11013b5519313b51eef9e59334bfce342023eba4b0632",
+          "cb1b8eb476eff740045442449e141ef0a7e8b00fc6e5207821ece0d9ecc4f863",
+          "8509a43309916ef29350ed5ba5e21c6337be1dc51612a452407f5e9573df2ea2"
+        ],
+        "tokens": 683,
+        "scores": {
+          "faithfulness": 0.8,
+          "answer_relevancy": 0.6114037648345149,
+          "context_precision": 0.699999999965,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qd21f8893dfa4",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "695efef82fce615f557e2f34dfb772ebde5cb839ed92a7184663e8766d59be8e",
+          "9c647c4b85761bb8026db951fc86309791807145d181014bb241bf8a3ff5f207",
+          "b0af690195b8b2c5a78bea15be70568525a05379cd68896a05d797e0752de62d",
+          "c56b132ab3f8ac14d2d37b8ffc2c45e364fbab3a8f2c212c5f0ab525ab44fea8",
+          "e90d517f1ba2df3f2d1f901ba54350ddb207c4b2f7299b87a6ce47a13162a764"
+        ],
+        "tokens": 893,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.49999999995,
+          "context_recall": 0.6666666666666666
+        }
+      },
+      {
+        "qid": "qd60952accf4b",
+        "answer": "The six types of request data accessors available in FastAPI are:\n\n1. `Query()`\n2. `Path()`\n3. `Body()`\n4. `Cookie()`\n5. `Header()`\n6. `File()`",
+        "context_chunk_ids": [
+          "75f96dafdd376e9ec6e009c073bdd77e8561cef4d641fbf69a3a99e057142768",
+          "e18e161f87fe53e500657677444a748bbd7f601466c61ade107416ddd618ae92",
+          "8c42df4d3d3ae36069f3eae4bcfd030507e21596617cf3b679e3adf3759b7bee",
+          "db602084a76c337147cb6be387a6fa6f3305ab528d04fddd59164ccbb800c9cc",
+          "89afaf65ae5f00daa3a270b1f387581b9ef2c268f47ba9d156bd3d12f68f498c"
+        ],
+        "tokens": 1101,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.8888441558847667,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qd67ef3a3043b",
+        "answer": "The `scopes` attribute.",
+        "context_chunk_ids": [
+          "1df6206832382d5efb27e048471b24f346d2ba805b0798ad99ff977a64d2a1eb",
+          "208f8c7eab7b0de0fc5fd5849ab0cf37eebf7d23e755b3c50068da6ed016ec1e",
+          "3edfe7b5a7e3cd44a78a1d70c09fdab7fec6bb0880ef7341262f4dac3fb82ea7",
+          "d18af6345cae500d780c35c5322c23bc350e72955e1212fd7f6eaabdf01d71a5",
+          "ad9f6d367a86bc6e619e661f8fa8c86ecfc2a70bd155aef1698043dd2ce20a00"
+        ],
+        "tokens": 893,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.7805958080054097,
+          "context_precision": 0.8055555555287036,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qd6ace67e1a11",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "732995625befbc98a5ea38461750410612db9331fbea1971495b1a125e2b41c8",
+          "7bd549f2d1d2b19184b7e50f7cee3b5960b8efec64b64474476afd78b02d7d08",
+          "60801fda2e4ae6d83dfce2e034ce93c6fbc5ffb8e4cd3aa26e381e8418697870",
+          "25c7158f8b104b14b1a6925f53f2c754dd3de119467aec1078e924f632331836",
+          "df55fd80a03306589fa069667581065ddcf3e80c8ebfc657137b635e42d06e88"
+        ],
+        "tokens": 947,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.99999999998,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qd926f26b785d",
+        "answer": "Marshmallow.",
+        "context_chunk_ids": [
+          "66d15b9e650b0a0f9734cc364641cecae4eaf2a4764bf1113e0c0f26d1bb9b0e",
+          "d784c8ba442873185f094a317d7137e02a0f1c6b78cea9c5fd1ae0da9a22baac",
+          "cd8ade6460a61030250b2583f4f4b1a751d1b9dd9438da77c42678b4c615e3ab",
+          "e0fe61175654d77816933014aad1256bebe9c7e34066e42b283413e99e06d6d3",
+          "dd284efce58095b5d801d58bc03af1ec97f3ad7a7395b8e80e6d2f0b639b59b5"
+        ],
+        "tokens": 1045,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.8666666666377778,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qd99ab02bb7af",
+        "answer": "401",
+        "context_chunk_ids": [
+          "bb8c0c071565a104f35beecf285438ace1a1968caf308045280f63b3f6510073",
+          "3cd7b2b8024fb00061ada55f020d59098ce1f36096629f256c0c4ef83e44d876",
+          "6b4b4e96922b1946f4d3ae1bed2d6f93a9489e7c729c1472c661f8867b0c78cb",
+          "e5e78e2f0d42897911e125c54cac8736e2989f2d300f666b9b5dfaa47de862ae",
+          "89d2d9f7031767839ee548c3430645d9a9a6b787b7f6f858f8c4922cf73790ed"
+        ],
+        "tokens": 719,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.6335862673009072,
+          "context_precision": 0.9999999999666667,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qdb7727b54f99",
+        "answer": "A list of `bytes` or `UploadFile`.",
+        "context_chunk_ids": [
+          "7433326d60590e71d44eb8a272db4e64a0b2dd88339296f4e190813bce6cfd1f",
+          "e281df6eed099b85138799766142de847f47afdfefd5c66af20716dff6460fc3",
+          "995faafd83d44a111c9feaf87f540016e0d47d895f3f7964837c7317891c4e1e",
+          "88dc0e8eff4abb29bc21ce2adacf8e7e323491216ee0c63500ec5b1305270b9d",
+          "c564b89b0e4a236740c34152d80d8634d44c50b3666656a5ba873119fea08739"
+        ],
+        "tokens": 770,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.7717652153783421,
+          "context_precision": 0.99999999995,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qdc3314347929",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "5e2d69365365ce3ea1aa52f2b2aa6a5c923443d3559417ff2f4ab5fe8a5de97d",
+          "8d5f8162e2c64f220fa6e116dbcbb3a0b9f78f054d38dcd13490dd00cbe0ef39",
+          "601ccfa8b82631c3e29b1e211fbd7442f77e97316fec16fbaa43611ada206f55",
+          "ce273dd85aed7df8deedd5f4e6e5e897a00074f0d58d490b6b1a5ffd57af47a3",
+          "a8c3c8cd8727cf7a61a0bbf0f05a1d6297a1cf8a2d05bffec13dfac8fe4f542a"
+        ],
+        "tokens": 762,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qe122e5b831fb",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "c236ae1e252188491d575468eb30ebcd045467e673a982a3b64c1b09618c78ee",
+          "72bba791a7790ed953ba1250931b38a096d1d50f309da0d39d8f95a311cd1c80",
+          "9abc213e65122f2b1e651a37fb88f523fe0c7dd6275e6320b2892ee9c0306f86",
+          "d2d64fc9a81d3564c6f3e674693c9a6a6865d73dff03bf06854a5843a07a36a1",
+          "ca50f57997b49dcab4ed592bf9d3afbe3eb7e5dd1b34e66696950b3bdebfb818"
+        ],
+        "tokens": 1411,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qee055a6aa915",
+        "answer": "The exact field names that must be used in the form data for OAuth2 password flow according to the specification are:\n\n- `username`\n- `password`",
+        "context_chunk_ids": [
+          "8bb96beecf3c3e86ed7ee2d6a5351d86d651f529e085f2d35a7face4d09c0355",
+          "38863bdd560f8ca59932297fbfe216f8d82568448ae3ccf1986ec1045350cc09",
+          "3e034592668f564f79d96fb5ab3e520a3eb1acb9ed99bf118c04e6caa0adf911",
+          "e0f766898c6a31e6c1d4ee1433a5082db3a9d686d210e6e6c040e0f3a046159e",
+          "f85465a3508e9567a565117d3778f7675170bf37370d8d6c90bc8153901d2b44"
+        ],
+        "tokens": 1126,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.9870767330837262,
+          "context_precision": 0.99999999995,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qf0d35cfb3006",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "9b7f7c02433bf207aa8e762ec6bbb8289d5bee57d4c948d211b2000de62b3e32",
+          "0dd69dd3f7f38c859f6395193b85d16c9a30c5aa30b868c6184e26420447765c",
+          "4c53822d3fc64cd756acd6ed6276834d3ae3f13e26610aeedf680b8d9d036fdb",
+          "c2acced530580c602436d35e262319f2dd978e7e0042ab109ceaa7a5a3d0374c",
+          "fc00d11723ab9199b9235fac514400b0a5881813e0f5d367584f43c30c56c2fc"
+        ],
+        "tokens": 1050,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.94999999997625,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qf12f01184897",
+        "answer": "The `status_code` parameter can alternatively receive an `IntEnum`, such as Python's [`http.HTTPStatus`](https://docs.python.org/3/library/http.html#http.HTTPStatus). (Context [1])",
+        "context_chunk_ids": [
+          "5713dab54f07d2b9be7612df5deb1ea05c68843bf4b5c4c5e630d705e6cf54ea",
+          "95be186e458f3119f115e5d710f23c10720b99b930a31116ae4e8f8bf4a913c1",
+          "0eb108fa96170b90d5e75edffc6311272bea223ffe45a97c7dd58958e2bfc1e4",
+          "6c1819586d147ad7510e583ff6c1fd2e94140f99b2fda50a06cfccccb12b3254",
+          "b28dbb56a0cffe32d8c9bbb058a2ae361882932421e3a0f6c134d4475e8bd310"
+        ],
+        "tokens": 936,
+        "scores": {
+          "faithfulness": 0.5,
+          "answer_relevancy": 0.7848208565107008,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qf14f6f7963d9",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "cd17c1d1da1381788c6fc89452a99cc05ec9de00b36686723c008afd07b02e0d",
+          "f85465a3508e9567a565117d3778f7675170bf37370d8d6c90bc8153901d2b44",
+          "33c0fd8338d01e198cde12c86373e68ce17d795149835040d1fa1a19f7f3d932",
+          "bd1993445e1d532e9d10fa00a84ef26031c643ee9e2c74e4f8e40aea6949c4f9",
+          "e9905da1637fbf5b4a92731cb70d606a43128c9470ab042acea97b3f97c5f9be"
+        ],
+        "tokens": 962,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.99999999995,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qf22939861049",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "62feb9a21a31c1572b3953cce92bcc24ceb89f4b756f201e758c35790c239bed",
+          "bd19d00d162d60239dc719b2fb16e46bbd814df591fe31bae99cc1908700a66b",
+          "d7a66fa1ec707e9f1a8133a085cbb6844d8d5b97cf211814ce859e5d793be485",
+          "231e829bf2d6b5f643544fb0de380a6cdb323b1f01e5dd51dd81928fbdd81b3a",
+          "a3c3c63efa00d9edbffdb1b9aa490b9b01ad10538fbf16a2715889e77f06d3fa"
+        ],
+        "tokens": 1131,
+        "scores": {
+          "faithfulness": 0.7142857142857143,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.99999999995,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qf3bc66065f14",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "3e7dd2b1860ccbff4af5079f37c7d58d2a8cfc4b1a6f9f1295e0f08acb57f011",
+          "c4c6dc35c6eb1e3b8f10cd989eb036e7a754f9e547785763f0163f984c04fc9c",
+          "c2acced530580c602436d35e262319f2dd978e7e0042ab109ceaa7a5a3d0374c",
+          "6e09add8959afee0849497b91753cbfec64f009fb7307cdece9e27fc86b15145",
+          "e66e82845fae7d0ae083e9e35fcea474ae5fcec73274ecb8ef382c70968141c3"
+        ],
+        "tokens": 803,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.8055555555287036,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qf42f82e181f7",
+        "answer": "`WebSocketException`",
+        "context_chunk_ids": [
+          "f3e912269c0cc00d65f61e0848fdac729d85740daef257ff82830021e77eb427",
+          "8e9593d241212669097a6adea781fd0f84658b2f71f4c49a775ff0a360dba328",
+          "24985886b6628cfce88da0518997b3a75303f5c369dbdbc1fc00a0e661d3d9b8",
+          "faa21529021e333d22d5189e4ff3a7a2751929fe49df8081a498111e0dc5df8c",
+          "699f479e8abb366309a3a9d836005a38a66c0d7e88bdb97d2ba1e923cb887b55"
+        ],
+        "tokens": 768,
+        "scores": {
+          "faithfulness": 0.5,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.99999999995,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qf8a8160ba6f5",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "e9ac041b5b979e286dfa30a0d61bcc96a122555d7d8fc51f129875268450d12c",
+          "ed65223ab75411c1d5c9750b0ac5db760047bb249b6cbdd1c86e1d7c190426a3",
+          "ac4f6a4f46cfa9053210de8519f99298781228c4f060bd26f1355bf454a867fd",
+          "1a1e243ae72bbd0cf720b0674bdb4d22683bb150494cceef02ce5cc97ac032f4",
+          "e05603e713660a30473ccc3a777e36f0084b99a530452bf7131a85c7cf14d8c2"
+        ],
+        "tokens": 620,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qfae1bb9b6ebc",
+        "answer": "To completely disable the OpenAPI documentation UI and JSON endpoint, you can set the environment variable `OPENAPI_URL` to the empty string (`\"\"`) or set `openapi_url=None` in the FastAPI app configuration. The context specifically mentions:\n\n- Setting `OPENAPI_URL=\"\"` (from [1])\n- Setting `openapi_url=None` (from [2])",
+        "context_chunk_ids": [
+          "6b614d616d8f8574c61c791abdbe0b5d63ad661ab51a0ac7f47e61366460977c",
+          "540791d6a8bcaa7a78e5d2f2f5583037f100df7de3b79a6563a611dd1ada0fac",
+          "ef40141b2c8da3189a805b5e0254d3abd3c79f848355542a8c7c9dd4ea1036fd",
+          "0797f5bd992ddc719f5b79f2fe15feb9908638a966cd8e4ef551804c473cd4b9",
+          "01b8f99bd00afee5a88f913baca0716f1fdb814cd6644bae21c217d5518917d1"
+        ],
+        "tokens": 787,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.9503237163645624,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qfaf2e2d17445",
+        "answer": "To temporarily replace a dependency function in a FastAPI app during testing, use `app.dependency_overrides` by setting the original dependency as the key and your override function as the value. Reset it afterward **inside the test function** by setting `app.dependency_overrides = {}` at the end of the test function.",
+        "context_chunk_ids": [
+          "ea106bb0708d595157547480c0a1c109cfe30db1fd315871ac2f1350315f63b6",
+          "1a1e243ae72bbd0cf720b0674bdb4d22683bb150494cceef02ce5cc97ac032f4",
+          "231e829bf2d6b5f643544fb0de380a6cdb323b1f01e5dd51dd81928fbdd81b3a",
+          "39f158eaec59260ac8bdd843b6fb91c2805ad472b71276f0754661a26046f757",
+          "ed65223ab75411c1d5c9750b0ac5db760047bb249b6cbdd1c86e1d7c190426a3"
+        ],
+        "tokens": 765,
+        "scores": {
+          "faithfulness": 0.8571428571428571,
+          "answer_relevancy": 0.9972880485238201,
+          "context_precision": 0.99999999995,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qfb79264113da",
+        "answer": "`fastapi run --root-path`",
+        "context_chunk_ids": [
+          "2b1d21cb76cd17a94483c2c4e466ed3d42e20e80971c833618eb61edafbbeec1",
+          "6bda9f5c65fe17d2d8fcdb2f5a65fddc512e984f84444396fc5b065b49ce2fa2",
+          "dc287732007db3812c2948673f10a0a11c003fbf8d840600c56eb6a7c619705f",
+          "4add4f9e69b2098e6240dffb4513423de2d5f0b38db40c026189e220f8dddefd",
+          "f5269229f5e0ec7d9beb9e89242c4d216949a5da81524134660aeccf7fdeedb9"
+        ],
+        "tokens": 930,
+        "scores": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.8435942707298375,
+          "context_precision": 0.7499999999625,
+          "context_recall": 1.0
+        }
+      },
+      {
+        "qid": "qfbc9a620af0e",
+        "answer": "The provided context does not contain the answer.",
+        "context_chunk_ids": [
+          "7b6aad49f45ef58afcc669bb0355a003e6b24de1b13c38143793ff1affdc2cf8",
+          "f320f90ae252c22f372da6f5e9f02627b924443def59d03d4a2f0d93f54a9660",
+          "3795df29090ebd8e7fe0d116106bcaaa93e54efbfd66ff9131c3b29f597d9365",
+          "c06afd718666216322a39ba970db2001704caa61dacd3b46c9c0ed819932b207",
+          "24725a5dd7ac45c5f744109e41c52a6fe42b3c3464103215258b6f2426bd4e13"
+        ],
+        "tokens": 755,
+        "scores": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_precision": 0.9999999999,
+          "context_recall": 1.0
+        }
+      }
+    ],
+    "created_at": "2026-11-03T05:15:55.575802+00:00"
+  }
 }

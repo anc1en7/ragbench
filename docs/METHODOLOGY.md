@@ -136,7 +136,7 @@
   precision, context recall). Judge temperature 0 and `top_p=1.0` (ragas defaults to 0.1,
   which Mistral models behind the `rag` combo reject under greedy sampling). No `seed` is
   sent because some routed providers reject it as an unknown parameter. Instructor JSON
-  mode. Per-metric judge error counts are logged after each finalist. Run on a fixed seeded subset of 100 test questions per
+  mode. Per-metric judge error counts are logged after each finalist. `rag` is an OmniRoute combo that routes each call to one model from a pool (Grok and Mistral models), so the underlying generator and judge model can differ between calls and finalists. Generation-metric differences between finalists of about 0.1 are within run-to-run noise (two finalists with identical contexts differed by 0.06 in faithfulness). Run on a fixed seeded subset of 100 test questions per
   finalist. Failed or NaN judge outputs are stored as missing and excluded per metric;
   `n_valid` is reported. Every generation block records the generator and judge models,
   prompt version, ragas version and embedder.

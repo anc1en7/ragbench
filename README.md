@@ -2,7 +2,7 @@
 
 A config-driven platform for benchmarking Retrieval-Augmented Generation (RAG) pipelines on a fixed, pinned corpus with a **human-verified gold question set**. It compares chunking strategies, embedding models, retrieval modes (dense, BM25, hybrid-RRF), rerankers, and two vector backends (pgvector and Qdrant), and reports retrieval quality, generation quality, latency and cost with confidence intervals.
 
-> **Status: under construction (Phase 4 of 6: retrieval sweep complete, RAGAS pending).** The staged sweep (33 configs on dev) and the test-split evaluation of the 5 dev-selected finalists are done. RAGAS generation metrics are implemented but not yet run. The API, tracing, CI gate and dashboard come in Phase 5. Every number below is copied from files in `results/`; where a stage has not run, it says so rather than guessing.
+> **Status: under construction (Phase 4 of 6: retrieval sweep and RAGAS complete, awaiting human review).** The staged sweep (33 configs on dev), the test-split evaluation of the 5 dev-selected finalists, and RAGAS generation metrics on those finalists are done. The API, tracing, CI gate and dashboard come in Phase 5. Every number below is copied from files in `results/`; where a stage has not run, it says so rather than guessing.
 
 ## Why this exists
 
@@ -152,7 +152,7 @@ Full details are in [`docs/METHODOLOGY.md`](docs/METHODOLOGY.md).
 
 ## Results
 
-> **Phase 4: retrieval complete, RAGAS pending.** 33 configs were swept on the **dev** split (47 questions) and ranked by nDCG@10. Only the top 5 were evaluated on the **test** split (110 questions), so test never influenced selection. All runs used the same machine and GPU (RTX 3050 Laptop, `results/hardware.json`). These results await human review (Checkpoint 4). Numbers are copied from `results/runs/*.json`; the generated analysis is in [`results/findings_draft.md`](results/findings_draft.md).
+> **Phase 4: retrieval and RAGAS complete.** 33 configs were swept on the **dev** split (47 questions) and ranked by nDCG@10. Only the top 5 were evaluated on the **test** split (110 questions), so test never influenced selection. All runs used the same machine and GPU (RTX 3050 Laptop, `results/hardware.json`). These results await human review (Checkpoint 4). Numbers are copied from `results/runs/*.json`; the generated analysis is in [`results/findings_draft.md`](results/findings_draft.md).
 
 ### Test leaderboard: dev-selected finalists (Phase 4)
 
@@ -166,7 +166,27 @@ All five finalists are recursive_md-256 chunks + `BAAI/bge-small-en-v1.5` + the 
 | 4 | Qdrant / dense / top 20 | 0.879 [0.829, 0.926] | 0.854 [0.798, 0.908] | 0.918 [0.864, 0.964] | 902.0 ms |
 | 5 | pgvector / hybrid / top 20 | 0.879 [0.829, 0.926] | 0.854 [0.798, 0.908] | 0.918 [0.864, 0.964] | 807.3 ms |
 
-The finalists' CIs overlap almost completely, so no finalist is detectably better than another on test. ANN sanity recall@10 is 1.000 for all five. Generation metrics (RAGAS) are **not yet run**.
+The finalists' CIs overlap almost completely, so no finalist is detectably better than another on test. ANN sanity recall@10 is 1.000 for all five.
+
+### Generation metrics (RAGAS) on the finalists
+
+`ragas==0.4.3`, a fixed seeded subset of 100 test questions per finalist, top 5 chunks as context, generator and judge both the OmniRoute `rag` model at temperature 0. Every metric has n_valid = 100 for every finalist (0 judge errors). Means with 95% bootstrap CIs, from `results/runs/*__test.json`:
+
+| # | Backend / mode / rerank depth | Faithfulness | Answer relevancy | Context precision | Context recall | "Context does not contain the answer" replies |
+|---|---|---|---|---|---|---|
+| 1 | Qdrant / hybrid / top 20 | 0.699 [0.62, 0.78] | 0.421 [0.34, 0.50] | 0.865 [0.82, 0.91] | 0.955 [0.91, 0.99] | 33 / 100 |
+| 2 | pgvector / dense / top 50 | 0.600 [0.51, 0.69] | 0.385 [0.31, 0.47] | 0.864 [0.81, 0.91] | 0.947 [0.89, 0.98] | 42 / 100 |
+| 3 | pgvector / dense / top 20 | 0.463 [0.37, 0.56] | 0.290 [0.21, 0.37] | 0.874 [0.83, 0.91] | 0.960 [0.91, 0.99] | 56 / 100 |
+| 4 | Qdrant / dense / top 20 | 0.506 [0.41, 0.61] | 0.325 [0.25, 0.41] | 0.876 [0.83, 0.92] | 0.960 [0.91, 0.99] | 51 / 100 |
+| 5 | pgvector / hybrid / top 20 | 0.568 [0.48, 0.66] | 0.350 [0.27, 0.43] | 0.876 [0.83, 0.92] | 0.960 [0.91, 0.99] | 43 / 100 |
+
+How to read this:
+
+- **Context precision and recall are high and flat** (0.86-0.88 and 0.95-0.96), which matches the retrieval leaderboard: retrieval is not the bottleneck.
+- **Faithfulness and answer relevancy are dragged down by refusals.** In 33-56% of answers the generator replied that the context does not contain the answer, even though context recall is about 0.95. Those replies score 0 on both metrics. This points at the generator or prompt (`gen-v1`), not at retrieval.
+- **Differences between finalists in faithfulness and answer relevancy are not evidence of a better pipeline.** Finalists 4 and 5 received *identical* contexts for all 100 questions, yet their faithfulness differs by 0.06 and their refusal counts by 8. The `rag` model is a router pool (Grok and Mistral models), so the underlying generator and judge model can change from call to call. Treat about +/-0.1 as run-to-run noise.
+- The run was interrupted once when every provider in the `rag` pool hit its quota (HTTP 429). It was stopped before finalist 5 saved anything and re-run after the quota reset, so no stored score comes from a failed call.
+- 20 judged items are exported to [`docs/judge_spotcheck.md`](docs/judge_spotcheck.md) for a human sanity check (not yet reviewed).
 
 ### Sweep highlights on dev (selection only, not headline numbers)
 

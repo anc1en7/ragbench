@@ -35,14 +35,15 @@ Format: status, decision, reason, date.
 | P4-5 | `generation.enabled` in sweep configs | Stays `false` (retrieval sweep); RAGAS on finalists still uses each config's `context_k`/`temperature` | Flipping it would change every `config_id` and orphan the retrieval runs |
 | P4-6 | Stage parents | A child stage expands the parent stage's `top_n` configs; the child's own `top_n` controls what it passes on | Makes `estimate` exact and keeps the grid readable |
 | P4-7 | First (CPU) sweep attempt | The 12 CPU-measured runs and the CPU-computed embedding cache were set aside (not committed) and everything was re-run on the GPU, including the Phase 3 baseline (`3384ade0ba3e`) | Latency is only comparable when measured on one device |
-| P4-8 | RAGAS run in progress | 1 of 5 finalists judged (`4443d42bc98a`: 100/100 valid on all four metrics, 0 judge errors); the other 4 finalists and `docs/judge_spotcheck.md` remain. The first attempt was stopped because the judge sent `seed` (rejected by some routed providers) and ragas' default `top_p=0.1` (rejected by Mistral at temperature 0); both were fixed before this run | Paused by the human 2026-11-02. Resume with `UV_NO_SYNC=1 .venv/Scripts/ragbench.exe finalize --grid configs/grid.yaml` (reuses all retrieval runs and finalist 1's RAGAS) |
+| P4-8 | RAGAS run complete | All 5 finalists judged on 100 test questions, n_valid 100/100 on every metric, 0 judge errors; `docs/judge_spotcheck.md` written (20 items). Finalist 5 was interrupted once by an OmniRoute quota exhaustion (HTTP 429 `ALL_TARGETS_SKIPPED` across the whole `rag` pool); the run was stopped before anything was saved and re-run after the reset. The `rag` combo routes to different underlying models (Grok, Mistral), so the generator and judge model is not fixed across finalists: finalists `cabfa4deefe8` and `ceb37f9c707e` had identical contexts on all 100 questions yet differ by 0.06 in faithfulness | Completed 2026-11-03. Open: whether to pin a single underlying judge/generator model for a re-run, and whether to revise the `gen-v1` prompt (33-56% of answers are "context does not contain the answer" despite context recall ~0.95) |
 
 ## Pending human actions
 
 - [x] Provide `LLM_BASE_URL` + `LLM_API_KEY` — done 2026-10-28; written to local `.env` (gitignored): base `https://vps.taila5d33a.ts.net:8444/v1`.
 - [x] **Restore one working chat provider on OmniRoute, then confirm the pinned `LLM_MODEL`** — resolved 2026-10-28: user connected the `rag` combo (Mistral Ministral 14B / Grok pool); `ragbench llm-probe` green, pinned in `results/hardware.json` and `.env`.
 - [x] Gold-set review to >= 150 verified questions (Checkpoint 1) — **done 2026-10-29: 157 verified**, 1 rejected, 18 flagged; split run (dev 47 / test 110).
-- [ ] Run the deferred RAGAS stage (P4-8), then review `docs/judge_spotcheck.md` (20 items)
+- [x] Run the deferred RAGAS stage (P4-8) — done 2026-11-03
+- [ ] Review `docs/judge_spotcheck.md` (20 items)
 - [ ] Review Checkpoint 4 results and decide on the pgvector FTS query fix (see open question below)
 - [ ] Approve storing the OmniRoute key as a GitHub Actions secret (needed for the RAGAS generation stage in CI)
 - [ ] Dashboard deployment (Hugging Face Spaces or Streamlit Community Cloud) per `docs/DEPLOY.md`
